@@ -65,7 +65,7 @@ def grade_recc_new(academic_year_form, child_dob, city, grade_type):
 	# grade_doc = frappe.get_all("Grade FH", fields=["base_ay", "age_criteria_start_date", "age_criteria_end_date", "grade"], filters={"grade_type": grade_type})
 
 	# Get all schools of selected city
-	all_school_list = frappe.get_all("School FH", fields=["name", "grade_type", "grade_details", "city"], filters={"city": city, "grade_type": grade_type})
+	all_school_list = frappe.get_all("School FH", fields=["name", "grade_type", "city"], filters={"city": city, "grade_type": grade_type})
 
 
 
