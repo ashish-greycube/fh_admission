@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:abbrevetion",
+ "creation": "2026-02-16 10:06:49.119539",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "school_name",
+  "city",
+  "area",
+  "grade_type",
+  "add_grades",
+  "column_break_hwnn",
+  "abbrevetion",
+  "address",
+  "section_break_qbji",
+  "grade_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "label": "City",
+   "options": "School City FH"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "area",
+   "fieldtype": "Data",
+   "label": "Area"
+  },
+  {
+   "fieldname": "abbrevetion",
+   "fieldtype": "Data",
+   "label": "Abbrevetion",
+   "unique": 1
+  },
+  {
+   "fieldname": "grade_details",
+   "fieldtype": "Table",
+   "label": "Grade Details",
+   "options": "Grade Details FH"
+  },
+  {
+   "fieldname": "school_name",
+   "fieldtype": "Data",
+   "label": "School Name"
+  },
+  {
+   "fieldname": "column_break_hwnn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_qbji",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "grade_type",
+   "fieldtype": "Link",
+   "label": "Grade Type",
+   "options": "Grade Type FH"
+  },
+  {
+   "fieldname": "add_grades",
+   "fieldtype": "Button",
+   "label": "Fetch Grades"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-05 14:29:24.048567",
+ "modified_by": "Administrator",
+ "module": "Fh Admission",
+ "name": "School FH",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

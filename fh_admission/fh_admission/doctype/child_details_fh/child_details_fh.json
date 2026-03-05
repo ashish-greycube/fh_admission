@@ -1,0 +1,98 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-03-03 17:14:36.427742",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "academic_year",
+  "section_break_fany",
+  "first_name",
+  "middle_name",
+  "last_name",
+  "column_break_xpjx",
+  "childs_dob",
+  "gender",
+  "column_break_xeig",
+  "current_school_nameif_applicable",
+  "school_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_fany",
+   "fieldtype": "Section Break",
+   "label": "Child Details"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "First Name"
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "column_break_xpjx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xeig",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "\nMale\nFemale"
+  },
+  {
+   "fieldname": "academic_year",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Academic Year applying for",
+   "options": "Academic Year FH"
+  },
+  {
+   "fieldname": "childs_dob",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Child's DOB"
+  },
+  {
+   "fieldname": "current_school_nameif_applicable",
+   "fieldtype": "Link",
+   "label": "Current School Name(if applicable)",
+   "options": "Child Current School FH"
+  },
+  {
+   "depends_on": "eval : doc.child_current_school == \"Other\"",
+   "fieldname": "school_name",
+   "fieldtype": "Data",
+   "label": "Enter School Name"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-03-05 11:03:55.366766",
+ "modified_by": "Administrator",
+ "module": "Fh Admission",
+ "name": "Child Details FH",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

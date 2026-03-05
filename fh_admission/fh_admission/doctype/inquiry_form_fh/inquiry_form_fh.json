@@ -1,0 +1,341 @@
+{
+ "actions": [],
+ "allow_guest_to_view": 1,
+ "allow_rename": 1,
+ "autoname": "field:primary_number",
+ "creation": "2026-03-03 15:43:24.907376",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "primary_tab",
+  "primary_number",
+  "primary_email",
+  "source",
+  "location_tab",
+  "city_for_admission",
+  "where_are_you_from",
+  "parent_details_tab",
+  "fathers_details_section",
+  "fathers_first_name",
+  "fathers_mobile_no",
+  "column_break_yoyh",
+  "fathers_last_name",
+  "father_email",
+  "section_break_fzwm",
+  "mothers_first_name",
+  "mothers_mobile_no",
+  "column_break_jiro",
+  "mothers_last_name",
+  "mothers_email",
+  "section_break_snmk",
+  "fountain_staff_parent_id",
+  "sibling_student_id",
+  "child_details_tab",
+  "academic_year",
+  "section_break_aysq",
+  "first_name",
+  "gender",
+  "column_break_qrry",
+  "middle_name",
+  "childs_dob",
+  "column_break_rqhb",
+  "last_name",
+  "current_school_nameif_applicable",
+  "school_name",
+  "section_break_crlj",
+  "column_break_cdft",
+  "column_break_loxy",
+  "column_break_plax",
+  "add_child_to_table",
+  "section_break_otnk",
+  "all_child_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "primary_tab",
+   "fieldtype": "Tab Break",
+   "label": "Primary"
+  },
+  {
+   "fieldname": "primary_number",
+   "fieldtype": "Data",
+   "label": "Primary Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "primary_email",
+   "fieldtype": "Data",
+   "label": "Primary Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "label": "Source"
+  },
+  {
+   "fieldname": "location_tab",
+   "fieldtype": "Tab Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "city_for_admission",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "City for Admission",
+   "options": "School City FH"
+  },
+  {
+   "fieldname": "where_are_you_from",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Where are you From?",
+   "options": "\nIn Surat\nIn India but not in Surat\nOutside India"
+  },
+  {
+   "fieldname": "parent_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Parent Details"
+  },
+  {
+   "fieldname": "fathers_details_section",
+   "fieldtype": "Section Break",
+   "label": "Father's Details"
+  },
+  {
+   "fieldname": "fathers_first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Father's First Name"
+  },
+  {
+   "fieldname": "fathers_mobile_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Father's Mobile No."
+  },
+  {
+   "fieldname": "column_break_yoyh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fathers_last_name",
+   "fieldtype": "Data",
+   "label": "Father's Last Name"
+  },
+  {
+   "fieldname": "father_email",
+   "fieldtype": "Data",
+   "label": "Father Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "section_break_fzwm",
+   "fieldtype": "Section Break",
+   "label": "Mother's Details"
+  },
+  {
+   "fieldname": "mothers_first_name",
+   "fieldtype": "Data",
+   "label": "Mother's First Name"
+  },
+  {
+   "fieldname": "mothers_mobile_no",
+   "fieldtype": "Data",
+   "label": "Mother's Mobile No."
+  },
+  {
+   "fieldname": "column_break_jiro",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mothers_last_name",
+   "fieldtype": "Data",
+   "label": "Mother's Last Name "
+  },
+  {
+   "fieldname": "mothers_email",
+   "fieldtype": "Data",
+   "label": "Mother's Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "section_break_snmk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "fountain_staff_parent_id",
+   "fieldtype": "Data",
+   "label": "If you are a Fountainhead staff member, please enter your staff ID.",
+   "placeholder": "e.g. FET1370"
+  },
+  {
+   "fieldname": "sibling_student_id",
+   "fieldtype": "Data",
+   "label": "If the child\u2019s real brother or sister is studying at Fountainhead School (any campus), please enter the child\u2019s Student ID ",
+   "placeholder": "e.g. FSK2012001"
+  },
+  {
+   "fieldname": "child_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Child Details"
+  },
+  {
+   "fieldname": "academic_year",
+   "fieldtype": "Link",
+   "label": "Academic Year",
+   "options": "Academic Year FH"
+  },
+  {
+   "fieldname": "section_break_aysq",
+   "fieldtype": "Section Break",
+   "label": "Child's Details"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale"
+  },
+  {
+   "fieldname": "column_break_qrry",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "default": "Today",
+   "fieldname": "childs_dob",
+   "fieldtype": "Date",
+   "label": "Child's DOB"
+  },
+  {
+   "fieldname": "column_break_rqhb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "current_school_nameif_applicable",
+   "fieldtype": "Link",
+   "label": "Current School Name(if applicable)",
+   "options": "Child Current School FH"
+  },
+  {
+   "depends_on": "eval:doc.current_school_nameif_applicable == \"Other\"",
+   "fieldname": "school_name",
+   "fieldtype": "Data",
+   "label": "Enter School Name"
+  },
+  {
+   "fieldname": "section_break_crlj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_otnk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "all_child_details",
+   "fieldtype": "Table",
+   "label": "All Child Details",
+   "options": "Child Details FH"
+  },
+  {
+   "fieldname": "column_break_cdft",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_loxy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_plax",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "add_child_to_table",
+   "fieldtype": "Button",
+   "label": "Add Child"
+  }
+ ],
+ "grid_page_length": 50,
+ "links": [],
+ "modified": "2026-03-05 14:46:44.873902",
+ "modified_by": "Administrator",
+ "module": "Fh Admission",
+ "name": "Inquiry Form FH",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Customer",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "first_name"
+}
