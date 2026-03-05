@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:city",
  "creation": "2026-02-16 10:01:15.027038",
@@ -21,7 +22,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-16 10:12:01.703116",
+ "modified": "2026-03-05 18:15:41.290027",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "School City FH",

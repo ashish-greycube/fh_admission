@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:naming_convention",
  "creation": "2026-02-16 10:03:54.228351",
@@ -68,7 +69,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-05 14:10:40.011001",
+ "modified": "2026-03-05 18:14:53.801034",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Grade FH",

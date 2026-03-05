@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:grade_type",
  "creation": "2026-02-28 12:14:45.603281",
@@ -23,7 +24,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-28 12:15:57.390072",
+ "modified": "2026-03-05 18:15:32.828449",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Grade Type FH",
