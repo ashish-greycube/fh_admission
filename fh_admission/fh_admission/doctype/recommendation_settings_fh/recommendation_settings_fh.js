@@ -6,6 +6,9 @@ let selectedValue = ""
 
 frappe.ui.form.on("Recommendation Settings FH", {
     validate(frm) {
+        frm.set_df_property("select_school_choice_list", "options", "")
+        frm.set_df_property("school_choice_list_html", "options", "")
+        frm.set_df_property("select_grade_choice_list", "options", "")
         call_get_grade_type_from_city(frm).then((r) => {
             if (r.message["status"] == 1) {
 
@@ -30,7 +33,7 @@ frappe.ui.form.on("Recommendation Settings FH", {
 
                     let grade_list_string = ""
 
-                    grade_list_string = grade_list.join("\n")
+                    grade_list_string = "\n" + grade_list.join("\n")
                     frm.set_df_property("select_grade_choice_list", "hidden", 0)
                     // frm.set_df_property("select_grade_choice_list", "reqd", 1)
                     frm.set_df_property("select_grade_choice_list", "options", grade_list_string)
@@ -81,6 +84,7 @@ frappe.ui.form.on("Recommendation Settings FH", {
     },
     select_grade_choice_list(frm) {
         selected_grade_value = frm.doc.select_grade_choice_list
+        frm.set_df_property("select_school_choice_list", "options", "")
 
         call_generate_school_choice_rows_html(selected_grade_value).then((r) => {
             frm.set_df_property("select_school_choice_list", "hidden", 0)
@@ -97,6 +101,11 @@ frappe.ui.form.on("Recommendation Settings FH", {
                 frm.set_df_property("select_school_choice_list", "hidden", "1")
             }
         })
+    },
+    refresh(frm) {
+        frm.set_df_property("select_school_choice_list", "options", "")
+        frm.set_df_property("school_choice_list_html", "options", "")
+        frm.set_df_property("select_grade_choice_list", "options", "")
     }
 })
 
