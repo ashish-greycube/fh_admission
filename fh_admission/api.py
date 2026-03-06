@@ -179,11 +179,14 @@ def generate_school_choice_list(schools):
 
 
 @frappe.whitelist(allow_guest=True)
-def generate_school_choice_rows_html(selected_grade):
+def generate_school_choice_rows_html(selected_grade, academic_year_form, child_dob, city, grade_type):
 
 	schools = []
 	global school_choice_html
 	school_choice_html = ""
+
+	recc_grade_list = grade_recc_new(academic_year_form, child_dob, city, grade_type)
+	recc_school_list = school_recc_new(city, None, recc_grade_list, grade_type)
 
 	for recc_school in recc_school_list:
 		if selected_grade in recc_school["grade"]:

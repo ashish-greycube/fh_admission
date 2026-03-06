@@ -92,7 +92,7 @@ frappe.ui.form.on("FH Grade Calculator", {
             return
         }
 
-        call_generate_school_choice_rows_html(selected_grade_value).then((r) => {
+        call_generate_school_choice_rows_html(selected_grade_value, frm).then((r) => {
             frm.set_df_property("select_school_choice_list", "hidden", 0)
             frm.set_df_property("school_choice_list_html", "options", r.message.html)
 
@@ -128,11 +128,15 @@ function call_reccomedation_calculator(doc) {
     })
 }
 
-function call_generate_school_choice_rows_html(grade) {
+function call_generate_school_choice_rows_html(grade, frm) {
     return frappe.call({
         method: "fh_admission.api.generate_school_choice_rows_html",
         args: {
-            "selected_grade": grade
+            "selected_grade": grade,
+            "academic_year_form": frm.doc.ay,
+            "child_dob": frm.doc.dob,
+            "city": frm.doc.city,
+            "grade_type": frm.doc.board
         }
     })
 }
