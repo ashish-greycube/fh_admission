@@ -86,13 +86,13 @@
    "is_query_report": 0,
    "label": "Calculator",
    "link_count": 0,
-   "link_to": "Recommendation Settings FH",
+   "link_to": "FH Grade Calculator",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2026-03-06 10:09:07.490411",
+ "modified": "2026-03-06 13:25:32.680410",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission",

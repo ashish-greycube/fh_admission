@@ -7,12 +7,11 @@ from frappe.model.document import Document
 class SchoolFH(Document):
 	@frappe.whitelist()
 	def append_grades_in_table(self):
-		all_filtered_grades = frappe.get_all("Grade FH", filters={"grade_type": self.grade_type}, fields=[])
-
+		all_filtered_grades = frappe.get_all("Grade FH", filters={"grade_type": self.grade_type}, fields=["name"])
+		self.grade_details = []
 		for grade in all_filtered_grades:
-			child_grade_doc = frappe.new_doc("Grade Details FH")
+			self.append("grade_details", {
+				"grade" : grade.name
+			})
 
-			child_grade_doc.grade = grade.name
-
-			self.grade_details.append(child_grade_doc)
-			self.save()
+		self.save(ignore_permissions=True)

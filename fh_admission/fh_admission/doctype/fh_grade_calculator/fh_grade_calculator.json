@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-03-06 12:03:58.979028",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "dob",
+  "ay",
+  "city",
+  "board",
+  "html_output",
+  "select_grade_choice_list",
+  "school_choice_list_html",
+  "select_school_choice_list"
+ ],
+ "fields": [
+  {
+   "fieldname": "dob",
+   "fieldtype": "Date",
+   "label": "DOB"
+  },
+  {
+   "fieldname": "ay",
+   "fieldtype": "Link",
+   "label": "A.Y.",
+   "options": "Academic Year FH"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "label": "City",
+   "options": "School City FH"
+  },
+  {
+   "fieldname": "board",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Board",
+   "options": "Grade Type FH"
+  },
+  {
+   "fieldname": "html_output",
+   "fieldtype": "HTML",
+   "label": "HTML Output"
+  },
+  {
+   "fieldname": "select_grade_choice_list",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Select Grade"
+  },
+  {
+   "fieldname": "school_choice_list_html",
+   "fieldtype": "HTML",
+   "label": "School Choice List HTML"
+  },
+  {
+   "fieldname": "select_school_choice_list",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Select School"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-03-06 12:10:58.246026",
+ "modified_by": "Administrator",
+ "module": "Fh Admission",
+ "name": "FH Grade Calculator",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -3,10 +3,14 @@
 
 frappe.ui.form.on("School FH", {
     add_grades(frm) {
-        if (!frm.doc.grade_type) {
-            frappe.throw("Grade Type can't be empty for fetching Grades.")
-
+        if (!frm.is_dirty()) {
+            if (!frm.doc.grade_type) {
+                frappe.throw("Please select Grade Type before fetching Grades.")
+            }
+        } else {
+            frappe.throw("Please save form before fetching Grades.")
         }
+
         frm.call("append_grades_in_table")
     },
     school_name(frm) {

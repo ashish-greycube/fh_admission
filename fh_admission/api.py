@@ -183,12 +183,12 @@ def generate_school_choice_rows_html(selected_grade):
 
 	args = []
 	global school_choice_html
-
-	# frappe.errprint(recc_school_list)
+	school_choice_html = ""
 
 	for recc_school in recc_school_list:
 		if selected_grade in recc_school["grade"]:
 			args.append(recc_school["school"])
+	# frappe.errprint(args)
 
 	if args:
 		school_choice_html = "".join(f"""
