@@ -152,8 +152,8 @@ def get_ordinal(n):
     return str(n) + {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
 
 @frappe.whitelist(allow_guest=True)
-def generate_school_choice_list(*args):
-    items = list(args)
+def generate_school_choice_list(schools):
+    items = schools
     if not items:
         return []
         
@@ -181,20 +181,20 @@ def generate_school_choice_list(*args):
 @frappe.whitelist(allow_guest=True)
 def generate_school_choice_rows_html(selected_grade):
 
-	args = []
+	schools = []
 	global school_choice_html
 	school_choice_html = ""
 
 	for recc_school in recc_school_list:
 		if selected_grade in recc_school["grade"]:
-			args.append(recc_school["school"])
+			schools.append(recc_school["school"])
 	# frappe.errprint(args)
 
-	if args:
+	if schools:
 		school_choice_html = "".join(f"""
 			<tr><td>{line}</td></tr>
-		""" for line in generate_school_choice_list(*args))
-	elif not args:
+		""" for line in generate_school_choice_list(schools))
+	elif not schools:
 		school_choice_html = "".join(f"""
 			<tr><td>No School Applicable for {selected_grade}.</td></tr>
 		""")
@@ -213,7 +213,7 @@ def generate_school_choice_rows_html(selected_grade):
 
 	return {
 		"html": school_selection_html,
-		"school_list": generate_school_choice_list(*args) if args else "No School Applicable"
+		"school_list": generate_school_choice_list(schools) if schools else "No School Applicable"
 	}
 
 
