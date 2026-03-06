@@ -18,26 +18,31 @@
   {
    "fieldname": "dob",
    "fieldtype": "Date",
-   "label": "DOB"
+   "in_list_view": 1,
+   "label": "DOB",
+   "reqd": 1
   },
   {
    "fieldname": "ay",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "A.Y.",
-   "options": "Academic Year FH"
+   "options": "Academic Year FH",
+   "reqd": 1
   },
   {
    "fieldname": "city",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "City",
-   "options": "School City FH"
+   "options": "School City FH",
+   "reqd": 1
   },
   {
    "fieldname": "board",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "hidden": 1,
-   "label": "Board",
-   "options": "Grade Type FH"
+   "label": "Board"
   },
   {
    "fieldname": "html_output",
@@ -66,7 +71,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-06 12:10:58.246026",
+ "modified": "2026-03-06 15:06:00.367167",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Grade Calculator",

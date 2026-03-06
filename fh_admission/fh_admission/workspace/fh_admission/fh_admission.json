@@ -16,6 +16,25 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Recommendation Calculator",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Calculator",
+   "link_count": 0,
+   "link_to": "FH Grade Calculator",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Masters",
    "link_count": 5,
    "link_type": "DocType",
@@ -25,19 +44,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "School",
+   "label": "Academic Year",
    "link_count": 0,
-   "link_to": "School FH",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "School City",
-   "link_count": 0,
-   "link_to": "School City FH",
+   "link_to": "Academic Year FH",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -55,6 +64,16 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "School City",
+   "link_count": 0,
+   "link_to": "School City FH",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Grade",
    "link_count": 0,
    "link_to": "Grade FH",
@@ -65,34 +84,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Academic Year",
+   "label": "School",
    "link_count": 0,
-   "link_to": "Academic Year FH",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Recommendation Calculator",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Calculator",
-   "link_count": 0,
-   "link_to": "FH Grade Calculator",
+   "link_to": "School FH",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2026-03-06 13:25:32.680410",
+ "modified": "2026-03-06 16:20:36.299272",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission",

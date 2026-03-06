@@ -2,67 +2,58 @@
 # For license information, please see license.txt
 
 import frappe
+import json
+import itertools
 from frappe import _
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from frappe.model.document import Document
-import itertools
-import json
 
-
-recc_school_list = []
-recc_grade_list = []
-age_based_on_academic_year = ""
-school_choice_html = ""
-school_selection_html = ""
-
+# This is main function, when called with given keywords returns recc grade list and school list
 @frappe.whitelist(allow_guest=True)
-def reccomedation_calculator(**kwargs):
-	child_dob = kwargs["child_dob"] if "child_dob" in kwargs else ""
-	city = kwargs["city"] if "city" in kwargs else ""
-	academic_year = kwargs["academic_year"] if "academic_year" in kwargs else ""
-	grade_type = kwargs["grade_type"] if "grade_type" in kwargs else ""
-
-	if child_dob == "" or city == "" or academic_year == "":
+def reccomedation_calculator(child_dob, city, academic_year, grade_type):
+	if not child_dob or not city or not academic_year:
 		return
 
 	age = age_calculator_based_on_ay(child_dob, academic_year)
-	global age_based_on_academic_year
-	age_based_on_academic_year = f"{age.years}Y, {age.months}M, {age.days}D"
-	age_in_years = age.years
 
-	global recc_grade_list
+	age_based_on_academic_year = f"{age.years}Y, {age.months}M, {age.days}D"
+	# age_in_years = age.years
+
 	recc_grade_list = grade_recc_new(academic_year, child_dob, city, grade_type)
 
+	recc_school_list = school_recc_new(city, recc_grade_list, grade_type)
 
-	global recc_school_list
-	recc_school_list = school_recc_new(city, age_in_years, recc_grade_list, grade_type)
+	recc_unique_school_list = []
+	for school in recc_school_list:
+		if school["school"] not in recc_unique_school_list:
+			recc_unique_school_list.append(school["school"])
 
+	# function is returning HTML, grade list, school list school-grade list
 	return {
 		"html": html_output(age_based_on_academic_year, recc_grade_list, recc_school_list),
 		"grade_list": recc_grade_list,
-		"school_list": recc_school_list
+		"school_list": recc_school_list,
+		"unique_school_list": recc_unique_school_list
 	} 
-	
 
-
+# this function calculates age based on start date of A.Y. and DOB
 def age_calculator_based_on_ay(child_dob, academic_year):
+	# get start date from Provided A.Y. 's Doc
 	ay_start_date = frappe.get_value("Academic Year FH", academic_year, "year_start_date")
 	child_dob = datetime.strptime(child_dob, '%Y-%m-%d').date()
 
-	delta = relativedelta(ay_start_date, child_dob)
+	age = relativedelta(ay_start_date, child_dob)
 	
-	return delta
+	return age
 	
 
+# this function returns recommendaed Grade List 
 def grade_recc_new(academic_year_form, child_dob, city, grade_type):
 	grades_list = []
 	recc_grade_list = []
 
 	child_dob = datetime.strptime(child_dob, '%Y-%m-%d').date()
-
-	# Get list of all grades
-	# grade_doc = frappe.get_all("Grade FH", fields=["base_ay", "age_criteria_start_date", "age_criteria_end_date", "grade"], filters={"grade_type": grade_type})
 
 	# Get all schools of selected city
 	all_school_list = frappe.get_all("School FH", fields=["name", "grade_type", "city"], filters={"city": city, "grade_type": grade_type})
@@ -112,8 +103,8 @@ def grade_recc_new(academic_year_form, child_dob, city, grade_type):
 	# print(recc_grade_list)
 	return recc_grade_list
 
-def school_recc_new(city, age_in_years, recc_grade_list, grade_type):
-	# list out all school with city filter
+def school_recc_new(city, recc_grade_list, grade_type):
+	# list out all school with city and grade_type filter
 	school_list = frappe.get_all("School FH", filters={"city": city, "grade_type": grade_type}, fields=["name"])
 
 	recc_school_list = []
@@ -182,11 +173,11 @@ def generate_school_choice_list(schools):
 def generate_school_choice_rows_html(selected_grade, academic_year_form, child_dob, city, grade_type):
 
 	schools = []
-	global school_choice_html
+	# global school_choice_html
 	school_choice_html = ""
 
 	recc_grade_list = grade_recc_new(academic_year_form, child_dob, city, grade_type)
-	recc_school_list = school_recc_new(city, None, recc_grade_list, grade_type)
+	recc_school_list = school_recc_new(city, recc_grade_list, grade_type)
 
 	for recc_school in recc_school_list:
 		if selected_grade in recc_school["grade"]:
@@ -203,7 +194,7 @@ def generate_school_choice_rows_html(selected_grade, academic_year_form, child_d
 		""")
 	# frappe.errprint(school_choice_html)
 
-	global school_selection_html
+	# global school_selection_html
 	school_selection_html = ""
 	school_selection_html = f"""
 		<div class="school-choice" style='width: 50%'>
@@ -264,6 +255,29 @@ def html_output(age_based_on_academic_year, recc_grade_list, recc_school_list):
 		""")
 
 
+# function for getting no. of grade types availabele in a particular city
+@frappe.whitelist(allow_guest=True)
+def get_grade_type_from_city(city):
+	schools_list = frappe.get_all("School FH", fields=["grade_type"], filters={"city":city})
+	unique_grade_type_list = []
+
+	for grade_type in schools_list:
+		if grade_type["grade_type"] not in unique_grade_type_list:
+			unique_grade_type_list.append(grade_type["grade_type"] )
+
+	if len(unique_grade_type_list) == 1:
+		return {
+			"status": 1,
+			"types": unique_grade_type_list
+		}
+	else:
+		return {
+			"status": "more",
+			"types": unique_grade_type_list
+		}
+	
+
+# function for adding child details in inquiry form to its child table
 @frappe.whitelist(allow_guest=True)
 def add_child_details_to_table_when_btn_clicked(doc):
 	doc = json.loads(doc)
@@ -283,25 +297,3 @@ def add_child_details_to_table_when_btn_clicked(doc):
 	
 	# frappe.errprint(child_details_doc)
 
-
-@frappe.whitelist(allow_guest=True)
-def get_grade_type_from_city(city):
-	schools_list = frappe.get_all("School FH", fields=["grade_type"], filters={"city":city})
-	unique_grade_type_list = []
-
-	for grade_type in schools_list:
-		if grade_type["grade_type"] not in unique_grade_type_list:
-			unique_grade_type_list.append(grade_type["grade_type"] )
-
-	# frappe.errprint(unique_grade_type_list)
-
-	if len(unique_grade_type_list) == 1:
-		return {
-			"status": 1,
-			"types": unique_grade_type_list
-		}
-	else:
-		return {
-			"status": "more",
-			"types": unique_grade_type_list
-		}

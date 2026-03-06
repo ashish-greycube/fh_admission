@@ -17,6 +17,8 @@ frappe.ui.form.on("FH Grade Calculator", {
                 // Calling the Fn which calls PY calculator function
                 call_reccomedation_calculator(frm.doc).then((r) => {
 
+                    console.log(r.message["grade_list"], r.message["school_list"], r.message["unique_school_list"])
+
                     if (typeof (r.message) != "object") {
 
                     }
