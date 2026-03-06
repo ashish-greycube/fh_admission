@@ -5,5 +5,5 @@ import frappe
 from frappe.model.document import Document
 
 
-class RecommendationSettingsFH(Document):
+class CalculatorFH(Document):
 	pass

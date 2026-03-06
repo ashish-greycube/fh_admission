@@ -11,6 +11,7 @@
  ],
  "fields": [
   {
+   "description": "This field will show up in Admission Inquiry Form.",
    "fieldname": "current_school_name",
    "fieldtype": "Data",
    "label": "Current School Name",
@@ -19,13 +20,14 @@
   {
    "fieldname": "link_hlyo",
    "fieldtype": "Link",
+   "label": "City",
    "options": "School City FH"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-03 13:15:07.265035",
+ "modified": "2026-03-06 10:15:42.157570",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Child Current School FH",

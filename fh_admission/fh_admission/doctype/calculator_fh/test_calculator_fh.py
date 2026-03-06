@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestRecommendationSettingsFH(FrappeTestCase):
+class TestCalculatorFH(FrappeTestCase):
 	pass

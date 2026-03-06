@@ -11,6 +11,7 @@
  ],
  "fields": [
   {
+   "description": "This field will show up in Admission Inquiry Form.",
    "fieldname": "city",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -22,7 +23,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-05 18:15:41.290027",
+ "modified": "2026-03-06 10:12:30.436941",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "School City FH",

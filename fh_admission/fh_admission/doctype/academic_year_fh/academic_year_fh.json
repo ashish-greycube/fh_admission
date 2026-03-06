@@ -17,7 +17,7 @@
  ],
  "fields": [
   {
-   "description": "For e.g. 2012, 2012-13",
+   "description": "For e.g. 2012, 2012-13.\nThis field will show up in Admission Inquiry Form.",
    "fieldname": "year",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -74,7 +74,7 @@
  ],
  "icon": "fa fa-calendar",
  "links": [],
- "modified": "2026-03-05 14:27:22.888998",
+ "modified": "2026-03-06 10:15:09.630129",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Academic Year FH",

@@ -4,7 +4,7 @@
 let custom_html_output = ""
 let selectedValue = ""
 
-frappe.ui.form.on("Recommendation Settings FH", {
+frappe.ui.form.on("Calculator FH", {
     validate(frm) {
         frm.set_df_property("select_school_choice_list", "options", "")
         frm.set_df_property("school_choice_list_html", "options", "")
@@ -59,7 +59,7 @@ frappe.ui.form.on("Recommendation Settings FH", {
 
                         let grade_list_string = ""
 
-                        grade_list_string = grade_list.join("\n")
+                        grade_list_string = "\n" + grade_list.join("\n")
                         frm.set_df_property("select_grade_choice_list", "hidden", 0)
                         // frm.set_df_property("select_grade_choice_list", "reqd", 1)
                         frm.set_df_property("select_grade_choice_list", "options", grade_list_string)
