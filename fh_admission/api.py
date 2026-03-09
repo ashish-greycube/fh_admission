@@ -171,7 +171,8 @@ def generate_school_choice_list(schools):
 
 @frappe.whitelist(allow_guest=True)
 def generate_school_choice_rows_html(selected_grade, academic_year_form, child_dob, city, grade_type):
-
+	print("selected_grade, academic_year_form, child_dob, city, grade_type")
+	print(selected_grade, academic_year_form, child_dob, city, grade_type)
 	schools = []
 	# global school_choice_html
 	school_choice_html = ""
@@ -204,7 +205,7 @@ def generate_school_choice_rows_html(selected_grade, academic_year_form, child_d
 			</table>
 		</div>
 	"""
-
+	print("schools",schools)
 	return {
 		"html": school_selection_html,
 		"school_list": generate_school_choice_list(schools) if schools else "No School Applicable"

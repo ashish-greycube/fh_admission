@@ -12,31 +12,31 @@
   "html_output",
   "select_grade_choice_list",
   "school_choice_list_html",
-  "select_school_choice_list"
+  "select_school_choice_list",
+  "column_break_srhp",
+  "clear_form",
+  "calculate"
  ],
  "fields": [
   {
    "fieldname": "dob",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "DOB",
-   "reqd": 1
+   "label": "DOB"
   },
   {
    "fieldname": "ay",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "A.Y.",
-   "options": "Academic Year FH",
-   "reqd": 1
+   "options": "Academic Year FH"
   },
   {
    "fieldname": "city",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "City",
-   "options": "School City FH",
-   "reqd": 1
+   "options": "School City FH"
   },
   {
    "fieldname": "board",
@@ -65,13 +65,27 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Select School"
+  },
+  {
+   "fieldname": "clear_form",
+   "fieldtype": "Button",
+   "label": "Clear Form"
+  },
+  {
+   "fieldname": "calculate",
+   "fieldtype": "Button",
+   "label": "Calculate"
+  },
+  {
+   "fieldname": "column_break_srhp",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-06 15:06:00.367167",
+ "modified": "2026-03-06 17:58:39.335953",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Grade Calculator",
