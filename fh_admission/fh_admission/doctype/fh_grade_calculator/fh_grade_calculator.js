@@ -6,18 +6,12 @@ let selectedValue = ""
 
 frappe.ui.form.on("FH Grade Calculator", {
     validate(frm) {
-        // frm.set_df_property("select_school_choice_list", "options", "")
-        // frm.set_df_property("school_choice_list_html", "options", "")
-        // frm.set_df_property("select_grade_choice_list", "options", "")
-        call_get_grade_type_from_city(frm).then((r) => {
+        call_get_grade_type_from_city(frm.doc.city).then((r) => {
             if (r.message["status"] == 1) {
-                // console.log("grade_type value", r.message["types"][0])
-                frm.set_value("board", r.message["types"][0]).then(() => {
-                    // Calling the Fn which calls PY calculator function
-                    call_reccomedation_calculator(frm.doc).then((r) => {
-
-                        console.log(r.message["grade_list"], r.message["school_list"], r.message["unique_school_list"])
-
+                let board_value = r.message["types"][0]
+                frm.set_value("board", board_value).then((r) => {
+                    console.log(frm, frm.doc.board)
+                    call_reccomedation_calculator(frm.doc.dob, frm.doc.city, frm.doc.ay, board_value).then((r) => {
                         if (typeof (r.message) != "object") {
 
                         }
@@ -36,7 +30,6 @@ frappe.ui.form.on("FH Grade Calculator", {
 
                         grade_list_string = "\n" + grade_list.join("\n")
                         frm.set_df_property("select_grade_choice_list", "hidden", 0)
-                        // frm.set_df_property("select_grade_choice_list", "reqd", 1)
                         frm.set_df_property("select_grade_choice_list", "options", grade_list_string)
                     })
                 })
@@ -44,7 +37,7 @@ frappe.ui.form.on("FH Grade Calculator", {
             } else {
                 if (frm.fields_dict.board.has_input) {
                     // Calling the Fn which calls PY calculator function
-                    call_reccomedation_calculator(frm.doc).then((r) => {
+                    call_reccomedation_calculator(frm.doc.dob, frm.doc.city, frm.doc.ay, frm.doc.board).then((r) => {
 
                         if (typeof (r.message) != "object") {
 
@@ -64,16 +57,14 @@ frappe.ui.form.on("FH Grade Calculator", {
 
                         grade_list_string = "\n" + grade_list.join("\n")
                         frm.set_df_property("select_grade_choice_list", "hidden", 0)
-                        // frm.set_df_property("select_grade_choice_list", "reqd", 1)
                         frm.set_df_property("select_grade_choice_list", "options", grade_list_string)
                     })
                 } else {
-                    // frappe.msgprint("Multiple grade types found in city, Select any one")
-                    frm.set_df_property("board", "hidden", 0)
-                    // frm.set_df_property("board", "reqd", 1)
                     let grade_types_list = r.message["types"].join("\n")
-                    // console.log(grade_types_list)
                     frm.set_df_property("board", "options", grade_types_list)
+                    if (frm.fields_dict.board.df.options != "") {
+                        frm.set_df_property("board", "hidden", 0)
+                    }
                 }
 
             }
@@ -86,16 +77,17 @@ frappe.ui.form.on("FH Grade Calculator", {
 
     },
     select_grade_choice_list(frm) {
+        console.log(frm, frm.doc.board)
         selected_grade_value = frm.doc.select_grade_choice_list
         frm.set_df_property("select_school_choice_list", "options", "")
 
         if (!selected_grade_value) {
-            frm.set_df_property("school_choice_list_html", "options", "Please Select a valid Grade")
-            frm.set_df_property("select_school_choice_list", "hidden", "1")
+            // frm.set_df_property("school_choice_list_html", "options", "Please Select a valid Grade")
+            frm.set_df_property("select_school_choice_list", "hidden", 1)
             return
         }
 
-        call_generate_school_choice_rows_html(selected_grade_value, frm).then((r) => {
+        call_generate_school_choice_rows_html(selected_grade_value, frm.doc.dob, frm.doc.city, frm.doc.ay, frm.doc.board).then((r) => {
             frm.set_df_property("select_school_choice_list", "hidden", 0)
             frm.set_df_property("school_choice_list_html", "options", r.message.html)
 
@@ -107,13 +99,15 @@ frappe.ui.form.on("FH Grade Calculator", {
                 frm.set_df_property("select_school_choice_list", "options", school_list_string)
             } else {
                 frm.set_df_property("select_school_choice_list", "options", "No School Applicable")
-                frm.set_df_property("select_school_choice_list", "hidden", "1")
+                frm.set_df_property("select_school_choice_list", "hidden", 1)
             }
         })
     },
+
     calculate(frm) {
         frm.save()
     },
+
     clear_form(frm) {
         frm.set_value("dob", "")
         frm.set_value("ay", "")
@@ -123,50 +117,67 @@ frappe.ui.form.on("FH Grade Calculator", {
         frm.set_value("select_school_choice_list", "")
         frm.set_df_property("html_output", "options", "")
         frm.set_df_property("school_choice_list_html", "options", "")
-        // frm.set_df_property("board", "hidden", 1)
+        frm.fields_dict.html_output.wrapper.innerHTML = "";
+        frm.fields_dict.school_choice_list_html.wrapper.innerHTML = "";
+        frm.refresh_field("school_choice_list_html")
+        frm.refresh_field("html_output")
 
-        frm.save().then(() => { frm.reload_doc() })
+        frm.set_df_property("select_grade_choice_list", "hidden", 1)
+        frm.save()
+    },
 
-    }
-    // refresh(frm) {
-    //     frm.set_df_property("select_school_choice_list", "options", "")
-    //     frm.set_df_property("school_choice_list_html", "options", "")
-    //     frm.set_df_property("select_grade_choice_list", "options", "")
-    // }
+    refresh: function (frm) {
+        $(".primary-action").remove()
+        call_get_grade_type_from_city(frm.doc.city).then((r) => {
+            if (r.message["status"] == 1) {
+                let board_value = r.message["types"][0]
+                frm.set_value("board", board_value)
+                frm.refresh_field("board")
+            } else {
+                let grade_types_list = r.message["types"].join("\n")
+                frm.set_df_property("board", "options", grade_types_list)
+                if (frm.fields_dict.board.df.options != "") {
+                    frm.set_df_property("board", "hidden", 0)
+                }
+            }
+        })
+    },
 })
 
 
-function call_reccomedation_calculator(doc) {
+function call_reccomedation_calculator(dob, city, ay, board) {
+    console.log(dob, city, ay, board)
     return frappe.call({
         method: "fh_admission.api.reccomedation_calculator",
         args: {
-            "child_dob": doc.dob,
-            "city": doc.city,
-            "academic_year": doc.ay,
-            "grade_type": doc.board
+            "child_dob": dob,
+            "city": city,
+            "academic_year": ay,
+            "grade_type": board
         }
     })
 }
 
-function call_generate_school_choice_rows_html(grade, frm) {
+function call_generate_school_choice_rows_html(grade, dob, city, ay, board) {
+    console.log(grade, dob, city, ay, board)
     return frappe.call({
         method: "fh_admission.api.generate_school_choice_rows_html",
         args: {
             "selected_grade": grade,
-            "academic_year_form": frm.doc.ay,
-            "child_dob": frm.doc.dob,
-            "city": frm.doc.city,
-            "grade_type": frm.doc.board
+            "academic_year_form": ay,
+            "child_dob": dob,
+            "city": city,
+            "grade_type": board
         }
     })
 }
 
 
-function call_get_grade_type_from_city(frm) {
+function call_get_grade_type_from_city(city) {
     return frappe.call({
         method: "fh_admission.api.get_grade_type_from_city",
         args: {
-            "city": frm.doc.city
+            "city": city
         }
     })
 }
