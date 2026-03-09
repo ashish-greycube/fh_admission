@@ -128,19 +128,21 @@ frappe.ui.form.on("FH Grade Calculator", {
 
     refresh: function (frm) {
         $(".primary-action").remove()
-        call_get_grade_type_from_city(frm.doc.city).then((r) => {
-            if (r.message["status"] == 1) {
-                let board_value = r.message["types"][0]
-                frm.set_value("board", board_value)
-                frm.refresh_field("board")
-            } else {
-                let grade_types_list = r.message["types"].join("\n")
-                frm.set_df_property("board", "options", grade_types_list)
-                if (frm.fields_dict.board.df.options != "") {
-                    frm.set_df_property("board", "hidden", 0)
+        if (frm.doc.city) {
+            call_get_grade_type_from_city(city = frm.doc.city).then((r) => {
+                if (r.message["status"] == 1) {
+                    let board_value = r.message["types"][0]
+                    frm.set_value("board", board_value)
+                    frm.refresh_field("board")
+                } else {
+                    let grade_types_list = r.message["types"].join("\n")
+                    frm.set_df_property("board", "options", grade_types_list)
+                    if (frm.fields_dict.board.df.options != "") {
+                        frm.set_df_property("board", "hidden", 0)
+                    }
                 }
-            }
-        })
+            })
+        }
     },
 })
 
