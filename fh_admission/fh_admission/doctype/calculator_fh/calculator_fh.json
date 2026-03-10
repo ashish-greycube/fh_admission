@@ -70,7 +70,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-05 16:36:18.234698",
+ "modified": "2026-03-10 09:51:43.971824",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Calculator FH",
@@ -85,6 +85,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "FH Admission",
    "share": 1,
    "write": 1
   }

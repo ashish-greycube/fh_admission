@@ -2,18 +2,19 @@
  "actions": [],
  "allow_guest_to_view": 1,
  "allow_rename": 1,
- "autoname": "field:primary_number",
+ "autoname": "field:mobile_no",
  "creation": "2026-03-03 15:43:24.907376",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "primary_tab",
-  "primary_number",
-  "primary_email",
+  "mobile_no",
   "source",
+  "column_break_bmog",
+  "email_id",
   "location_tab",
-  "city_for_admission",
   "where_are_you_from",
+  "city_for_admission",
   "parent_details_tab",
   "fathers_details_section",
   "fathers_first_name",
@@ -29,26 +30,64 @@
   "mothers_email",
   "section_break_snmk",
   "fountain_staff_parent_id",
+  "column_break_cira",
   "sibling_student_id",
   "child_details_tab",
+  "academic_year_details_section",
   "academic_year",
+  "children_details_section",
+  "html_revf",
   "section_break_aysq",
-  "first_name",
-  "gender",
+  "first_child_first_name",
+  "first_child_middle_name",
+  "first_child_last_name",
+  "do_you_want_to_add_child_second",
   "column_break_qrry",
-  "middle_name",
-  "childs_dob",
-  "column_break_rqhb",
-  "last_name",
-  "current_school_nameif_applicable",
-  "school_name",
-  "section_break_crlj",
-  "column_break_cdft",
-  "column_break_loxy",
-  "column_break_plax",
-  "add_child_to_table",
-  "section_break_otnk",
-  "all_child_details"
+  "first_child_gender",
+  "first_child_date_of_birth",
+  "first_child_current_school_name",
+  "first_child_school_name",
+  "section_break_mjgv",
+  "html_biht",
+  "section_break_bqyo",
+  "second_child_first_name",
+  "second_child_middle_name",
+  "second_child_last_name",
+  "do_you_want_to_add_child_third",
+  "column_break_jrry",
+  "second_child_gender",
+  "second_child_date_of_birth",
+  "second_child_current_school_name",
+  "second_child_school_name",
+  "section_break_earw",
+  "third_child_first_name",
+  "third_child_middle_name",
+  "third_child_last_name",
+  "do_you_want_to_add_another_child_fourth",
+  "column_break_upxh",
+  "third_child_gender",
+  "third_child_childs_dob",
+  "third_child_current_school_name",
+  "third_child_school_name",
+  "section_break_qepn",
+  "fourth_child_first_name",
+  "fourth_child_middle_name",
+  "fourth_child_last_name",
+  "do_you_want_to_add_another_child_fifth",
+  "column_break_xmpr",
+  "fourth_child_gender",
+  "fourth_child_childs_dob",
+  "fourth_child_current_school_name",
+  "fourth_child_school_name",
+  "section_break_klmv",
+  "fifth_child_first_name",
+  "fifth_child_middle_name",
+  "fifth_child_last_name",
+  "column_break_ogui",
+  "fifth_child_gender",
+  "fifth_child_childs_dob",
+  "fifth_child_current_school_name",
+  "fifth_child_school_name"
  ],
  "fields": [
   {
@@ -57,22 +96,10 @@
    "label": "Primary"
   },
   {
-   "fieldname": "primary_number",
-   "fieldtype": "Data",
-   "label": "Primary Number",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "primary_email",
-   "fieldtype": "Data",
-   "label": "Primary Email",
-   "options": "Email"
-  },
-  {
    "fieldname": "source",
    "fieldtype": "Data",
-   "label": "Source"
+   "label": "Source",
+   "read_only": 1
   },
   {
    "fieldname": "location_tab",
@@ -83,14 +110,14 @@
    "fieldname": "city_for_admission",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "City for Admission",
+   "label": "City For Admission",
    "options": "School City FH"
   },
   {
    "fieldname": "where_are_you_from",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Where are you From?",
+   "label": "Where Are You From?",
    "options": "\nIn Surat\nIn India but not in Surat\nOutside India"
   },
   {
@@ -167,13 +194,13 @@
   {
    "fieldname": "fountain_staff_parent_id",
    "fieldtype": "Data",
-   "label": "If you are a Fountainhead staff member, please enter your staff ID.",
+   "label": "If You Are A Fountainhead Staff Member, Please Enter Your Staff ID",
    "placeholder": "e.g. FET1370"
   },
   {
    "fieldname": "sibling_student_id",
    "fieldtype": "Data",
-   "label": "If the child\u2019s real brother or sister is studying at Fountainhead School (any campus), please enter the child\u2019s Student ID ",
+   "label": "If The Child's Real Brother Or Sister Is Studying At Fountainhead School(Any Campus), Please Enter The Child's Student ID",
    "placeholder": "e.g. FSK2012001"
   },
   {
@@ -184,96 +211,325 @@
   {
    "fieldname": "academic_year",
    "fieldtype": "Link",
+   "ignore_user_permissions": 1,
    "label": "Academic Year",
    "options": "Academic Year FH"
   },
   {
    "fieldname": "section_break_aysq",
-   "fieldtype": "Section Break",
-   "label": "Child's Details"
-  },
-  {
-   "fieldname": "first_name",
-   "fieldtype": "Data",
-   "label": "First Name"
-  },
-  {
-   "fieldname": "gender",
-   "fieldtype": "Select",
-   "label": "Gender",
-   "options": "Male\nFemale"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_qrry",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "middle_name",
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID",
+   "options": "Email"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_bmog",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cira",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "academic_year_details_section",
+   "fieldtype": "Section Break",
+   "label": "Academic Year Details"
+  },
+  {
+   "fieldname": "first_child_first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "first_child_middle_name",
    "fieldtype": "Data",
    "label": "Middle Name"
   },
   {
-   "default": "Today",
-   "fieldname": "childs_dob",
-   "fieldtype": "Date",
-   "label": "Child's DOB"
-  },
-  {
-   "fieldname": "column_break_rqhb",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "last_name",
+   "fieldname": "first_child_last_name",
    "fieldtype": "Data",
    "label": "Last Name"
   },
   {
-   "fieldname": "current_school_nameif_applicable",
+   "default": "0",
+   "fieldname": "do_you_want_to_add_child_second",
+   "fieldtype": "Check",
+   "label": "Do You Want To Add Another Child?"
+  },
+  {
+   "fieldname": "first_child_gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale"
+  },
+  {
+   "default": "Today",
+   "fieldname": "first_child_date_of_birth",
+   "fieldtype": "Date",
+   "label": "Child's DOB"
+  },
+  {
+   "fieldname": "first_child_current_school_name",
    "fieldtype": "Link",
-   "label": "Current School Name(if applicable)",
+   "label": "Current School Name (If Applicable)",
    "options": "Child Current School FH"
   },
   {
-   "depends_on": "eval:doc.current_school_nameif_applicable == \"Other\"",
-   "fieldname": "school_name",
+   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "fieldname": "first_child_school_name",
    "fieldtype": "Data",
    "label": "Enter School Name"
   },
   {
-   "fieldname": "section_break_crlj",
+   "depends_on": "eval:doc.do_you_want_to_add_child_second==1;",
+   "fieldname": "section_break_bqyo",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "section_break_otnk",
+   "fieldname": "second_child_first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "second_child_middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "second_child_last_name",
+   "fieldtype": "Data",
+   "label": "Last Name "
+  },
+  {
+   "default": "0",
+   "fieldname": "do_you_want_to_add_child_third",
+   "fieldtype": "Check",
+   "label": "Do You Want To Add Another Child?"
+  },
+  {
+   "fieldname": "column_break_jrry",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "second_child_gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale"
+  },
+  {
+   "default": "Today",
+   "fieldname": "second_child_date_of_birth",
+   "fieldtype": "Date",
+   "label": "Child's DOB"
+  },
+  {
+   "fieldname": "second_child_current_school_name",
+   "fieldtype": "Link",
+   "label": "Current School Name (If Applicable)",
+   "options": "Child Current School FH"
+  },
+  {
+   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "fieldname": "second_child_school_name",
+   "fieldtype": "Data",
+   "label": "Enter School Name"
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_to_add_child_third==1;",
+   "fieldname": "section_break_earw",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "all_child_details",
-   "fieldtype": "Table",
-   "label": "All Child Details",
-   "options": "Child Details FH"
-  },
-  {
-   "fieldname": "column_break_cdft",
+   "fieldname": "column_break_upxh",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_loxy",
+   "fieldname": "third_child_first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "third_child_middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "third_child_last_name",
+   "fieldtype": "Data",
+   "label": "Last Name "
+  },
+  {
+   "default": "0",
+   "fieldname": "do_you_want_to_add_another_child_fourth",
+   "fieldtype": "Check",
+   "label": "Do You Want To Add Another Child? "
+  },
+  {
+   "fieldname": "third_child_gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale"
+  },
+  {
+   "default": "Today",
+   "fieldname": "third_child_childs_dob",
+   "fieldtype": "Date",
+   "label": "Child's DOB"
+  },
+  {
+   "fieldname": "third_child_current_school_name",
+   "fieldtype": "Link",
+   "label": "Current School Name (If Applicable)",
+   "options": "Child Current School FH"
+  },
+  {
+   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "fieldname": "third_child_school_name",
+   "fieldtype": "Data",
+   "label": "Enter School Name"
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_to_add_another_child_fourth==1;",
+   "fieldname": "section_break_qepn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_xmpr",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_plax",
+   "depends_on": "eval:doc.do_you_want_to_add_another_child_fifth==1;",
+   "fieldname": "section_break_klmv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ogui",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "add_child_to_table",
-   "fieldtype": "Button",
-   "label": "Add Child"
+   "fieldname": "fourth_child_first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "fourth_child_middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "fourth_child_last_name",
+   "fieldtype": "Data",
+   "label": "Last Name "
+  },
+  {
+   "default": "0",
+   "fieldname": "do_you_want_to_add_another_child_fifth",
+   "fieldtype": "Check",
+   "label": "Do You Want To Add Another Child?"
+  },
+  {
+   "fieldname": "fourth_child_gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale"
+  },
+  {
+   "default": "Today",
+   "fieldname": "fourth_child_childs_dob",
+   "fieldtype": "Date",
+   "label": "Child's DOB"
+  },
+  {
+   "fieldname": "fourth_child_current_school_name",
+   "fieldtype": "Link",
+   "label": "Current School Name (If Applicable)",
+   "options": "Child Current School FH"
+  },
+  {
+   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "fieldname": "fourth_child_school_name",
+   "fieldtype": "Data",
+   "label": "Enter School Name "
+  },
+  {
+   "fieldname": "fifth_child_first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "fifth_child_middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "fifth_child_last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "fifth_child_gender",
+   "fieldtype": "Select",
+   "label": "Gender ",
+   "options": "Male\nFemale"
+  },
+  {
+   "default": "Today",
+   "fieldname": "fifth_child_childs_dob",
+   "fieldtype": "Date",
+   "label": "Child's DOB "
+  },
+  {
+   "fieldname": "fifth_child_current_school_name",
+   "fieldtype": "Link",
+   "label": "Current School Name (If Applicable)",
+   "options": "Child Current School FH"
+  },
+  {
+   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "fieldname": "fifth_child_school_name",
+   "fieldtype": "Data",
+   "label": "Enter School Name"
+  },
+  {
+   "fieldname": "html_revf",
+   "fieldtype": "HTML",
+   "options": "<p style=\"color:black;\">First Child Details</p>",
+   "read_only": 1
+  },
+  {
+   "fieldname": "children_details_section",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_to_add_child_second==1;",
+   "fieldname": "section_break_mjgv",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "html_biht",
+   "fieldtype": "HTML",
+   "options": "<p style=\"color:black;\">Second Child Details</p>"
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-03-06 15:19:26.385498",
+ "modified": "2026-03-10 09:49:52.248304",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",
@@ -326,6 +582,19 @@
    "read": 1,
    "report": 1,
    "role": "All",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "FH Admission",
    "select": 1,
    "share": 1,
    "write": 1
