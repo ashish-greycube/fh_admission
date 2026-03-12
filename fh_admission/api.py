@@ -204,6 +204,11 @@ def generate_eligibility_html_tables(data):
 
     table2 = f"""
 		<table class="table table-bordered table-sm" style="border:1px solid black;">
+            <thead class="table-light">
+				<tr>
+					<th>Schools In City {city}</th>
+				</tr>
+			</thead>
 			<tbody>
                 
 				    {school_rows}
