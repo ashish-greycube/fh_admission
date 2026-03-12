@@ -7,7 +7,7 @@ from frappe.model.document import Document
 class SchoolFH(Document):
 	@frappe.whitelist()
 	def append_grades_in_table(self):
-		all_filtered_grades = frappe.get_all("Grade FH", filters={"grade_type": self.grade_type}, fields=["name"])
+		all_filtered_grades = frappe.get_all("Grade FH", filters={"board_type": self.board_type, "school_type":self.school_type}, fields=["name"])
 		self.grade_details = []
 		for grade in all_filtered_grades:
 			self.append("grade_details", {

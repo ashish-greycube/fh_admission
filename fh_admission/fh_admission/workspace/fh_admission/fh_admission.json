@@ -54,9 +54,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Grade Type",
+   "label": "Board Type",
    "link_count": 0,
-   "link_to": "Grade Type FH",
+   "link_to": "Board Type FH",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -92,7 +92,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-03-10 09:52:20.686558",
+ "modified": "2026-03-12 09:23:18.232888",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission",

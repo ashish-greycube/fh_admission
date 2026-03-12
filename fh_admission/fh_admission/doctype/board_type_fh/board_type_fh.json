@@ -2,22 +2,22 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:grade_type",
+ "autoname": "field:board_type",
  "creation": "2026-02-28 12:14:45.603281",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "grade_type"
+  "board_type"
  ],
  "fields": [
   {
    "allow_in_quick_entry": 1,
    "bold": 1,
    "description": "This field will show up in Admission Inquiry Form.",
-   "fieldname": "grade_type",
+   "fieldname": "board_type",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Grade Type",
+   "label": "Board Type",
    "reqd": 1,
    "unique": 1
   }
@@ -25,10 +25,10 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-10 09:51:21.581307",
+ "modified": "2026-03-10 14:35:12.847544",
  "modified_by": "Administrator",
  "module": "Fh Admission",
- "name": "Grade Type FH",
+ "name": "Board Type FH",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [

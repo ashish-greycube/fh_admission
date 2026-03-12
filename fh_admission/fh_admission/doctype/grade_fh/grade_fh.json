@@ -7,8 +7,9 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "grade_type",
+  "board_type",
   "grade",
+  "school_type",
   "naming_convention",
   "column_break_khgs",
   "base_ay",
@@ -48,13 +49,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "grade_type",
-   "fieldtype": "Link",
-   "label": "Grade Type",
-   "options": "Grade Type FH",
-   "reqd": 1
-  },
-  {
    "fieldname": "naming_convention",
    "fieldtype": "Data",
    "hidden": 1,
@@ -65,12 +59,26 @@
   {
    "fieldname": "column_break_khgs",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "school_type",
+   "fieldtype": "Link",
+   "label": "School Type",
+   "options": "School Type FH",
+   "reqd": 1
+  },
+  {
+   "fieldname": "board_type",
+   "fieldtype": "Link",
+   "label": "Board Type",
+   "options": "Board Type FH",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-10 09:50:54.034717",
+ "modified": "2026-03-10 14:35:45.951750",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Grade FH",

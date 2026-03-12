@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestGradeTypeFH(FrappeTestCase):
+class TestBoardTypeFH(FrappeTestCase):
 	pass

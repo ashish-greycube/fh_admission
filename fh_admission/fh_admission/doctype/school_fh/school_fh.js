@@ -4,7 +4,7 @@
 frappe.ui.form.on("School FH", {
     add_grades(frm) {
         if (!frm.is_dirty()) {
-            if (!frm.doc.grade_type) {
+            if (!frm.doc.board_type) {
                 frappe.throw("Please select Grade Type before fetching Grades.")
             }
         } else {

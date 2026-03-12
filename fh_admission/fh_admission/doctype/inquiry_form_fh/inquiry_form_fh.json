@@ -59,6 +59,8 @@
   "second_child_date_of_birth",
   "second_child_current_school_name",
   "second_child_school_name",
+  "section_break_qlwm",
+  "html_omlc",
   "section_break_earw",
   "third_child_first_name",
   "third_child_middle_name",
@@ -69,6 +71,8 @@
   "third_child_childs_dob",
   "third_child_current_school_name",
   "third_child_school_name",
+  "section_break_wkru",
+  "html_jjyz",
   "section_break_qepn",
   "fourth_child_first_name",
   "fourth_child_middle_name",
@@ -79,6 +83,8 @@
   "fourth_child_childs_dob",
   "fourth_child_current_school_name",
   "fourth_child_school_name",
+  "section_break_gblw",
+  "html_yczs",
   "section_break_klmv",
   "fifth_child_first_name",
   "fifth_child_middle_name",
@@ -154,8 +160,7 @@
   {
    "fieldname": "father_email",
    "fieldtype": "Data",
-   "label": "Father Email",
-   "options": "Email"
+   "label": "Father Email"
   },
   {
    "fieldname": "section_break_fzwm",
@@ -184,8 +189,7 @@
   {
    "fieldname": "mothers_email",
    "fieldtype": "Data",
-   "label": "Mother's Email",
-   "options": "Email"
+   "label": "Mother's Email"
   },
   {
    "fieldname": "section_break_snmk",
@@ -266,6 +270,7 @@
   },
   {
    "default": "0",
+   "depends_on": "eval:doc.do_you_want_to_add_child_second==0;",
    "fieldname": "do_you_want_to_add_child_second",
    "fieldtype": "Check",
    "label": "Do You Want To Add Another Child?"
@@ -289,10 +294,11 @@
    "options": "Child Current School FH"
   },
   {
-   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "depends_on": "eval:doc.first_child_current_school_name == \"Other\"",
    "fieldname": "first_child_school_name",
    "fieldtype": "Data",
-   "label": "Enter School Name"
+   "label": "Enter School Name",
+   "mandatory_depends_on": "eval:doc.first_child_current_school_name == \"Other\""
   },
   {
    "depends_on": "eval:doc.do_you_want_to_add_child_second==1;",
@@ -316,6 +322,7 @@
   },
   {
    "default": "0",
+   "depends_on": "eval:doc.do_you_want_to_add_child_third==0;",
    "fieldname": "do_you_want_to_add_child_third",
    "fieldtype": "Check",
    "label": "Do You Want To Add Another Child?"
@@ -343,10 +350,11 @@
    "options": "Child Current School FH"
   },
   {
-   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "depends_on": "eval:doc.second_child_current_school_name == \"Other\"",
    "fieldname": "second_child_school_name",
    "fieldtype": "Data",
-   "label": "Enter School Name"
+   "label": "Enter School Name",
+   "mandatory_depends_on": "eval:doc.second_child_current_school_name == \"Other\""
   },
   {
    "depends_on": "eval:doc.do_you_want_to_add_child_third==1;",
@@ -374,6 +382,7 @@
   },
   {
    "default": "0",
+   "depends_on": "eval:doc.do_you_want_to_add_another_child_fourth==0;",
    "fieldname": "do_you_want_to_add_another_child_fourth",
    "fieldtype": "Check",
    "label": "Do You Want To Add Another Child? "
@@ -397,10 +406,11 @@
    "options": "Child Current School FH"
   },
   {
-   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "depends_on": "eval:doc.third_child_current_school_name == \"Other\"",
    "fieldname": "third_child_school_name",
    "fieldtype": "Data",
-   "label": "Enter School Name"
+   "label": "Enter School Name",
+   "mandatory_depends_on": "eval:doc.third_child_current_school_name == \"Other\""
   },
   {
    "depends_on": "eval:doc.do_you_want_to_add_another_child_fourth==1;",
@@ -437,6 +447,7 @@
   },
   {
    "default": "0",
+   "depends_on": "eval:doc.do_you_want_to_add_another_child_fifth==0;",
    "fieldname": "do_you_want_to_add_another_child_fifth",
    "fieldtype": "Check",
    "label": "Do You Want To Add Another Child?"
@@ -460,10 +471,11 @@
    "options": "Child Current School FH"
   },
   {
-   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "depends_on": "eval:doc.fourth_child_current_school_name == \"Other\"",
    "fieldname": "fourth_child_school_name",
    "fieldtype": "Data",
-   "label": "Enter School Name "
+   "label": "Enter School Name ",
+   "mandatory_depends_on": "eval:doc.fourth_child_current_school_name == \"Other\""
   },
   {
    "fieldname": "fifth_child_first_name",
@@ -499,16 +511,16 @@
    "options": "Child Current School FH"
   },
   {
-   "depends_on": "eval:doc.current_school_name == \"Other\"",
+   "depends_on": "eval:doc.fifth_child_current_school_name == \"Other\"",
    "fieldname": "fifth_child_school_name",
    "fieldtype": "Data",
-   "label": "Enter School Name"
+   "label": "Enter School Name",
+   "mandatory_depends_on": "eval:doc.fifth_child_current_school_name == \"Other\""
   },
   {
    "fieldname": "html_revf",
    "fieldtype": "HTML",
-   "options": "<p style=\"color:black;\">First Child Details</p>",
-   "read_only": 1
+   "options": "<p style=\"color:black;\">First Child Details</p>"
   },
   {
    "fieldname": "children_details_section",
@@ -525,11 +537,44 @@
    "fieldname": "html_biht",
    "fieldtype": "HTML",
    "options": "<p style=\"color:black;\">Second Child Details</p>"
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_to_add_child_third==1;",
+   "fieldname": "section_break_qlwm",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "html_omlc",
+   "fieldtype": "HTML",
+   "options": "<p style=\"color:black;\">Third Child Details</p> "
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_to_add_another_child_fourth==1;",
+   "fieldname": "section_break_wkru",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "html_jjyz",
+   "fieldtype": "HTML",
+   "options": "<p style=\"color:black;\">Fourth Child Details</p> "
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_to_add_another_child_fifth==1;",
+   "fieldname": "section_break_gblw",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "html_yczs",
+   "fieldtype": "HTML",
+   "options": "<p style=\"color:black;\">Fifth Child Details</p> "
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-03-10 09:49:52.248304",
+ "modified": "2026-03-11 17:58:10.348625",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",

@@ -10,11 +10,12 @@
   "school_name",
   "city",
   "area",
-  "grade_type",
+  "board_type",
   "add_grades",
   "column_break_hwnn",
   "abbrevetion",
   "address",
+  "school_type",
   "section_break_qbji",
   "grade_details"
  ],
@@ -62,21 +63,27 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "grade_type",
-   "fieldtype": "Link",
-   "label": "Grade Type",
-   "options": "Grade Type FH"
-  },
-  {
    "fieldname": "add_grades",
    "fieldtype": "Button",
    "label": "Fetch Grades"
+  },
+  {
+   "fieldname": "board_type",
+   "fieldtype": "Link",
+   "label": "Board Type",
+   "options": "Board Type FH"
+  },
+  {
+   "fieldname": "school_type",
+   "fieldtype": "Link",
+   "label": "School Type",
+   "options": "School Type FH"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-10 09:51:10.039157",
+ "modified": "2026-03-10 15:55:55.054741",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "School FH",

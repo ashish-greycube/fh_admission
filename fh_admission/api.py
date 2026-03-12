@@ -1,140 +1,73 @@
-# Copyright (c) 2026, GreyCube Technologies and contributors
-# For license information, please see license.txt
-
-import frappe
 import json
+import frappe
 import itertools
-from frappe import _
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-from frappe.model.document import Document
+from collections import defaultdict
 
-# This is main function, when called with given keywords returns recc grade list and school list
-@frappe.whitelist(allow_guest=True)
-def reccomedation_calculator(child_dob, city, academic_year, grade_type):
-	if not child_dob or not city or not academic_year:
-		return
+@frappe.whitelist()
+def get_eligible_grades(child_dob, child_academic_year, city):
+    if not child_dob or not child_academic_year:
+        frappe.throw(_("Please provide both Date of Birth and Target Academic Year"))
 
-	age = age_calculator_based_on_ay(child_dob, academic_year)
+    # Extract target year once in Python for efficiency
+    try:
+        target_year = int(child_academic_year[:4])
+    except ValueError:
+        frappe.throw(_("Invalid Academic Year format. Expected YYYY-YY (e.g., 2027-28)"))
 
-	age_based_on_academic_year = f"{age.years}Y, {age.months}M, {age.days}D"
-	# age_in_years = age.years
+    query = """
+        WITH AdjustedCriteria AS (
+            SELECT 
+				school.name,
+                school.school_name,
+				school.city,
+				grade.school_type,
+                grade.grade_name,
+                grade.base_academic_year,	
+                /* Task 1: Dynamically calculate offset for EACH row */
+                DATE_ADD(
+                    grade.age_criteria_start_date, 
+                    INTERVAL (%s - CAST(SUBSTRING(grade.base_academic_year, 1, 4) AS SIGNED)) YEAR
+                ) AS adjusted_start_date,
+                DATE_ADD(
+                    grade.age_criteria_end_date, 
+                    INTERVAL (%s - CAST(SUBSTRING(grade.base_academic_year, 1, 4) AS SIGNED)) YEAR
+                ) AS adjusted_end_date
+            FROM 
+                `tabSchool FH` school
+            INNER JOIN 
+                `tabGrade Details FH` grade ON grade.parent = school.name
+            WHERE 
+                grade.base_academic_year LIKE '20%%' /* Safety: only rows with YYYY format */
+        )
+        SELECT 
+			name,	
+			school_type,
+            school_name, 
+			grade_name, 
+			base_academic_year, 
+            adjusted_start_date, 
+			adjusted_end_date,
+            city
+        FROM 
+            AdjustedCriteria
+        WHERE 
+            %s BETWEEN adjusted_start_date AND adjusted_end_date AND city = %s
+    """
 
-	recc_grade_list = grade_recc_new(academic_year, child_dob, city, grade_type)
+    # We pass target_year twice (for start and end date calculation) 
+    # and child_dob for the final filter
+    return frappe.db.sql(query, (target_year, target_year, child_dob, city), as_dict=True)
 
-	recc_school_list = school_recc_new(city, recc_grade_list, grade_type)
-
-	recc_unique_school_list = []
-	for school in recc_school_list:
-		if school["school"] not in recc_unique_school_list:
-			recc_unique_school_list.append(school["school"])
-
-	# function is returning HTML, grade list, school list school-grade list
-	return {
-		"html": html_output(age_based_on_academic_year, recc_grade_list, recc_school_list),
-		"grade_list": recc_grade_list,
-		"school_list": recc_school_list,
-		"unique_school_list": recc_unique_school_list
-	} 
-
-# this function calculates age based on start date of A.Y. and DOB
-def age_calculator_based_on_ay(child_dob, academic_year):
-	# get start date from Provided A.Y. 's Doc
-	ay_start_date = frappe.get_value("Academic Year FH", academic_year, "year_start_date")
-	child_dob = datetime.strptime(child_dob, '%Y-%m-%d').date()
-
-	age = relativedelta(ay_start_date, child_dob)
-	
-	return age
-	
-
-# this function returns recommendaed Grade List 
-def grade_recc_new(academic_year_form, child_dob, city, grade_type):
-	grades_list = []
-	recc_grade_list = []
-
-	child_dob = datetime.strptime(child_dob, '%Y-%m-%d').date()
-
-	# Get all schools of selected city
-	all_school_list = frappe.get_all("School FH", fields=["name", "grade_type", "city"], filters={"city": city, "grade_type": grade_type})
-
-
-
-	# by iterating over each school, we make unique grades list
-	for school in all_school_list:
-		school_doc = frappe.get_doc("School FH", school["name"]).as_dict()
-		for row in school_doc["grade_details"]:
-			if row["grade"] not in grades_list:
-				grades_list.append(row["grade"])
-
-	# for unique grade in grades list
-	for grade_name in grades_list:
-		# with grade's name get its doc
-		grade = frappe.get_doc("Grade FH", grade_name)
-
-		# get AY from Settings and Grade's base AY
-		grade_base_ay = grade.get("base_ay")
-		doc_grade_base_ay = frappe.get_doc("Academic Year FH", grade_base_ay)
-		doc_form_ay = frappe.get_doc("Academic Year FH", academic_year_form)
-
-		# criteria start & end date from Grade
-		grade_start_date = (grade.get("age_criteria_start_date"))
-		grade_end_date = (grade.get("age_criteria_end_date"))
-
-		# Case in which selected AY is in future
-		if doc_form_ay.year_start_date > doc_grade_base_ay.year_start_date or doc_form_ay.year_start_date < doc_grade_base_ay.year_start_date:
-			# difference btw. base AY & Selected AY in years
-			date_diff = relativedelta(doc_form_ay.year_start_date, doc_grade_base_ay.year_start_date)
-			date_diff_years = date_diff.years
-
-			# Incerement criteria date by difference in years
-			grade_start_date = grade_start_date + relativedelta(years=date_diff_years)
-			grade_end_date = grade_end_date + relativedelta(years=date_diff_years)
-
-			# append the grade to Recc. list if eligible
-			if child_dob>=grade_start_date and child_dob<=grade_end_date:
-				recc_grade_list.append(grade.get("grade"))
-		
-		# Case where selected AY == Base AY in Grade
-		elif doc_form_ay.year_start_date == doc_grade_base_ay.year_start_date:
-			if child_dob>=grade_start_date and child_dob<=grade_end_date:
-				recc_grade_list.append(grade.get("grade"))
-
-	# print(recc_grade_list)
-	return recc_grade_list
-
-def school_recc_new(city, recc_grade_list, grade_type):
-	# list out all school with city and grade_type filter
-	school_list = frappe.get_all("School FH", filters={"city": city, "grade_type": grade_type}, fields=["name"])
-
-	recc_school_list = []
-	unique_school_list = []
-
-	# Iterate through all schools
-	for school in school_list:
-		# get school doc for getting all grades of a school
-		school = frappe.get_doc("School FH", school)
-
-		# Iterate through all rows of grade of a school
-		for row in school.grade_details:
-			# checking if selected grade is in recommended list or not
-			if row.grade_name in recc_grade_list:
-				# group by school and store grades in their respective schools
-				if school.name not in unique_school_list:
-					unique_school_list.append(school.name)
-					recc_school_list.append({
-						"school": school.name,
-						"grade": [row.grade_name]
-					})
-				else:
-					for recc_school in recc_school_list:
-						if recc_school["school"] == school.name:
-							recc_school["grade"].append(row.grade_name)
-
-		
-	# print(recc_school_list)
-	return recc_school_list
-
+@frappe.whitelist()
+def get_unique_grades(query_results):
+	query_results = json.loads(query_results)
+	unique_grades = []
+	if query_results:
+		for res in query_results:
+			# if res.get('school_type') == school_type:
+				if res.get('grade_name') not in unique_grades:
+					unique_grades.append(res.get('grade_name'))
+	return sorted(unique_grades)
 
 def get_ordinal(n):
     """Helper function to return the ordinal string of a number (1st, 2nd, 3rd, etc.)"""
@@ -142,9 +75,7 @@ def get_ordinal(n):
         return str(n) + 'th'
     return str(n) + {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
 
-@frappe.whitelist(allow_guest=True)
-def generate_school_choice_list(schools):
-    items = schools
+def get_possible_options_for_school(items):
     if not items:
         return []
         
@@ -152,7 +83,7 @@ def generate_school_choice_list(schools):
     
     # 1. Generate "Only [Item]" for every input
     for item in items:
-        results.append(f"Only {item}")
+        results.append(f"{item}")
 
     # --- STOP HERE IF ONLY ONE INPUT ---
     if len(items) == 1:
@@ -163,138 +94,122 @@ def generate_school_choice_list(schools):
         
     # 3. All full-length permutations (Only for 2+ inputs)
     for perm in itertools.permutations(items):
-        ordered_parts = [f"{get_ordinal(i + 1)} {val}" for i, val in enumerate(perm)]
+        ordered_parts = [f"{get_ordinal(i + 1)} Preference {val}" for i, val in enumerate(perm)]
         results.append(" , ".join(ordered_parts))
         
     return results
 
-
-@frappe.whitelist(allow_guest=True)
-def generate_school_choice_rows_html(selected_grade, academic_year_form, child_dob, city, grade_type):
-	print("selected_grade, academic_year_form, child_dob, city, grade_type")
-	print(selected_grade, academic_year_form, child_dob, city, grade_type)
+@frappe.whitelist()
+def get_unique_schools_based_on_grade(query_results, grade):
+	query_results = json.loads(query_results)
+	unique_schools = []
 	schools = []
-	# global school_choice_html
-	school_choice_html = ""
+	if query_results and grade: 
+		for res in query_results:
+			if res.get('grade_name') == grade:
+				if res.get('name') not in unique_schools:
+					unique_schools.append(res.get('name'))
 
-	recc_grade_list = grade_recc_new(academic_year_form, child_dob, city, grade_type)
-	recc_school_list = school_recc_new(city, recc_grade_list, grade_type)
-
-	for recc_school in recc_school_list:
-		if selected_grade in recc_school["grade"]:
-			schools.append(recc_school["school"])
-	# frappe.errprint(args)
-
-	if schools:
-		school_choice_html = "".join(f"""
-			<tr><td>{line}</td></tr>
-		""" for line in generate_school_choice_list(schools))
-	elif not schools:
-		school_choice_html = "".join(f"""
-			<tr><td>No School Applicable for {selected_grade}.</td></tr>
-		""")
-	# frappe.errprint(school_choice_html)
-
-	# global school_selection_html
-	school_selection_html = ""
-	school_selection_html = f"""
-		<div class="school-choice" style='width: 50%'>
-			<table class='table table-striped' style='border: 1px solid black; text-align: center; width: 50%'>
-				<tr style='border: 1px solid black; text-align: center; width: 50%'><th style='border: 1px solid black; text-align: center; width: 50%'>School Selection</th></tr>
-				{school_choice_html}
-			</table>
-		</div>
-	"""
-	print("schools",schools)
-	return {
-		"html": school_selection_html,
-		"school_list": generate_school_choice_list(schools) if schools else "No School Applicable"
-	}
+	if unique_schools != []:
+		schools = get_possible_options_for_school(unique_schools)
+	return schools
 
 
 @frappe.whitelist()
-# def html_output(city, child_dob, academic_year):	
-def html_output(age_based_on_academic_year, recc_grade_list, recc_school_list):
-	# making Recc. grade list to => "FPA": "G1, G2"
-	school_grade_dict = {}
-	unique_school_name_list = []
-	for recc_school in recc_school_list:
-		# school_grade_dict[recc_school["school"]] = recc_school["grade"]
-		school_grade_dict[recc_school["school"]] = ", ".join(recc_school["grade"])
+def generate_eligibility_html_tables(data):
+    # Load JSON string if passed as string
+    if isinstance(data, str):
+        data = json.loads(data)
 
-		# making a unique list of recommended schools
-		if recc_school["school"] not in unique_school_name_list:
-			unique_school_name_list.append(recc_school["school"])
+    if not data:
+        return "<div>No data available</div>", "<div>No data available</div>"
 
-	# print(school_grade_dict, unique_school_name_list)
+    # -------- Table 1 : School -> Grades --------
+    school_map = defaultdict(lambda: {"code": "", "grades": set()})
 
-	school_recc_row_for_html = " | ".join(f"{school}: {school_grade_dict[school]}" for school in unique_school_name_list)
+    for item in data:
+        school = item["school_name"]
+        school_map[school]["code"] = item["name"]
+        school_map[school]["grades"].add(item["grade_name"])
 
-	# print(school_recc_row_for_html)
+    table1_rows = ""
+    for school, info in school_map.items():
+        grades = ", ".join(sorted(info["grades"]))
+        table1_rows += f"""
+        <tr>
+            <td>{info['code']}</td>
+            <td>{school}</td>
+            <td>{grades}</td>
+        </tr>
+        """
 
-	all_grades =  " | ".join(f"{grade}" for grade in recc_grade_list)
-	# all_schools = " | ".join(f"{school["school"]}: {grades_of_recc_schools}" for school in recc_school_list)
+    table1 = f"""
+		<table class="table table-bordered table-sm" style="border:1px solid black;">
+			<thead class="table-light">
+				<tr>
+					<th>Code</th>
+					<th>School Name</th>
+					<th>Grades Available</th>
+				</tr>
+			</thead>
+			<tbody>
+			{table1_rows}
+			</tbody>
+		</table>
+		"""
 
-	grade_choice_checks_html = "<br>".join(f"""
-		<input class='grade-choice' name='grade-choice-radio' id='{grade.replace(' ', '_')}' type='radio' value='{grade}'>
-		<label for='{grade.replace(' ', '_')}'>{grade}</label>
-	""" for grade in recc_grade_list)
+    # -------- Table 2 : School Types --------
+    school_types = defaultdict(list)
 
-	
+    for item in data:
+        school_types[item["school_type"]].append((item["school_name"], item["name"]))
 
-	return (f"""
-		 	<h3>Age: {age_based_on_academic_year}</h3>
-			<table class="table table-striped" style='border: 1px solid black; text-align: center; width: 50%'>
-		 		<tr style='border: 1px solid black; text-align: center; width: 50%'><th style='border: 1px solid black; text-align: center; width: 50%'><center>Grade Recommendation</center></th></tr>
-		 		<tr style='border: 1px solid black; text-align: center; width: 50%'><td>{all_grades or "Not Applicable"}</td></tr>
-			</table>
-			<table class="table table-striped" style='border: 1px solid black; text-align: center; width: 50%'>
-		 		<tr style='border: 1px solid black; text-align: center; width: 50%'><th style='border: 1px solid black; text-align: center; width: 50%'><center>School Recommendation</center></th></tr>
-		 		<tr style='border: 1px solid black; text-align: center; width: 50%'><td style='border: 1px solid black; text-align: center; width: 50%'>{school_recc_row_for_html or "Not Applicable"}</td></tr>
-			</table>
+    # remove duplicates
+    for k in school_types:
+        school_types[k] = list(set(school_types[k]))
 
-		""")
+    headers = list(school_types.keys())
+    max_rows = max(len(v) for v in school_types.values())
 
+    header_html = "".join([f"<th>{h}</th>" for h in headers])
 
-# function for getting no. of grade types availabele in a particular city
-@frappe.whitelist(allow_guest=True)
-def get_grade_type_from_city(city):
-	schools_list = frappe.get_all("School FH", fields=["grade_type"], filters={"city":city})
-	unique_grade_type_list = []
+    rows_html = ""
+    for i in range(max_rows):
+        rows_html += "<tr>"
+        for h in headers:
+            if i < len(school_types[h]):
+                school, code = school_types[h][i]
+                rows_html += f"<td>{school} ({code})</td>"
+            else:
+                rows_html += "<td></td>"
+        rows_html += "</tr>"
 
-	for grade_type in schools_list:
-		if grade_type["grade_type"] not in unique_grade_type_list:
-			unique_grade_type_list.append(grade_type["grade_type"] )
+    table2 = f"""
+		<table class="table table-bordered table-sm" style="border:1px solid black;">
+			<thead class="table-light">
+				<tr>
+					{header_html}
+				</tr>
+			</thead>
+			<tbody>
+				{rows_html}
+			</tbody>
+		</table>
+		"""
 
-	if len(unique_grade_type_list) == 1:
-		return {
-			"status": 1,
-			"types": unique_grade_type_list
-		}
-	else:
-		return {
-			"status": "more",
-			"types": unique_grade_type_list
-		}
-	
+    city = data[0].get('city')
+    all_schools = frappe.db.get_all("School FH", {"city": city}, ['name', 'school_name'], order_by="name")
+    if all_schools:
+          school_rows = "".join([f"<tr><td>{s.school_name} ({s.name})</td></tr>" for s in all_schools])
 
-# function for adding child details in inquiry form to its child table
-@frappe.whitelist(allow_guest=True)
-def add_child_details_to_table_when_btn_clicked(doc):
-	doc = json.loads(doc)
-	inquiry_doc = frappe.get_doc("Inquiry Form FH", doc["name"])
-	child_details_doc = frappe.new_doc("Child Details FH").as_dict()
+    table2 = f"""
+		<table class="table table-bordered table-sm" style="border:1px solid black;">
+			<tbody>
+                
+				    {school_rows}
+                
+			</tbody>
+		</table>
+		"""
 
-	excluded_fields = ["parent", "parentfield", "parenttype", "__islocal", "__unsaved","name"]
-
-	for child_field in child_details_doc:
-		if child_field not in excluded_fields:
-			child_details_doc[child_field] = inquiry_doc.get(child_field)
-
-	# inquiry_doc.all_child_details.append(child_details_doc)
-	inquiry_doc.append("all_child_details", child_details_doc)
-
-	inquiry_doc.save()
-	
-	# frappe.errprint(child_details_doc)
-
+    return table1 + table2

@@ -8,14 +8,15 @@
   "dob",
   "ay",
   "city",
-  "board",
-  "html_output",
-  "select_grade_choice_list",
-  "school_choice_list_html",
-  "select_school_choice_list",
+  "school_type",
+  "select_grade",
+  "select_school",
   "column_break_srhp",
   "clear_form",
-  "calculate"
+  "calculate",
+  "html_output",
+  "school_choice_list_html",
+  "board"
  ],
  "fields": [
   {
@@ -50,21 +51,9 @@
    "label": "HTML Output"
   },
   {
-   "fieldname": "select_grade_choice_list",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Select Grade"
-  },
-  {
    "fieldname": "school_choice_list_html",
    "fieldtype": "HTML",
    "label": "School Choice List HTML"
-  },
-  {
-   "fieldname": "select_school_choice_list",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Select School"
   },
   {
    "fieldname": "clear_form",
@@ -79,13 +68,34 @@
   {
    "fieldname": "column_break_srhp",
    "fieldtype": "Column Break"
+  },
+  {
+   "description": "Please Select Any School Type From Above Options.",
+   "fieldname": "school_type",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "School Type"
+  },
+  {
+   "description": "Please Select Any Grade From Above Options.",
+   "fieldname": "select_grade",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Select Grade"
+  },
+  {
+   "description": "Please Select Any School From Above Options.",
+   "fieldname": "select_school",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Select School"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-10 09:50:14.917762",
+ "modified": "2026-03-11 10:50:29.273989",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Grade Calculator",
