@@ -6,7 +6,12 @@
  "engine": "InnoDB",
  "field_order": [
   "interakt_details_section",
-  "interakt_api_key"
+  "interakt_api_key",
+  "admission_inquiry_form_details_section",
+  "enter_source_name",
+  "generate_url",
+  "source_wise_urls",
+  "urls"
  ],
  "fields": [
   {
@@ -18,13 +23,41 @@
    "fieldname": "interakt_api_key",
    "fieldtype": "Password",
    "label": "Interakt API Key"
+  },
+  {
+   "fieldname": "admission_inquiry_form_details_section",
+   "fieldtype": "Section Break",
+   "label": "Admission Inquiry Form Details"
+  },
+  {
+   "fieldname": "enter_source_name",
+   "fieldtype": "Data",
+   "label": "Enter Source Name"
+  },
+  {
+   "fieldname": "generate_url",
+   "fieldtype": "Button",
+   "label": "Generate URL"
+  },
+  {
+   "fieldname": "source_wise_urls",
+   "fieldtype": "HTML",
+   "label": "Source Wise URLs"
+  },
+  {
+   "default": "\"\"",
+   "fieldname": "urls",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "URLs",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-10 09:50:29.960546",
+ "modified": "2026-03-20 17:49:16.101154",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission Settings",

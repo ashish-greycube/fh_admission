@@ -8,10 +8,12 @@
  "engine": "InnoDB",
  "field_order": [
   "primary_tab",
+  "country_code",
   "mobile_no",
   "source",
   "column_break_bmog",
   "email_id",
+  "status",
   "location_tab",
   "where_are_you_from",
   "city_for_admission",
@@ -41,36 +43,42 @@
   "first_child_first_name",
   "first_child_middle_name",
   "first_child_last_name",
+  "first_child_eligible_grades",
   "do_you_want_to_add_child_second",
   "column_break_qrry",
   "first_child_gender",
   "first_child_date_of_birth",
   "first_child_current_school_name",
   "first_child_school_name",
+  "first_child_eligible_schools",
   "section_break_mjgv",
   "html_biht",
   "section_break_bqyo",
   "second_child_first_name",
   "second_child_middle_name",
   "second_child_last_name",
+  "second_child_eligible_grades",
   "do_you_want_to_add_child_third",
   "column_break_jrry",
   "second_child_gender",
   "second_child_date_of_birth",
   "second_child_current_school_name",
   "second_child_school_name",
+  "second_child_eligible_schools",
   "section_break_qlwm",
   "html_omlc",
   "section_break_earw",
   "third_child_first_name",
   "third_child_middle_name",
   "third_child_last_name",
+  "third_child_eligible_grades",
   "do_you_want_to_add_another_child_fourth",
   "column_break_upxh",
   "third_child_gender",
   "third_child_childs_dob",
   "third_child_current_school_name",
   "third_child_school_name",
+  "third_child_eligible_schools",
   "section_break_wkru",
   "html_jjyz",
   "section_break_qepn",
@@ -78,22 +86,38 @@
   "fourth_child_middle_name",
   "fourth_child_last_name",
   "do_you_want_to_add_another_child_fifth",
+  "fourth_child_eligible_grades",
   "column_break_xmpr",
   "fourth_child_gender",
   "fourth_child_childs_dob",
   "fourth_child_current_school_name",
   "fourth_child_school_name",
+  "fourth_child_eligible_schools",
   "section_break_gblw",
   "html_yczs",
   "section_break_klmv",
   "fifth_child_first_name",
   "fifth_child_middle_name",
   "fifth_child_last_name",
+  "fifth_child_eligible_grades",
   "column_break_ogui",
   "fifth_child_gender",
   "fifth_child_childs_dob",
   "fifth_child_current_school_name",
-  "fifth_child_school_name"
+  "fifth_child_school_name",
+  "fifth_child_eligible_schools",
+  "required_details_to_show_on_load_section",
+  "first_child_options",
+  "second_child_options",
+  "third_child_options",
+  "fourth_child_options",
+  "fifth_child_options",
+  "column_break_udfj",
+  "first_child_school_options",
+  "second_child_school_options",
+  "third_child_school_options",
+  "fourth_child_school_options",
+  "fifth_child_school_options"
  ],
  "fields": [
   {
@@ -216,6 +240,7 @@
    "fieldname": "academic_year",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
+   "in_standard_filter": 1,
    "label": "Academic Year",
    "options": "Academic Year FH"
   },
@@ -230,8 +255,7 @@
   {
    "fieldname": "email_id",
    "fieldtype": "Data",
-   "label": "Email ID",
-   "options": "Email"
+   "label": "Email ID"
   },
   {
    "fieldname": "mobile_no",
@@ -282,7 +306,6 @@
    "options": "Male\nFemale"
   },
   {
-   "default": "Today",
    "fieldname": "first_child_date_of_birth",
    "fieldtype": "Date",
    "label": "Child's DOB"
@@ -338,7 +361,6 @@
    "options": "Male\nFemale"
   },
   {
-   "default": "Today",
    "fieldname": "second_child_date_of_birth",
    "fieldtype": "Date",
    "label": "Child's DOB"
@@ -394,7 +416,6 @@
    "options": "Male\nFemale"
   },
   {
-   "default": "Today",
    "fieldname": "third_child_childs_dob",
    "fieldtype": "Date",
    "label": "Child's DOB"
@@ -459,7 +480,6 @@
    "options": "Male\nFemale"
   },
   {
-   "default": "Today",
    "fieldname": "fourth_child_childs_dob",
    "fieldtype": "Date",
    "label": "Child's DOB"
@@ -499,7 +519,6 @@
    "options": "Male\nFemale"
   },
   {
-   "default": "Today",
    "fieldname": "fifth_child_childs_dob",
    "fieldtype": "Date",
    "label": "Child's DOB "
@@ -570,11 +589,134 @@
    "fieldname": "html_yczs",
    "fieldtype": "HTML",
    "options": "<p style=\"color:black;\">Fifth Child Details</p> "
+  },
+  {
+   "fieldname": "first_child_eligible_grades",
+   "fieldtype": "Data",
+   "label": "Eligible Grades"
+  },
+  {
+   "fieldname": "first_child_eligible_schools",
+   "fieldtype": "Data",
+   "label": "Eligible Schools"
+  },
+  {
+   "fieldname": "second_child_eligible_grades",
+   "fieldtype": "Data",
+   "label": "Eligible Grades"
+  },
+  {
+   "fieldname": "second_child_eligible_schools",
+   "fieldtype": "Data",
+   "label": "Eligible Schools"
+  },
+  {
+   "fieldname": "third_child_eligible_grades",
+   "fieldtype": "Data",
+   "label": "Eligible Grades"
+  },
+  {
+   "fieldname": "third_child_eligible_schools",
+   "fieldtype": "Data",
+   "label": "Eligible Schools"
+  },
+  {
+   "fieldname": "fourth_child_eligible_grades",
+   "fieldtype": "Data",
+   "label": "Eligible Grades"
+  },
+  {
+   "fieldname": "fourth_child_eligible_schools",
+   "fieldtype": "Data",
+   "label": "Eligible Schools"
+  },
+  {
+   "fieldname": "fifth_child_eligible_grades",
+   "fieldtype": "Data",
+   "label": "Eligible Grades"
+  },
+  {
+   "fieldname": "fifth_child_eligible_schools",
+   "fieldtype": "Data",
+   "label": "Eligible Schools"
+  },
+  {
+   "fieldname": "required_details_to_show_on_load_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Required Details To Show On Load"
+  },
+  {
+   "fieldname": "first_child_options",
+   "fieldtype": "Data",
+   "label": "First Child Grade Options"
+  },
+  {
+   "fieldname": "third_child_options",
+   "fieldtype": "Data",
+   "label": "Third Child Grade Options"
+  },
+  {
+   "fieldname": "fifth_child_options",
+   "fieldtype": "Data",
+   "label": "Fifth Child Grade Options"
+  },
+  {
+   "fieldname": "column_break_udfj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "second_child_options",
+   "fieldtype": "Data",
+   "label": "Second Child Grade Options"
+  },
+  {
+   "fieldname": "fourth_child_options",
+   "fieldtype": "Data",
+   "label": "Fourth Child Grade Options"
+  },
+  {
+   "fieldname": "first_child_school_options",
+   "fieldtype": "Data",
+   "label": "First Child School Options"
+  },
+  {
+   "fieldname": "second_child_school_options",
+   "fieldtype": "Data",
+   "label": "Second Child School Options"
+  },
+  {
+   "fieldname": "third_child_school_options",
+   "fieldtype": "Data",
+   "label": "Third Child School Options"
+  },
+  {
+   "fieldname": "fourth_child_school_options",
+   "fieldtype": "Data",
+   "label": "Fourth Child School Options"
+  },
+  {
+   "fieldname": "fifth_child_school_options",
+   "fieldtype": "Data",
+   "label": "Fifth Child School Options"
+  },
+  {
+   "default": "Incomplete",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "\nIncomplete\nCompleted"
+  },
+  {
+   "fieldname": "country_code",
+   "fieldtype": "Data",
+   "label": "Country Code"
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-03-11 17:58:10.348625",
+ "modified": "2026-03-18 11:31:01.693215",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",
@@ -649,5 +791,14 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [
+  {
+   "color": "Red",
+   "title": "Incomplete"
+  },
+  {
+   "color": "Green",
+   "title": "Completed"
+  }
+ ]
 }

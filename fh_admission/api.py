@@ -137,19 +137,19 @@ def generate_eligibility_html_tables(data):
         grades = ", ".join(sorted(info["grades"]))
         table1_rows += f"""
         <tr>
-            <td>{info['code']}</td>
-            <td>{school}</td>
-            <td>{grades}</td>
+            <td style='border:1px solid black;'>{info['code']}</td>
+            <td style='border:1px solid black;'>{school}</td>
+            <td style='border:1px solid black;'>{grades}</td>
         </tr>
         """
 
     table1 = f"""
-		<table class="table table-bordered table-sm" style="border:1px solid black;">
+		<table class="table table-sm" style="border:1px solid black; margin-top:1rem;">
 			<thead class="table-light">
 				<tr>
-					<th>Code</th>
-					<th>School Name</th>
-					<th>Grades Available</th>
+					<th style='border:1px solid black;'>Code</th>
+					<th style='border:1px solid black;'>School Name</th>
+					<th style='border:1px solid black;'>Grades Available</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -185,7 +185,7 @@ def generate_eligibility_html_tables(data):
         rows_html += "</tr>"
 
     table2 = f"""
-		<table class="table table-bordered table-sm" style="border:1px solid black;">
+		<table class="table table-sm" style="border:1px solid black;">
 			<thead class="table-light">
 				<tr>
 					{header_html}
@@ -200,13 +200,13 @@ def generate_eligibility_html_tables(data):
     city = data[0].get('city')
     all_schools = frappe.db.get_all("School FH", {"city": city}, ['name', 'school_name'], order_by="name")
     if all_schools:
-          school_rows = "".join([f"<tr><td>{s.school_name} ({s.name})</td></tr>" for s in all_schools])
+          school_rows = "".join([f"<tr><td style='border:1px solid black;'>{s.school_name} ({s.name})</td></tr>" for s in all_schools])
 
     table2 = f"""
-		<table class="table table-bordered table-sm" style="border:1px solid black;">
+		<table class="table table-sm" style="border:1px solid black;">
             <thead class="table-light">
 				<tr>
-					<th>Schools In City {city}</th>
+					<th style="border:1px solid black;">Schools In City {city}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -217,4 +217,9 @@ def generate_eligibility_html_tables(data):
 		</table>
 		"""
 
-    return table1 + table2
+    final_html = f"""
+        <div class="eligibility-criteria">
+            {table1 + table2}
+        </div>
+    """
+    return final_html

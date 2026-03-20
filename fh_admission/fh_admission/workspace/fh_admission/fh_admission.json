@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"W13vadhhPe\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">FH Admission</span>\",\"col\":12}},{\"id\":\"DdsER8kA-u\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"7r67f_OtwV\",\"type\":\"card\",\"data\":{\"card_name\":\"Recommendation Calculator\",\"col\":4}}]",
+ "content": "[{\"id\":\"W13vadhhPe\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">FH Admission</span>\",\"col\":12}},{\"id\":\"DdsER8kA-u\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"7r67f_OtwV\",\"type\":\"card\",\"data\":{\"card_name\":\"Recommendation Calculator\",\"col\":4}},{\"id\":\"j2y-Q00pO5\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
  "creation": "2026-03-05 17:59:36.199035",
  "custom_blocks": [],
  "docstatus": 0,
@@ -36,7 +36,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Masters",
-   "link_count": 5,
+   "link_count": 7,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -90,9 +90,48 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Child Current School",
+   "link_count": 0,
+   "link_to": "Child Current School FH",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Inquiry Form",
+   "link_count": 0,
+   "link_to": "Inquiry Form FH",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Admission Settings",
+   "link_count": 0,
+   "link_to": "FH Admission Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2026-03-12 09:23:18.232888",
+ "modified": "2026-03-20 17:54:30.720677",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission",

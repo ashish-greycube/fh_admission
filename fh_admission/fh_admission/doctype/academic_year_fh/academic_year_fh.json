@@ -74,7 +74,7 @@
  ],
  "icon": "fa fa-calendar",
  "links": [],
- "modified": "2026-03-10 09:50:04.696775",
+ "modified": "2026-03-20 17:38:27.705167",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Academic Year FH",
@@ -140,6 +140,6 @@
  "row_format": "Dynamic",
  "show_name_in_global_search": 1,
  "sort_field": "name",
- "sort_order": "DESC",
+ "sort_order": "ASC",
  "states": []
 }
