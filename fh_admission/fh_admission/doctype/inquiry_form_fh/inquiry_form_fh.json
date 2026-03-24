@@ -35,11 +35,11 @@
   "column_break_cira",
   "sibling_student_id",
   "child_details_tab",
-  "academic_year_details_section",
-  "academic_year",
+  "no_of_added_children",
   "children_details_section",
   "html_revf",
   "section_break_aysq",
+  "academic_year",
   "first_child_first_name",
   "first_child_middle_name",
   "first_child_last_name",
@@ -54,6 +54,7 @@
   "section_break_mjgv",
   "html_biht",
   "section_break_bqyo",
+  "second_child_academic_year",
   "second_child_first_name",
   "second_child_middle_name",
   "second_child_last_name",
@@ -68,6 +69,7 @@
   "section_break_qlwm",
   "html_omlc",
   "section_break_earw",
+  "third_child_academic_year",
   "third_child_first_name",
   "third_child_middle_name",
   "third_child_last_name",
@@ -82,6 +84,7 @@
   "section_break_wkru",
   "html_jjyz",
   "section_break_qepn",
+  "fourth_child_academic_year",
   "fourth_child_first_name",
   "fourth_child_middle_name",
   "fourth_child_last_name",
@@ -100,6 +103,7 @@
   "fifth_child_middle_name",
   "fifth_child_last_name",
   "fifth_child_eligible_grades",
+  "fifth_child_academic_year",
   "column_break_ogui",
   "fifth_child_gender",
   "fifth_child_childs_dob",
@@ -273,11 +277,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "academic_year_details_section",
-   "fieldtype": "Section Break",
-   "label": "Academic Year Details"
-  },
-  {
    "fieldname": "first_child_first_name",
    "fieldtype": "Data",
    "label": "First Name"
@@ -303,7 +302,7 @@
    "fieldname": "first_child_gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale"
+   "options": "\nMale\nFemale"
   },
   {
    "fieldname": "first_child_date_of_birth",
@@ -358,7 +357,7 @@
    "fieldname": "second_child_gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale"
+   "options": "\nMale\nFemale"
   },
   {
    "fieldname": "second_child_date_of_birth",
@@ -413,7 +412,7 @@
    "fieldname": "third_child_gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale"
+   "options": "\nMale\nFemale"
   },
   {
    "fieldname": "third_child_childs_dob",
@@ -477,7 +476,7 @@
    "fieldname": "fourth_child_gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale"
+   "options": "\nMale\nFemale"
   },
   {
    "fieldname": "fourth_child_childs_dob",
@@ -516,7 +515,7 @@
    "fieldname": "fifth_child_gender",
    "fieldtype": "Select",
    "label": "Gender ",
-   "options": "Male\nFemale"
+   "options": "\nMale\nFemale"
   },
   {
    "fieldname": "fifth_child_childs_dob",
@@ -712,11 +711,43 @@
    "fieldname": "country_code",
    "fieldtype": "Data",
    "label": "Country Code"
+  },
+  {
+   "fieldname": "second_child_academic_year",
+   "fieldtype": "Link",
+   "label": "Academic Year",
+   "options": "Academic Year FH"
+  },
+  {
+   "fieldname": "third_child_academic_year",
+   "fieldtype": "Link",
+   "label": "Academic Year",
+   "options": "Academic Year FH"
+  },
+  {
+   "fieldname": "fourth_child_academic_year",
+   "fieldtype": "Link",
+   "label": "Academic Year",
+   "options": "Academic Year FH"
+  },
+  {
+   "fieldname": "fifth_child_academic_year",
+   "fieldtype": "Link",
+   "label": "Academic Year",
+   "options": "Academic Year FH"
+  },
+  {
+   "default": "1",
+   "fieldname": "no_of_added_children",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "No Of Added Children",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-03-18 11:31:01.693215",
+ "modified": "2026-03-24 10:34:53.549111",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",

@@ -8,6 +8,26 @@ function save_data_to_doc_on_change(fieldname, value) {
 			"mobile_no": frappe.web_form.doc.mobile_no,
 			"fieldname": fieldname,
 			"value": value
+		},
+		callback: function (res) {
+			if (res && res.message == true) {
+				if (fieldname.startsWith("first")) {
+					frappe.web_form.set_value('first_child_eligible_grades', '')
+					frappe.web_form.set_value('first_child_eligible_schools', '')
+				} else if (fieldname.startsWith("second")) {
+					frappe.web_form.set_value('second_child_eligible_grades', '')
+					frappe.web_form.set_value('second_child_eligible_schools', '')
+				} else if (fieldname.startsWith("third")) {
+					frappe.web_form.set_value('third_child_eligible_grades', '')
+					frappe.web_form.set_value('third_child_eligible_schools', '')
+				} else if (fieldname.startsWith("fourth")) {
+					frappe.web_form.set_value('fourth_child_eligible_grades', '')
+					frappe.web_form.set_value('fourth_child_eligible_schools', '')
+				} else if (fieldname.startsWith("fifth")) {
+					frappe.web_form.set_value('fifth_child_eligible_grades', '')
+					frappe.web_form.set_value('fifth_child_eligible_schools', '')
+				}
+			}
 		}
 	})
 }
@@ -187,7 +207,7 @@ frappe.ready(function () {
 	$("#second_child_check_eligibility").on("click", () => {
 		check_eligibility_criteria_and_set_field_options(
 			frappe.web_form.get_value("second_child_date_of_birth"),
-			frappe.web_form.get_value("academic_year"),
+			frappe.web_form.get_value("second_child_academic_year"),
 			frappe.web_form.get_value("city_for_admission"),
 			'second_child_eligible_grades',
 			'second_child_eligible_schools',
@@ -198,7 +218,7 @@ frappe.ready(function () {
 	$("#third_child_check_eligibility").on("click", () => {
 		check_eligibility_criteria_and_set_field_options(
 			frappe.web_form.get_value("third_child_childs_dob"),
-			frappe.web_form.get_value("academic_year"),
+			frappe.web_form.get_value("third_child_academic_year"),
 			frappe.web_form.get_value("city_for_admission"),
 			'third_child_eligible_grades',
 			'third_child_eligible_schools',
@@ -209,7 +229,7 @@ frappe.ready(function () {
 	$("#fourth_child_check_eligibility").on("click", () => {
 		check_eligibility_criteria_and_set_field_options(
 			frappe.web_form.get_value("fourth_child_childs_dob"),
-			frappe.web_form.get_value("academic_year"),
+			frappe.web_form.get_value("fourth_child_academic_year"),
 			frappe.web_form.get_value("city_for_admission"),
 			'fourth_child_eligible_grades',
 			'fourth_child_eligible_schools',
@@ -220,7 +240,7 @@ frappe.ready(function () {
 	$("#fifth_child_check_eligibility").on("click", () => {
 		check_eligibility_criteria_and_set_field_options(
 			frappe.web_form.get_value("fifth_child_childs_dob"),
-			frappe.web_form.get_value("academic_year"),
+			frappe.web_form.get_value("fifth_child_academic_year"),
 			frappe.web_form.get_value("city_for_admission"),
 			'fifth_child_eligible_grades',
 			'fifth_child_eligible_schools',
@@ -256,6 +276,7 @@ frappe.ready(function () {
 	frappe.web_form.on('first_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('do_you_want_to_add_child_second', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
+	frappe.web_form.on('second_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_first_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_middle_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_last_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -266,6 +287,7 @@ frappe.ready(function () {
 	frappe.web_form.on('do_you_want_to_add_child_third', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
+	frappe.web_form.on('third_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('third_child_first_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('third_child_middle_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('third_child_last_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -276,6 +298,7 @@ frappe.ready(function () {
 	frappe.web_form.on('do_you_want_to_add_another_child_fourth', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('third_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
+	frappe.web_form.on('fourth_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fourth_child_first_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fourth_child_middle_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fourth_child_last_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -286,6 +309,7 @@ frappe.ready(function () {
 	frappe.web_form.on('do_you_want_to_add_another_child_fifth', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fourth_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
+	frappe.web_form.on('fifth_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fifth_child_first_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fifth_child_middle_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fifth_child_last_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));

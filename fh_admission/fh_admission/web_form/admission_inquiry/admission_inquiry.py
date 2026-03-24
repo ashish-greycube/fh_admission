@@ -10,6 +10,13 @@ def get_context(context):
 def save_data_to_doc_on_change(mobile_no, fieldname, value):
 	if mobile_no:
 		frappe.db.set_value("Inquiry Form FH", mobile_no, fieldname, value, update_modified=False)
+		if fieldname in ['do_you_want_to_add_child_second', 'do_you_want_to_add_child_third', 'do_you_want_to_add_another_child_fourth', 'do_you_want_to_add_another_child_fifth']:
+			count = frappe.db.get_value("Inquiry Form FH", mobile_no, 'no_of_added_children')
+			print(fieldname, value, count, type(value))
+			res = count+1 if int(value) == 1 else count - 1
+			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', res, update_modified=False)
+		if fieldname in ['first_child_date_of_birth', 'second_child_date_of_birth', 'third_child_childs_dob', 'fourth_child_childs_dob', 'fifth_child_childs_dob']:
+			return True
 
 @frappe.whitelist()
 def set_school_and_grade_values_on_load(docname):
@@ -31,7 +38,9 @@ def set_school_and_grade_values_on_load(docname):
 @frappe.whitelist()
 def change_status_of_doc_on_form_submit_and_send_message(docname):
 	if docname:
-		frappe.db.set_value("Inquiry Form FH", docname, 'status', 'Completed', update_modified=False)
+		status = check_for_empty_fields_before_set_status_as_completed(docname)
+		if status == "Completed":
+			frappe.db.set_value("Inquiry Form FH", docname, 'status', "Completed", update_modified=False)
 
 		# Send Success Message
 		output = {"success": False, "message": "It seems there are some technical issue. Please Try again after some time.",}
@@ -40,7 +49,7 @@ def change_status_of_doc_on_form_submit_and_send_message(docname):
 		country_code = frappe.db.get_value("Inquiry Form FH", docname, 'country_code')
 		mobile_no = frappe.db.get_value("Inquiry Form FH", docname, 'mobile_no')
 
-		if api_key:
+		if api_key and status == "Completed":
 			URL = "https://api.interakt.ai/v1/public/message/"
 
 			payload = json.dumps({
@@ -82,15 +91,42 @@ def change_status_of_doc_on_form_submit_and_send_message(docname):
 					"success": True,
 					"message": "Success Message Sent To {0}".format(mobile_no),
 				})
+				frappe.local.login_manager = LoginManager()
+				frappe.local.login_manager.logout("test@abc.com")
 			return output
 		else:
 			output.update({
 				"success": False,
 				"message": "It seems there are some technical issue. Please Try again after some time.",
 			})
-		
-		frappe.local.login_manager = LoginManager()
-		frappe.local.login_manager.logout("test@abc.com")
 		return output
 
-		
+def check_for_empty_fields_before_set_status_as_completed(docname):
+	status = 'Completed'
+	if docname:
+		doc = frappe.get_doc("Inquiry Form FH", docname)
+		if doc:
+			if int(frappe.db.get_value("Inquiry Form FH", docname, 'no_of_added_children')) == 1:
+				for field in ['first_child_eligible_grades', 'first_child_eligible_schools']:
+					print(field, doc.get(field))
+					if doc.get(field) == None:
+						status = 'Incomplete'
+			elif int(frappe.db.get_value("Inquiry Form FH", docname, 'no_of_added_children')) == 2:
+				for field in ['first_child_eligible_grades', 'first_child_eligible_schools', 'second_child_eligible_grades', 'second_child_eligible_schools']:
+					print(field, doc.get(field), "2")
+					if doc.get(field) == None:
+						status = 'Incomplete'
+			elif int(frappe.db.get_value("Inquiry Form FH", docname, 'no_of_added_children')) == 3:
+				for field in ['first_child_eligible_grades', 'first_child_eligible_schools', 'second_child_eligible_grades', 'second_child_eligible_schools', 'third_child_eligible_grades', 'third_child_eligible_schools']:
+					print(field, doc.get(field))
+					if doc.get(field) == None:
+						status = 'Incomplete'
+			elif int(frappe.db.get_value("Inquiry Form FH", docname, 'no_of_added_children')) == 4:
+				for field in ['first_child_eligible_grades', 'first_child_eligible_schools', 'second_child_eligible_grades', 'second_child_eligible_schools', 'third_child_eligible_grades', 'third_child_eligible_schools', 'fourth_child_eligible_grades', 'fourth_child_eligible_schools']:
+					if doc.get(field) == None:
+						status = 'Incomplete'
+			elif int(frappe.db.get_value("Inquiry Form FH", docname, 'no_of_added_children')) == 5:
+				for field in ['first_child_eligible_grades', 'first_child_eligible_schools', 'second_child_eligible_grades', 'second_child_eligible_schools', 'third_child_eligible_grades', 'third_child_eligible_schools', 'fourth_child_eligible_grades', 'fourth_child_eligible_schools', 'fifth_child_eligible_grades', 'fifth_child_eligible_schools']:
+					if doc.get(field) == None:
+						status = 'Incomplete'
+	return status
