@@ -9,13 +9,24 @@ def get_context(context):
 @frappe.whitelist()
 def save_data_to_doc_on_change(mobile_no, fieldname, value):
 	if mobile_no:
+		# Save value of field in inquiry document.
 		frappe.errprint(f"{mobile_no, fieldname, value}")
 		frappe.db.set_value("Inquiry Form FH", mobile_no, fieldname, value, update_modified=False)
-		if fieldname in ['do_you_want_to_add_child_second', 'do_you_want_to_add_child_third', 'do_you_want_to_add_another_child_fourth', 'do_you_want_to_add_another_child_fifth']:
-			count = frappe.db.get_value("Inquiry Form FH", mobile_no, 'no_of_added_children')
-			print(fieldname, value, count, type(value))
-			res = count+1 if int(value) == 1 else count - 1
-			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', res, update_modified=False)
+
+		# If field is checkbox then update no of children added in inquiry form.
+		if fieldname == 'do_you_want_to_add_child_second': 
+			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', 2 if int(value) == 1 else 1, update_modified=False)
+		
+		if fieldname == 'do_you_want_to_add_child_third':
+			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', 3 if int(value) == 1 else 2, update_modified=False)
+
+		if fieldname == 'do_you_want_to_add_another_child_fourth':
+			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', 4 if int(value) == 1 else 3, update_modified=False)
+
+		if fieldname == 'do_you_want_to_add_another_child_fifth':
+			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', 5 if int(value) == 1 else 4, update_modified=False)
+
+		# To verify that children's date of birth is changed return true.
 		if fieldname in ['first_child_date_of_birth', 'second_child_date_of_birth', 'third_child_childs_dob', 'fourth_child_childs_dob', 'fifth_child_childs_dob']:
 			return True
 
@@ -34,7 +45,9 @@ def set_school_and_grade_values_on_load(docname):
 		if doc:
 			for key in keys:
 				result.update({key: doc.get(key)})
-	return result
+
+		no_of_added_children = doc.no_of_added_children
+	return result, no_of_added_children
 
 @frappe.whitelist()
 def change_status_of_doc_on_form_submit_and_send_message(docname):
