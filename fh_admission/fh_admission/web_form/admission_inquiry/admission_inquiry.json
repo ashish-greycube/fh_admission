@@ -11,7 +11,7 @@
  "button_label": "Submit",
  "condition_json": "[]",
  "creation": "2026-03-06 17:24:11.990973",
- "custom_css": ".web-form-container {\n    background-color: #fafbfc !important;\n\tborder-radius: 8px !important;\n\tpadding: 0px 35px !important;\n\tbox-shadow: 2px 4px 8px -1px #92a8b2 !important;\n}\n\n.web-form-header {\n    padding: 0 !important;\n    background: #265166 !important;\n    border-right: 1px solid #265166 !important;\n    border-left: 1px solid #265166 !important;\n    border-top: 1px solid #265166 !important;\n}\n\n.web-form {\n    background-color: #fafbfc !important;\n border-right: 1px solid #e2e2e2 !important;\n border-left: 1px solid #e2e2e2 !important;\n border-bottom: 1px solid #e2e2e2 !important;\n}\n\n.web-form-head .title{\n    display: none !important;\n}\n\n.page-content-wrapper .container .page_content {\n    max-width: 1130px !important;\n    /*margin: auto;*/\n}\n\n.form-group {\n    margin-bottom: 2rem;\n}\n\n.submit-btn {\n    background-color: #265166 !important;\n    border: 1px solid #265166 !important;\n    color: #fff !important;\n    padding: 10px 20px !important;\n    border-radius:5px !important;\n}\n\n.submit-btn:hover {\n    background-color: #fff !important;\n    color: #265166 !important;\n}\n\n.delete-btn {\n    display:none !important;\n}\n\n.discard-btn {\n    display:none !important;\n}\n\n@media (max-width: 480px) {\n    .parents-section{\n        margin: 1rem -2.5rem !important; \n        font-size: 17px !important;\n    }\n    \n    .child-section{\n        margin: 2rem -2.5rem !important; \n    }\n}\n\n@media (min-width: 481px) and (max-width: 768px) {\n    .parents-section{\n        margin: 1rem -2.5rem !important; \n        font-size: 17px !important;\n    }\n    \n    .child-section{\n        margin: 2rem -2.5rem !important; \n    }\n}\n\n.web-footer {\n    display:none !important;\n}\n\n.navbar {\n    display:none !important;\n}\n\n#first_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#second_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#third_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#fourth_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#fifth_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n\n\n\n\n\n\n\n",
+ "custom_css": ".web-form-container {\n    background-color: #fafbfc !important;\n\tborder-radius: 8px !important;\n\tpadding: 0px 35px !important;\n\tbox-shadow: 2px 4px 8px -1px #92a8b2 !important;\n}\n\n.web-form-header {\n    padding: 0 !important;\n    background: #265166 !important;\n    border-right: 1px solid #265166 !important;\n    border-left: 1px solid #265166 !important;\n    border-top: 1px solid #265166 !important;\n}\n\n.web-form {\n    background-color: #fafbfc !important;\n border-right: 1px solid #e2e2e2 !important;\n border-left: 1px solid #e2e2e2 !important;\n border-bottom: 1px solid #e2e2e2 !important;\n}\n\n.web-form-head .title{\n    display: none !important;\n}\n\n.page-content-wrapper .container .page_content {\n    max-width: 1130px !important;\n    /*margin: auto;*/\n}\n\n.form-group {\n    margin-bottom: 2rem;\n}\n\n.submit-btn {\n    background-color: #265166 !important;\n    border: 1px solid #265166 !important;\n    color: #fff !important;\n    padding: 10px 20px !important;\n    border-radius:5px !important;\n}\n\n.submit-btn:hover {\n    background-color: #fff !important;\n    color: #265166 !important;\n}\n\n.delete-btn {\n    display:none !important;\n}\n\n.discard-btn {\n    display:none !important;\n}\n\n@media (max-width: 480px) {\n    .parents-section{\n        margin: 1rem -2.5rem !important; \n        font-size: 17px !important;\n    }\n    \n    .child-section{\n        margin: 2rem -2.5rem !important; \n    }\n}\n\n@media (min-width: 481px) and (max-width: 768px) {\n    .parents-section{\n        margin: 1rem -2.5rem !important; \n        font-size: 17px !important;\n    }\n    \n    .child-section{\n        margin: 2rem -2.5rem !important; \n    }\n}\n\n.web-footer {\n    display:none !important;\n}\n\n.navbar {\n    display:none !important;\n}\n\n#first_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#second_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#third_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#fourth_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n#fifth_child_check_eligibility {\n    background-color: #699db7 !important;\n    border: 1px solid #699db7 !important;\n    color: #fff !important;\n    padding: 10px !important;\n}\n\n.modal-title {\n    font-size: 14px !important;\n}\n\n.modal-body .msgprint {\n    font-size: 14px !important;\n}\n\n\n\n\n\n\n\n",
  "doc_type": "Inquiry Form FH",
  "docstatus": 0,
  "doctype": "Web Form",
@@ -21,7 +21,7 @@
  "list_columns": [],
  "login_required": 1,
  "max_attachment_size": 0,
- "modified": "2026-03-24 11:40:09.571583",
+ "modified": "2026-03-25 12:50:00.891357",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "admission-inquiry",
@@ -586,7 +586,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.first_child_eligible_grades!='';",
+   "depends_on": "eval:doc.first_child_eligible_grades!=null && doc.first_child_eligible_grades!='';",
    "fieldname": "first_child_eligible_grades",
    "fieldtype": "Select",
    "hidden": 0,
@@ -614,7 +614,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.first_child_eligible_schools!='';",
+   "depends_on": "eval:doc.first_child_eligible_schools!='' && doc.first_child_eligible_schools!=null;",
    "fieldname": "first_child_eligible_schools",
    "fieldtype": "Select",
    "hidden": 0,
@@ -629,7 +629,7 @@
   {
    "allow_read_on_all_link_options": 0,
    "default": "0",
-   "depends_on": "eval:doc.first_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.first_child_eligible_schools!=null && doc.first_child_eligible_grades!=null && doc.first_child_eligible_schools!='' && doc.first_child_eligible_grades!='';",
    "fieldname": "do_you_want_to_add_child_second",
    "fieldtype": "Check",
    "hidden": 0,
@@ -861,7 +861,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.second_child_eligible_grades!='';",
+   "depends_on": "eval:doc.second_child_eligible_grades!=null && doc.second_child_eligible_grades!='';",
    "fieldname": "second_child_eligible_grades",
    "fieldtype": "Select",
    "hidden": 0,
@@ -890,7 +890,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.second_child_eligible_schools!='';",
+   "depends_on": "eval:doc.second_child_eligible_schools!='' && doc.second_child_eligible_schools!=null;",
    "fieldname": "second_child_eligible_schools",
    "fieldtype": "Select",
    "hidden": 0,
@@ -906,7 +906,7 @@
   {
    "allow_read_on_all_link_options": 0,
    "default": "0",
-   "depends_on": "eval:doc.second_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.second_child_eligible_schools!=null && doc.second_child_eligible_grades!=null && doc.second_child_eligible_schools!='' && doc.second_child_eligible_grades!='';",
    "fieldname": "do_you_want_to_add_child_third",
    "fieldtype": "Check",
    "hidden": 0,
@@ -1136,7 +1136,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.third_child_eligible_grades!=null;",
+   "depends_on": "eval:doc.third_child_eligible_grades!=null && doc.third_child_eligible_grades!='';",
    "fieldname": "third_child_eligible_grades",
    "fieldtype": "Select",
    "hidden": 0,
@@ -1165,7 +1165,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.third_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.third_child_eligible_schools!='' && doc.third_child_eligible_schools!=null;",
    "fieldname": "third_child_eligible_schools",
    "fieldtype": "Select",
    "hidden": 0,
@@ -1181,7 +1181,7 @@
   {
    "allow_read_on_all_link_options": 0,
    "default": "0",
-   "depends_on": "eval:doc.third_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.third_child_eligible_schools!=null && doc.third_child_eligible_grades!=null && doc.third_child_eligible_schools!='' && doc.third_child_eligible_grades!='';",
    "fieldname": "do_you_want_to_add_another_child_fourth",
    "fieldtype": "Check",
    "hidden": 0,
@@ -1411,7 +1411,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.fourth_child_eligible_grades!=null;",
+   "depends_on": "eval:doc.fourth_child_eligible_grades!=null && doc.fourth_child_eligible_grades!='';",
    "fieldname": "fourth_child_eligible_grades",
    "fieldtype": "Select",
    "hidden": 0,
@@ -1440,7 +1440,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.fourth_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.fourth_child_eligible_schools!='' && doc.fourth_child_eligible_schools!=null;",
    "fieldname": "fourth_child_eligible_schools",
    "fieldtype": "Select",
    "hidden": 0,
@@ -1456,7 +1456,7 @@
   {
    "allow_read_on_all_link_options": 0,
    "default": "0",
-   "depends_on": "eval:doc.fourth_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.fourth_child_eligible_schools!=null && doc.fourth_child_eligible_grades!=null && doc.fourth_child_eligible_schools!='' && doc.fourth_child_eligible_grades!='';",
    "fieldname": "do_you_want_to_add_another_child_fifth",
    "fieldtype": "Check",
    "hidden": 0,
@@ -1685,7 +1685,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.fifth_child_eligible_grades!=null;",
+   "depends_on": "eval:doc.fifth_child_eligible_grades!=null && doc.fifth_child_eligible_grades!='';",
    "fieldname": "fifth_child_eligible_grades",
    "fieldtype": "Select",
    "hidden": 0,
@@ -1714,7 +1714,7 @@
   },
   {
    "allow_read_on_all_link_options": 0,
-   "depends_on": "eval:doc.fifth_child_eligible_schools!=null;",
+   "depends_on": "eval:doc.fifth_child_eligible_schools!='' && doc.fifth_child_eligible_schools!=null;",
    "fieldname": "fifth_child_eligible_schools",
    "fieldtype": "Select",
    "hidden": 0,

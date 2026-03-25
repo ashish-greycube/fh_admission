@@ -12,7 +12,6 @@ def save_data_to_doc_on_change(mobile_no, fieldname, value):
 		frappe.db.set_value("Inquiry Form FH", mobile_no, fieldname, value, update_modified=False)
 		if fieldname in ['do_you_want_to_add_child_second', 'do_you_want_to_add_child_third', 'do_you_want_to_add_another_child_fourth', 'do_you_want_to_add_another_child_fifth']:
 			count = frappe.db.get_value("Inquiry Form FH", mobile_no, 'no_of_added_children')
-			print(fieldname, value, count, type(value))
 			res = count+1 if int(value) == 1 else count - 1
 			frappe.db.set_value("Inquiry Form FH", mobile_no, 'no_of_added_children', res, update_modified=False)
 		if fieldname in ['first_child_date_of_birth', 'second_child_date_of_birth', 'third_child_childs_dob', 'fourth_child_childs_dob', 'fifth_child_childs_dob']:

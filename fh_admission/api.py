@@ -122,7 +122,7 @@ def generate_eligibility_html_tables(data):
         data = json.loads(data)
 
     if not data:
-        return "<div>No data available</div>", "<div>No data available</div>"
+        return "<div class='eligibility-criteria'>No data available</div>"
 
     # -------- Table 1 : School -> Grades --------
     school_map = defaultdict(lambda: {"code": "", "grades": set()})
