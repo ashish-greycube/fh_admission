@@ -204,9 +204,6 @@ frappe.ready(function () {
 
 	// Fetch Eligibility Criteria On Click Of Button
 	$("#first_child_check_eligibility").on("click", () => {
-		console.log(frappe.web_form.get_value("first_child_date_of_birth"),
-			frappe.web_form.get_value("academic_year"),
-			frappe.web_form.get_value("city_for_admission"),)
 		if (frappe.web_form.get_value("first_child_date_of_birth") == null || frappe.web_form.get_value("academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
 			frappe.throw({
 				message: "Please select date of birth, Academic year and City you want to take admission.",
