@@ -291,7 +291,7 @@ function set_school_and_grade_values_on_load() {
 
 
 frappe.ready(function () {
-	console.log("DOne")
+	let form_initialized = false;
 
 	// Change Status To Completed On Web Form Submission
 	$(".submit-btn").on("click", () => {
@@ -305,7 +305,7 @@ frappe.ready(function () {
 
 	setTimeout(() => {
 		set_school_and_grade_values_on_load()
-
+		form_initialized = true;
 	}, 2000);
 
 	// Save Field Data On Change Of Field Value
@@ -334,7 +334,7 @@ frappe.ready(function () {
 	frappe.web_form.on('first_child_current_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('first_child_eligible_schools', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('first_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
-	frappe.web_form.on('do_you_want_to_add_child_second', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('do_you_want_to_add_child_second', (field, value) => { if (form_initialized == true) { save_data_to_doc_on_change(field.df.fieldname, value) } });
 
 	frappe.web_form.on('second_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_first_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -344,7 +344,7 @@ frappe.ready(function () {
 	frappe.web_form.on('second_child_date_of_birth', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_current_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('second_child_eligible_schools', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
-	frappe.web_form.on('do_you_want_to_add_child_third', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('do_you_want_to_add_child_third', (field, value) => { if (form_initialized == true) { save_data_to_doc_on_change(field.df.fieldname, value) } });
 	frappe.web_form.on('second_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
 	frappe.web_form.on('third_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -355,7 +355,7 @@ frappe.ready(function () {
 	frappe.web_form.on('third_child_childs_dob', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('third_child_current_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('third_child_eligible_schools', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
-	frappe.web_form.on('do_you_want_to_add_another_child_fourth', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('do_you_want_to_add_another_child_fourth', (field, value) => { if (form_initialized == true) { save_data_to_doc_on_change(field.df.fieldname, value) } });
 	frappe.web_form.on('third_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
 	frappe.web_form.on('fourth_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -366,7 +366,7 @@ frappe.ready(function () {
 	frappe.web_form.on('fourth_child_childs_dob', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fourth_child_current_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('fourth_child_eligible_schools', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
-	frappe.web_form.on('do_you_want_to_add_another_child_fifth', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('do_you_want_to_add_another_child_fifth', (field, value) => { if (form_initialized == true) { save_data_to_doc_on_change(field.df.fieldname, value) } });
 	frappe.web_form.on('fourth_child_school_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
 	frappe.web_form.on('fifth_child_academic_year', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -396,6 +396,3 @@ frappe.ready(function () {
 	$('select[data-fieldname="fourth_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("fourth_child_eligible_grades", frappe.web_form.get_value("fourth_child_eligible_grades")));
 	$('select[data-fieldname="fifth_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("fifth_child_eligible_grades", frappe.web_form.get_value("fifth_child_eligible_grades")));
 });
-
-$(document).ready(function () {
-})
