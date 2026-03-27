@@ -31,8 +31,9 @@
   },
   {
    "fieldname": "enter_source_name",
-   "fieldtype": "Data",
-   "label": "Enter Source Name"
+   "fieldtype": "Link",
+   "label": "Enter Source Name",
+   "options": "Lead Source"
   },
   {
    "fieldname": "generate_url",
@@ -57,7 +58,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-20 17:49:16.101154",
+ "modified": "2026-03-26 17:06:17.917743",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission Settings",

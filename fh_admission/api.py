@@ -149,8 +149,8 @@ def generate_eligibility_html_tables(data):
 			<thead class="table-light">
 				<tr>
 					<th style='border:1px solid black;'>Code</th>
-					<th style='border:1px solid black;'>School Name</th>
-					<th style='border:1px solid black;'>Grades Available</th>
+					<th style='border:1px solid black;'>Eligible School(s)</th>
+					<th style='border:1px solid black;'>Eligible Grade(s)</th>
 				</tr>
 			</thead>
 			<tbody>

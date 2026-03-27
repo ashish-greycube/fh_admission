@@ -79,6 +79,8 @@ app_license = "mit"
 # 	"filters": "fh_admission.utils.jinja_filters"
 # }
 
+after_migrate = "fh_admission.migration.after_migrations"
+
 # Installation
 # ------------
 

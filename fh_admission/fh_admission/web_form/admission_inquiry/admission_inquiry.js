@@ -41,96 +41,7 @@ function save_data_to_doc_on_change(fieldname, value) {
 		}
 	})
 
-	$(document).find("#first_child_check_eligibility").on("click", () => {
-		if (frappe.web_form.get_value("first_child_date_of_birth") == null || frappe.web_form.get_value("academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
-			frappe.throw({
-				message: "Please select date of birth, Academic year and City you want to take admission.",
-				title: "Invalid Information",
-			})
-		} else {
-			check_eligibility_criteria_and_set_field_options(
-				frappe.web_form.get_value("first_child_date_of_birth"),
-				frappe.web_form.get_value("academic_year"),
-				frappe.web_form.get_value("city_for_admission"),
-				'first_child_eligible_grades',
-				'first_child_eligible_schools',
-				'#first_child_check_eligibility'
-			)
-		}
-	})
-
-	$(document).find("#second_child_check_eligibility").on("click", () => {
-		console.log("Checking Second Child Eligibility.....")
-		if (frappe.web_form.get_value("second_child_date_of_birth") == null || frappe.web_form.get_value("second_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
-			frappe.throw({
-				message: "Please select date of birth, Academic year and City you want to take admission.",
-				title: "Invalid Information",
-			})
-		} else {
-			check_eligibility_criteria_and_set_field_options(
-				frappe.web_form.get_value("second_child_date_of_birth"),
-				frappe.web_form.get_value("second_child_academic_year"),
-				frappe.web_form.get_value("city_for_admission"),
-				'second_child_eligible_grades',
-				'second_child_eligible_schools',
-				"#second_child_check_eligibility"
-			)
-		}
-	})
-
-	$(document).find("#third_child_check_eligibility").on("click", () => {
-		if (frappe.web_form.get_value("third_child_childs_dob") == null || frappe.web_form.get_value("third_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
-			frappe.throw({
-				message: "Please select date of birth, Academic year and City you want to take admission.",
-				title: "Invalid Information",
-			})
-		} else {
-			check_eligibility_criteria_and_set_field_options(
-				frappe.web_form.get_value("third_child_childs_dob"),
-				frappe.web_form.get_value("third_child_academic_year"),
-				frappe.web_form.get_value("city_for_admission"),
-				'third_child_eligible_grades',
-				'third_child_eligible_schools',
-				"#third_child_check_eligibility"
-			)
-		}
-	})
-
-	$(document).find("#fourth_child_check_eligibility").on("click", () => {
-		if (frappe.web_form.get_value("fourth_child_childs_dob") == null || frappe.web_form.get_value("fourth_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
-			frappe.throw({
-				message: "Please select date of birth, Academic year and City you want to take admission.",
-				title: "Invalid Information",
-			})
-		} else {
-			check_eligibility_criteria_and_set_field_options(
-				frappe.web_form.get_value("fourth_child_childs_dob"),
-				frappe.web_form.get_value("fourth_child_academic_year"),
-				frappe.web_form.get_value("city_for_admission"),
-				'fourth_child_eligible_grades',
-				'fourth_child_eligible_schools',
-				"#fourth_child_check_eligibility"
-			)
-		}
-	})
-
-	$(document).find("#fifth_child_check_eligibility").on("click", () => {
-		if (frappe.web_form.get_value("fifth_child_childs_dob") == null || frappe.web_form.get_value("fifth_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
-			frappe.throw({
-				message: "Please select date of birth, Academic year and City you want to take admission.",
-				title: "Invalid Information",
-			})
-		} else {
-			check_eligibility_criteria_and_set_field_options(
-				frappe.web_form.get_value("fifth_child_childs_dob"),
-				frappe.web_form.get_value("fifth_child_academic_year"),
-				frappe.web_form.get_value("city_for_admission"),
-				'fifth_child_eligible_grades',
-				'fifth_child_eligible_schools',
-				"#fifth_child_check_eligibility"
-			)
-		}
-	})
+	bindEligibilityButtonEventOnLoad();
 }
 
 
@@ -180,6 +91,7 @@ function check_eligibility_criteria_and_set_field_options(child_dob, child_acade
 				frappe.web_form.set_df_property(grade_fieldname, 'options', grade_options);
 				frappe.web_form.set_df_property(grade_fieldname, 'hidden', 0);
 				frappe.web_form.set_df_property(grade_fieldname, 'depends_on', `eval:doc.${grade_fieldname}==''||doc.${grade_fieldname}!='';`);
+				frappe.web_form.set_df_property(school_fieldname, 'depends_on', `eval:doc.${school_fieldname}==''||doc.${school_fieldname}!='';`);
 				if (res.message.length == 1) {
 					frappe.web_form.set_value(grade_fieldname, res.message[0])
 					save_data_to_doc_on_change(grade_fieldname, res.message[0])
@@ -200,7 +112,7 @@ function check_eligibility_criteria_and_set_field_options(child_dob, child_acade
 				store_grade_and_school_options_for_future_ref(grade_fieldname, null, school_options);
 				frappe.web_form.set_df_property(school_fieldname, 'options', school_options);
 				frappe.web_form.set_df_property(school_fieldname, 'hidden', 0);
-				frappe.web_form.set_df_property(school_fieldname, 'depends_on', `eval:doc.${school_fieldname}==''||doc.${school_fieldname}!='';`);
+				frappe.web_form.set_value(school_fieldname, '');
 				if (res.message.length == 1) {
 					frappe.web_form.set_value(school_fieldname, res.message[0])
 					save_data_to_doc_on_change(school_fieldname, res.message[0])
@@ -299,6 +211,7 @@ frappe.ready(function () {
 			method: "fh_admission.fh_admission.web_form.admission_inquiry.admission_inquiry.change_status_of_doc_on_form_submit_and_send_message",
 			args: {
 				"docname": frappe.web_form.doc.mobile_no,
+				"webform_data": frappe.web_form.doc
 			}
 		})
 	})
@@ -395,4 +308,100 @@ frappe.ready(function () {
 	$('select[data-fieldname="third_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("third_child_eligible_grades", frappe.web_form.get_value("third_child_eligible_grades")));
 	$('select[data-fieldname="fourth_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("fourth_child_eligible_grades", frappe.web_form.get_value("fourth_child_eligible_grades")));
 	$('select[data-fieldname="fifth_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("fifth_child_eligible_grades", frappe.web_form.get_value("fifth_child_eligible_grades")));
+
+	// Bind Event OnLoad
+	bindEligibilityButtonEventOnLoad();
 });
+
+function bindEligibilityButtonEventOnLoad() {
+	$(document).find("#first_child_check_eligibility").on("click", () => {
+		if (frappe.web_form.get_value("first_child_date_of_birth") == null || frappe.web_form.get_value("academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
+			frappe.throw({
+				message: "Please select date of birth, Academic year and City you want to take admission.",
+				title: "Invalid Information",
+			})
+		} else {
+			check_eligibility_criteria_and_set_field_options(
+				frappe.web_form.get_value("first_child_date_of_birth"),
+				frappe.web_form.get_value("academic_year"),
+				frappe.web_form.get_value("city_for_admission"),
+				'first_child_eligible_grades',
+				'first_child_eligible_schools',
+				'#first_child_check_eligibility'
+			)
+		}
+	})
+
+	$(document).find("#second_child_check_eligibility").on("click", () => {
+		console.log("Checking Second Child Eligibility.....")
+		if (frappe.web_form.get_value("second_child_date_of_birth") == null || frappe.web_form.get_value("second_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
+			frappe.throw({
+				message: "Please select date of birth, Academic year and City you want to take admission.",
+				title: "Invalid Information",
+			})
+		} else {
+			check_eligibility_criteria_and_set_field_options(
+				frappe.web_form.get_value("second_child_date_of_birth"),
+				frappe.web_form.get_value("second_child_academic_year"),
+				frappe.web_form.get_value("city_for_admission"),
+				'second_child_eligible_grades',
+				'second_child_eligible_schools',
+				"#second_child_check_eligibility"
+			)
+		}
+	})
+
+	$(document).find("#third_child_check_eligibility").on("click", () => {
+		if (frappe.web_form.get_value("third_child_childs_dob") == null || frappe.web_form.get_value("third_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
+			frappe.throw({
+				message: "Please select date of birth, Academic year and City you want to take admission.",
+				title: "Invalid Information",
+			})
+		} else {
+			check_eligibility_criteria_and_set_field_options(
+				frappe.web_form.get_value("third_child_childs_dob"),
+				frappe.web_form.get_value("third_child_academic_year"),
+				frappe.web_form.get_value("city_for_admission"),
+				'third_child_eligible_grades',
+				'third_child_eligible_schools',
+				"#third_child_check_eligibility"
+			)
+		}
+	})
+
+	$(document).find("#fourth_child_check_eligibility").on("click", () => {
+		if (frappe.web_form.get_value("fourth_child_childs_dob") == null || frappe.web_form.get_value("fourth_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
+			frappe.throw({
+				message: "Please select date of birth, Academic year and City you want to take admission.",
+				title: "Invalid Information",
+			})
+		} else {
+			check_eligibility_criteria_and_set_field_options(
+				frappe.web_form.get_value("fourth_child_childs_dob"),
+				frappe.web_form.get_value("fourth_child_academic_year"),
+				frappe.web_form.get_value("city_for_admission"),
+				'fourth_child_eligible_grades',
+				'fourth_child_eligible_schools',
+				"#fourth_child_check_eligibility"
+			)
+		}
+	})
+
+	$(document).find("#fifth_child_check_eligibility").on("click", () => {
+		if (frappe.web_form.get_value("fifth_child_childs_dob") == null || frappe.web_form.get_value("fifth_child_academic_year") == null || frappe.web_form.get_value("city_for_admission") == null) {
+			frappe.throw({
+				message: "Please select date of birth, Academic year and City you want to take admission.",
+				title: "Invalid Information",
+			})
+		} else {
+			check_eligibility_criteria_and_set_field_options(
+				frappe.web_form.get_value("fifth_child_childs_dob"),
+				frappe.web_form.get_value("fifth_child_academic_year"),
+				frappe.web_form.get_value("city_for_admission"),
+				'fifth_child_eligible_grades',
+				'fifth_child_eligible_schools',
+				"#fifth_child_check_eligibility"
+			)
+		}
+	})
+}
