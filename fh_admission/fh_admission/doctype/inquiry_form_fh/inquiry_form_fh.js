@@ -58,8 +58,4 @@ frappe.ui.form.on("Inquiry Form FH", {
             })
         }
     },
-
-    status: function (frm) {
-        console.log(frm.doc.status);
-    }
 });

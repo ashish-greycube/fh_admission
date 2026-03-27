@@ -16,6 +16,9 @@
   "status",
   "location_tab",
   "where_are_you_from",
+  "state",
+  "select_gujarat_city",
+  "select_maharashtra_city",
   "city_for_admission",
   "parent_details_tab",
   "fathers_details_section",
@@ -142,17 +145,17 @@
   },
   {
    "fieldname": "city_for_admission",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "label": "City For Admission",
-   "options": "School City FH"
+   "options": "\nVapi\nSurat\nAurangabad (CSN)"
   },
   {
    "fieldname": "where_are_you_from",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Where Are You From?",
-   "options": "\nIn Surat\nIn India but not in Surat\nOutside India"
+   "options": "\nIndia\nOutside India"
   },
   {
    "fieldname": "parent_details_tab",
@@ -743,11 +746,32 @@
    "hidden": 1,
    "label": "No Of Added Children",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.where_are_you_from==\"India\";",
+   "fieldname": "state",
+   "fieldtype": "Select",
+   "label": "Select State",
+   "options": "\nGujarat\nMaharashtra\nNone of the above"
+  },
+  {
+   "depends_on": "eval:doc.state==\"Gujarat\";",
+   "fieldname": "select_gujarat_city",
+   "fieldtype": "Select",
+   "label": "Select City",
+   "options": "\nAhmedabad\nAhwa\nAmreli\nAnand\nAnkleshwar\nBharuch\nBhavnagar\nBhuj\nBorsad\nBotad\nChhota Udaipur\nDahod\nDeesa\nGandhidham\nGandhinagar\nGodhra\nGondal\nHalol\nHimmatnagar\nJamnagar\nJunagadh\nKadi\nKalol\nKeshod\nKhambhaliya\nLimbdi\nLunawada\nMahuva\nMangrol\nMehsana\nModasa\nMorbi\nNadiad\nNavsari\nPalanpur\nPatan\nPorbandar\nRajkot\nRajpipla\nSavarkundla\nSidhpur\nSurat\nSurendranagar\nUna\nUnjha\nUpleta\nVadodara\nValsad\nVapi\nVeraval\nViramgam\nVisnagar\nVyara\nWadhwan"
+  },
+  {
+   "depends_on": "eval:doc.state==\"Maharashtra\";",
+   "fieldname": "select_maharashtra_city",
+   "fieldtype": "Select",
+   "label": "Select City",
+   "options": "\nAchalpur\nAhilyanagar\nAkola\nAlibag\nAmbernath\nAmravati\nBadlapur\nBarshi\nBeed\nBhandara\nBhiwandi\nBhusawal\nBuldhana\nChandrapur\nChhatrapati Sambhajinagar\nDharashiva\nDhule\nDombivli\nGadchiroli\nGondia\nHinganghat\nHingoli\nIchalkaranji\nJalgaon\nJalna\nKalyan\nKolhapur\nLatur\nMalegaon\nMira-Bhayandar\nMumbai\nNagpur\nNanded\nNandurbar\nNashik\nNavi Mumbai\nPalghar\nPanvel\nParbhani\nPimpri-Chinchwad\nPune\nRatnagiri\nSangli\nSatara\nSindhudurg\nSolapur\nThane\nUdgir\nUlhasnagar\nVasai\nVirar\nWardha\nWashim\nYavatmal"
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-03-24 10:34:53.549111",
+ "modified": "2026-03-27 17:10:06.669970",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",

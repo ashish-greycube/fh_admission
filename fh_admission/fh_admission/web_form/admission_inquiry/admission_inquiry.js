@@ -69,6 +69,8 @@ function get_html(data) {
 
 // Function To Run On Every Child's Check Eligibility Call.
 function check_eligibility_criteria_and_set_field_options(child_dob, child_academic_year, city, grade_fieldname, school_fieldname, html_fieldname) {
+	frappe.web_form.set_value(grade_fieldname, '');
+	frappe.web_form.set_value(school_fieldname, '');
 	frappe.call({
 		method: "fh_admission.api.get_eligible_grades",
 		args: {
@@ -112,10 +114,12 @@ function check_eligibility_criteria_and_set_field_options(child_dob, child_acade
 				store_grade_and_school_options_for_future_ref(grade_fieldname, null, school_options);
 				frappe.web_form.set_df_property(school_fieldname, 'options', school_options);
 				frappe.web_form.set_df_property(school_fieldname, 'hidden', 0);
-				frappe.web_form.set_value(school_fieldname, '');
+
 				if (res.message.length == 1) {
 					frappe.web_form.set_value(school_fieldname, res.message[0])
 					save_data_to_doc_on_change(school_fieldname, res.message[0])
+				} else {
+					frappe.web_form.set_value(school_fieldname, '');
 				}
 			}
 		})
@@ -225,6 +229,9 @@ frappe.ready(function () {
 	frappe.web_form.on('email_id', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
 	frappe.web_form.on('where_are_you_from', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('state', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('select_gujarat_city', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
+	frappe.web_form.on('select_maharashtra_city', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 	frappe.web_form.on('city_for_admission', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
 
 	frappe.web_form.on('fathers_first_name', (field, value) => save_data_to_doc_on_change(field.df.fieldname, value));
@@ -311,6 +318,9 @@ frappe.ready(function () {
 
 	// Bind Event OnLoad
 	bindEligibilityButtonEventOnLoad();
+
+	// Set All Schools On Load
+	setAllSchoolsOnLoad();
 });
 
 function bindEligibilityButtonEventOnLoad() {
@@ -402,6 +412,18 @@ function bindEligibilityButtonEventOnLoad() {
 				'fifth_child_eligible_schools',
 				"#fifth_child_check_eligibility"
 			)
+		}
+	})
+}
+
+function setAllSchoolsOnLoad() {
+	frappe.call({
+		method: "fh_admission.fh_admission.web_form.admission_inquiry.admission_inquiry.get_html_of_all_schools",
+		args: {},
+		callback: function (res) {
+			if (res) {
+				$(".all-schools").after(res.message)
+			}
 		}
 	})
 }

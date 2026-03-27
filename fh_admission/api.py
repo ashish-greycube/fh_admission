@@ -3,6 +3,7 @@ import frappe
 import itertools
 from collections import defaultdict
 from frappe import _
+import random
 
 @frappe.whitelist()
 def get_eligible_grades(child_dob, child_academic_year, city):
@@ -220,7 +221,7 @@ def generate_eligibility_html_tables(data):
 
     final_html = f"""
         <div class="eligibility-criteria">
-            {table1 + table2}
+            {table1}
         </div>
     """
     return final_html

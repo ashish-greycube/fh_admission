@@ -2,6 +2,7 @@ import json
 import frappe
 import requests
 from frappe.auth import LoginManager
+import random
 
 def get_context(context):
 	pass
@@ -205,3 +206,40 @@ def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
 			create_lead_per_child_on_submit_of_inquiry_form(webform_data)
 			output = send_confirmation_notification_on_success(docname, api_key)
 		return output
+	
+@frappe.whitelist()
+def get_html_of_all_schools():
+    colors = ['#2e8fbf', '#d74660']
+    all_schools = frappe.db.get_all("School FH" ,['name', 'school_name', 'city'], order_by="city")
+	
+    school_rows = ""
+    previous_idx = 0
+    if all_schools:
+        for s in all_schools:
+            idx, previous_idx = get_unique_random_idx(0, 1, previous_idx)
+            school_rows = school_rows + f"<tr><td style='border:1px solid black; background-color:{colors[idx]}; color:white;'>{s.school_name}</td><td style='border:1px solid black; background-color:{colors[idx]}; color:white;'>{s.name}</td><td style='border:1px solid black; background-color:{colors[idx]}; color:white;'>{s.city}</td></tr>"
+        #  = "".join([f"<tr><td style='border:1px solid black; background-color:{colors[]};'>{s.school_name}</td><td style='border:1px solid black; background-color:{colors[]};'>{s.name}</td><td style='border:1px solid black; background-color:{colors[]};'>{s.city}</td></tr>" ])
+    
+    template = f"""
+        <table class="table table-sm" style="border:1px solid black;">
+            <thead class="table-light">
+                <tr>
+                    <th style="border:1px solid black; background-color:#ebebeb; font-size:15px;">School Name</th>
+                    <th style="border:1px solid black; background-color:#ebebeb; font-size:15px;">Code</th>
+                    <th style="border:1px solid black; background-color:#ebebeb; font-size:15px;">City</th>
+                </tr>
+            </thead>
+            <tbody>
+                {school_rows}
+            </tbody>
+        </table>
+        """
+    return template
+
+def get_unique_random_idx(min_idx, max_idx, previous_idx):
+	idx = random.randint(min_idx, max_idx)
+	if previous_idx == idx:
+		while previous_idx == idx:
+			idx = random.randint(min_idx, max_idx)
+	previous_idx = idx
+	return idx, previous_idx
