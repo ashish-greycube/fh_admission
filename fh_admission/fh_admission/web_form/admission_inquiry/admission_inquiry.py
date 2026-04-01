@@ -209,37 +209,20 @@ def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
 	
 @frappe.whitelist()
 def get_html_of_all_schools():
-    colors = ['#2e8fbf', '#d74660']
-    all_schools = frappe.db.get_all("School FH" ,['name', 'school_name', 'city'], order_by="city")
-	
-    school_rows = ""
-    previous_idx = 0
-    if all_schools:
-        for s in all_schools:
-            idx, previous_idx = get_unique_random_idx(0, 1, previous_idx)
-            school_rows = school_rows + f"<tr><td style='border:1px solid black; background-color:{colors[idx]}; color:white;'>{s.school_name}</td><td style='border:1px solid black; background-color:{colors[idx]}; color:white;'>{s.name}</td><td style='border:1px solid black; background-color:{colors[idx]}; color:white;'>{s.city}</td></tr>"
-        #  = "".join([f"<tr><td style='border:1px solid black; background-color:{colors[]};'>{s.school_name}</td><td style='border:1px solid black; background-color:{colors[]};'>{s.name}</td><td style='border:1px solid black; background-color:{colors[]};'>{s.city}</td></tr>" ])
-    
-    template = f"""
-        <table class="table table-sm" style="border:1px solid black;">
-            <thead class="table-light">
-                <tr>
-                    <th style="border:1px solid black; background-color:#ebebeb; font-size:15px;">School Name</th>
-                    <th style="border:1px solid black; background-color:#ebebeb; font-size:15px;">Code</th>
-                    <th style="border:1px solid black; background-color:#ebebeb; font-size:15px;">City</th>
-                </tr>
-            </thead>
-            <tbody>
-                {school_rows}
-            </tbody>
-        </table>
-        """
-    return template
+	all_schools = frappe.db.get_all("School FH" ,['name', 'school_name', 'city'], order_by="city")
 
-def get_unique_random_idx(min_idx, max_idx, previous_idx):
-	idx = random.randint(min_idx, max_idx)
-	if previous_idx == idx:
-		while previous_idx == idx:
-			idx = random.randint(min_idx, max_idx)
-	previous_idx = idx
-	return idx, previous_idx
+	school_rows = ""
+	if all_schools:
+		counter = 0
+		for s in all_schools:
+			school_rows = school_rows + f'<div class="col col-sm-3 col-md-3 badge  {'bg-warning' if counter == 0 else 'bg-info text-white'}" style="padding: 0.8em 0.4em !important; max-width: 24% !important;">{s.school_name} <br> ({s.name} - {s.city})</div>'
+			counter = 0 if counter == 1 else 1
+
+	template = f"""
+	<div class="container">
+			<div class="row" style="gap:3px;">
+				{school_rows}
+			</div>
+		</div>
+		"""
+	return template

@@ -650,17 +650,17 @@
   },
   {
    "fieldname": "first_child_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "First Child Grade Options"
   },
   {
    "fieldname": "third_child_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Third Child Grade Options"
   },
   {
    "fieldname": "fifth_child_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Fifth Child Grade Options"
   },
   {
@@ -669,37 +669,37 @@
   },
   {
    "fieldname": "second_child_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Second Child Grade Options"
   },
   {
    "fieldname": "fourth_child_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Fourth Child Grade Options"
   },
   {
    "fieldname": "first_child_school_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "First Child School Options"
   },
   {
    "fieldname": "second_child_school_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Second Child School Options"
   },
   {
    "fieldname": "third_child_school_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Third Child School Options"
   },
   {
    "fieldname": "fourth_child_school_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Fourth Child School Options"
   },
   {
    "fieldname": "fifth_child_school_options",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Fifth Child School Options"
   },
   {
@@ -771,7 +771,7 @@
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-03-27 17:10:06.669970",
+ "modified": "2026-04-01 12:37:27.376419",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",

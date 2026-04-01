@@ -7,8 +7,8 @@ import random
 
 @frappe.whitelist()
 def get_eligible_grades(child_dob, child_academic_year, city):
-    if not child_dob or not child_academic_year:
-        frappe.throw(_("Please provide both Date of Birth and Target Academic Year"))
+    # if not child_dob or not child_academic_year:
+    #     frappe.throw(_("Please provide both Date of Birth and Target Academic Year"))
 
     # Extract target year once in Python for efficiency
     try:
