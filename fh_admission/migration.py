@@ -13,6 +13,16 @@ def after_migrations():
                 "is_system_generated": 0,
                 "is_custom_field": 1,
                 "options": "Inquiry Form FH"
+            },
+            {
+                "insert_after": "request_type",
+                "fieldtype" : "Data",
+                "fieldname": "custom_selected_school",
+                "label": "Selected School",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+                "read_only": 1,
+                "hidden": 1
             }
         ]    
     }

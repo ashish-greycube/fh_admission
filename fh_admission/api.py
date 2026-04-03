@@ -92,7 +92,7 @@ def get_possible_options_for_school(items):
         return results
         
     # 2. Add "EITHER" or "ANY" (Only for 2+ inputs)
-    results.append("EITHER" if len(items) == 2 else "ANY") 
+    # results.append("EITHER" if len(items) == 2 else "ANY") 
         
     # 3. All full-length permutations (Only for 2+ inputs)
     for perm in itertools.permutations(items):

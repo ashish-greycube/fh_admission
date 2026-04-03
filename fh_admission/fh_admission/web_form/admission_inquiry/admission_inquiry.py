@@ -145,30 +145,30 @@ def create_lead_per_child_on_submit_of_inquiry_form(webform):
     if data:
         if data.first_child_eligible_grades != "" and data.first_child_eligible_schools != "":
              create_new_lead(
-				 data.first_child_first_name, data.first_child_middle_name, data.first_child_last_name, data.first_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no
+				 data.first_child_first_name, data.first_child_middle_name, data.first_child_last_name, data.first_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.first_child_eligible_schools
 			 )
 
         if data.do_you_want_to_add_child_second == 1 and data.second_child_eligible_grades != "" and data.second_child_eligible_schools != "":
              create_new_lead(
-				data.second_child_first_name, data.second_child_middle_name, data.second_child_last_name, data.second_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no
+				data.second_child_first_name, data.second_child_middle_name, data.second_child_last_name, data.second_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.second_child_eligible_schools
 			 )
 
         if data.do_you_want_to_add_child_third == 1 and data.third_child_eligible_grades != "" and data.third_child_eligible_schools != "":
              create_new_lead(
-                data.third_child_first_name, data.third_child_middle_name, data.third_child_last_name, data.third_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no
+                data.third_child_first_name, data.third_child_middle_name, data.third_child_last_name, data.third_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.third_child_eligible_schools
              )
 
         if data.do_you_want_to_add_another_child_fourth == 1 and data.fourth_child_eligible_grades != "" and data.fourth_child_eligible_schools != "":
              create_new_lead(
-                data.fourth_child_first_name, data.fourth_child_middle_name, data.fourth_child_last_name, data.fourth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no
+                data.fourth_child_first_name, data.fourth_child_middle_name, data.fourth_child_last_name, data.fourth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.fourth_child_eligible_schools
              )
 
         if data.do_you_want_to_add_another_child_fifth == 1 and data.fifth_child_eligible_grades != "" and data.fifth_child_eligible_schools != "":
              create_new_lead(
-                data.fifth_child_first_name, data.fifth_child_middle_name, data.fifth_child_last_name, data.fifth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no
+                data.fifth_child_first_name, data.fifth_child_middle_name, data.fifth_child_last_name, data.fifth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.fifth_child_eligible_schools
              )
         
-def create_new_lead(first_name, middle_name, last_name, gender, source, phone, status, reference):
+def create_new_lead(first_name, middle_name, last_name, gender, source, phone, status, reference, eligible_school):
 	isLeadExist = frappe.db.get_value("Lead", {
 		"first_name" : first_name,
 		"mobile_no": phone,
@@ -185,6 +185,15 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 		doc.status = status
 		doc.custom_inquiry_form_reference = reference
 
+		if eligible_school.startswith("1st"):
+			selected_school = eligible_school.split(',')[0].strip().split(' ')[-1]
+			doc.custom_selected_school = eligible_school
+			doc.custom_campus = selected_school
+		else:
+			selected_school = eligible_school
+			doc.custom_selected_school = selected_school
+			doc.custom_campus = selected_school
+
 		doc.save(ignore_permissions=True)
 
 @frappe.whitelist()
@@ -195,7 +204,7 @@ def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
 		status = check_for_empty_fields_before_set_status_as_completed(docname)
 		print(status)
 		if status == "Completed":
-			frappe.db.set_value("Inquiry Form FH", docname, 'status', "Completed", update_modified=False)
+			frappe.db.set_value("Inquiry Form FH", docname, 'status', "Completed")
 			frappe.db.commit()
 
 		# Create Lead & Send Confirmation Message On Whatsapp
