@@ -224,7 +224,12 @@ def get_html_of_all_schools():
 	if all_schools:
 		counter = 0
 		for s in all_schools:
-			school_rows = school_rows + f'<div class="col col-sm-3 col-md-3 badge  {'bg-warning' if counter == 0 else 'bg-info text-white'}" style="padding: 0.8em 0.4em !important; max-width: 24% !important;">{s.school_name} <br> ({s.name} - {s.city})</div>'
+			school_rows = school_rows + "<div class='col col-sm-3 col-md-3 badge {0}' style='padding: 0.8em 0.4em !important; max-width: 24% !important;'>{1} <br> ({2} - {3})</div>".format(
+				'bg-warning' if counter == 0 else 'bg-info text-white',
+				s.school_name,
+				s.name,
+				s.city
+			)
 			counter = 0 if counter == 1 else 1
 
 	template = f"""
