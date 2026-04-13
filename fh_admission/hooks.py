@@ -149,7 +149,7 @@ doc_events = {
 # ---------------
 
 scheduler_events = {
-	"0 * * * *": [
+	"Hourly": [
 		"fh_admission.api.update_sla_status_for_eligible_leads_at_every_hour"
 	],
 }
