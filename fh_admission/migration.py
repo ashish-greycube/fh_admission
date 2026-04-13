@@ -6,15 +6,6 @@ def after_migrations():
     custom_fields = {
         "Lead": [
             {
-                "insert_after": "fax",
-                "fieldtype" : "Link",
-                "fieldname": "custom_inquiry_form_reference",
-                "label": "Inquiry Form Reference",
-                "is_system_generated": 0,
-                "is_custom_field": 1,
-                "options": "Inquiry Form FH"
-            },
-            {
                 "insert_after": "request_type",
                 "fieldtype" : "Data",
                 "fieldname": "custom_selected_school",
@@ -23,7 +14,35 @@ def after_migrations():
                 "is_custom_field": 1,
                 "read_only": 1,
                 "hidden": 1
-            }
+            },
+            {
+                "insert_after": "custom_selected_school",
+                "fieldtype" : "Link",
+                "fieldname": "custom_inquiry_form_reference",
+                "label": "Inquiry Form Reference",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+                "options": "Inquiry Form FH",
+                "read_only": 1,
+            },
+            {
+                "insert_after": "response_by",
+                "fieldtype" : "Select",
+                "fieldname": "custom_sla_status",
+                "label": "SLA Status",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+                "options": "\nResponded\nFailed to Respond",
+                "read_only": 1,
+            },
+            {
+                "insert_after": "custom_sla_status",
+                "fieldtype" : "Check",
+                "fieldname": "custom_is_email_sent",
+                "label": "Is Email Sent?",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+            },
         ]    
     }
 

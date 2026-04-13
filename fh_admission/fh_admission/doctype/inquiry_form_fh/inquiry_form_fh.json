@@ -177,7 +177,8 @@
    "fieldname": "fathers_mobile_no",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Father's Mobile No."
+   "label": "Father's Mobile No.",
+   "options": "Phone"
   },
   {
    "fieldname": "column_break_yoyh",
@@ -206,7 +207,8 @@
   {
    "fieldname": "mothers_mobile_no",
    "fieldtype": "Data",
-   "label": "Mother's Mobile No."
+   "label": "Mother's Mobile No.",
+   "options": "Phone"
   },
   {
    "fieldname": "column_break_jiro",
@@ -755,14 +757,14 @@
    "options": "\nGujarat\nMaharashtra\nNone of the above"
   },
   {
-   "depends_on": "eval:doc.state==\"Gujarat\";",
+   "depends_on": "eval:doc.state==\"Gujarat\"&&doc.where_are_you_from==\"India\";",
    "fieldname": "select_gujarat_city",
    "fieldtype": "Select",
    "label": "Select City",
    "options": "\nAhmedabad\nAhwa\nAmreli\nAnand\nAnkleshwar\nBharuch\nBhavnagar\nBhuj\nBorsad\nBotad\nChhota Udaipur\nDahod\nDeesa\nGandhidham\nGandhinagar\nGodhra\nGondal\nHalol\nHimmatnagar\nJamnagar\nJunagadh\nKadi\nKalol\nKeshod\nKhambhaliya\nLimbdi\nLunawada\nMahuva\nMangrol\nMehsana\nModasa\nMorbi\nNadiad\nNavsari\nPalanpur\nPatan\nPorbandar\nRajkot\nRajpipla\nSavarkundla\nSidhpur\nSurat\nSurendranagar\nUna\nUnjha\nUpleta\nVadodara\nValsad\nVapi\nVeraval\nViramgam\nVisnagar\nVyara\nWadhwan"
   },
   {
-   "depends_on": "eval:doc.state==\"Maharashtra\";",
+   "depends_on": "eval:doc.state==\"Maharashtra\"&&doc.where_are_you_from==\"India\";",
    "fieldname": "select_maharashtra_city",
    "fieldtype": "Select",
    "label": "Select City",
@@ -770,8 +772,13 @@
   }
  ],
  "grid_page_length": 50,
- "links": [],
- "modified": "2026-04-01 12:37:27.376419",
+ "links": [
+  {
+   "link_doctype": "Lead",
+   "link_fieldname": "custom_inquiry_form_reference"
+  }
+ ],
+ "modified": "2026-04-13 11:40:20.700894",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Inquiry Form FH",

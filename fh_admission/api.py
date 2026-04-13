@@ -225,3 +225,33 @@ def generate_eligibility_html_tables(data):
         </div>
     """
     return final_html
+
+
+# --------------- Lead Customizations -------------------------
+def change_sla_status_in_lead(lead_name, sla_status):
+    if lead_name and sla_status:
+        frappe.db.set_value("Lead", lead_name, "custom_sla_status", sla_status)
+
+def update_sla_status_for_eligible_leads_at_every_hour():
+    leads = frappe.db.get_all(
+        "Lead",
+        filters = {
+            "creation": ["<=", frappe.utils.add_to_date(frappe.utils.now(), hours=-1)],
+            "custom_is_email_sent": 0
+        },
+        fields = ["name"]
+    )
+    if leads:
+        for lead in leads:
+            lead_doc = frappe.get_doc("Lead", lead.name)
+            if lead_doc.response_by and frappe.utils.now_datetime() > frappe.utils.get_datetime(lead_doc.response_by) and lead_doc.first_responded_on == None:
+                change_sla_status_in_lead(lead.name, "Failed to Respond")
+            else:
+                change_sla_status_in_lead(lead.name, "Responded")
+
+@frappe.whitelist()
+def change_lead_owner_on_assingment(self, method=None):
+     if self.reference_type == "Lead" and self.reference_name and self.description.startswith("Automatic Assignment"):
+          if self.allocated_to:
+               frappe.db.set_value("Lead", self.reference_name, "lead_owner", self.allocated_to)
+     

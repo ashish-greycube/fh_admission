@@ -139,34 +139,20 @@ after_migrate = "fh_admission.migration.after_migrations"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"ToDo": {
+		"on_insert": "fh_admission.api.change_lead_owner_on_assingment",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"fh_admission.tasks.all"
-# 	],
-# 	"daily": [
-# 		"fh_admission.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"fh_admission.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"fh_admission.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"fh_admission.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"0 * * * *": [
+		"fh_admission.api.update_sla_status_for_eligible_leads_at_every_hour"
+	],
+}
 
 # Testing
 # -------

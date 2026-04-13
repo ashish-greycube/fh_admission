@@ -10,6 +10,10 @@ def get_context(context):
 @frappe.whitelist()
 def save_data_to_doc_on_change(mobile_no, fieldname, value):
 	if mobile_no:
+		if fieldname in ['fathers_mobile_no', 'mothers_mobile_no']:
+			if value != "" and (not value.isdigit() or len(value) > 10):
+				frappe.throw("Please enter a valid 10 digit mobile number.")
+
 		# Save value of field in inquiry document.
 		frappe.errprint(f"{mobile_no, fieldname, value}")
 		frappe.db.set_value("Inquiry Form FH", mobile_no, fieldname, value, update_modified=False)
@@ -224,19 +228,56 @@ def get_html_of_all_schools():
 	if all_schools:
 		counter = 0
 		for s in all_schools:
-			school_rows = school_rows + "<div class='col col-sm-3 col-md-3 badge {0}' style='padding: 0.8em 0.4em !important; max-width: 24% !important;'>{1} <br> ({2} - {3})</div>".format(
-				'bg-warning' if counter == 0 else 'bg-info text-white',
-				s.school_name,
-				s.name,
-				s.city
-			)
+			# We use a data-attribute or class for the alternating colors
+			color_class = 'warning' if counter == 0 else 'info'
+			
+			school_rows += f"""
+			<div class='school-card {color_class}'>
+				<strong>{s.school_name}</strong><br>
+				({s.name} - {s.city})
+			</div>
+			"""
 			counter = 0 if counter == 1 else 1
 
 	template = f"""
-	<div class="container">
-			<div class="row" style="gap:3px;">
-				{school_rows}
-			</div>
+		<style>
+		.school-grid {{
+			display: grid;
+			/* Desktop: 4 columns */
+			grid-template-columns: repeat(4, 1fr);
+			gap: 6px;
+			width: 100%;
+		}}
+
+		.school-card {{
+			padding: 0.6em 0.2em;
+			text-align: center;
+			border-radius: 4px;
+			font-family: sans-serif;
+			font-size: 0.7rem;
+		}}
+
+		/* Color States */
+		.warning {{ background-color: #ffc107; color: #212529; }}
+		.info {{ background-color: #0dcaf0; color: #fff; }}
+
+		/* Tablet: 2 columns (max-width: 992px) */
+		@media (max-width: 992px) {{
+			.school-grid {{
+				grid-template-columns: repeat(2, 1fr);
+			}}
+		}}
+
+		/* Mobile: 1 column (max-width: 480px) */
+		@media (max-width: 480px) {{
+			.school-grid {{
+				grid-template-columns: 1fr;
+			}}
+		}}
+		</style>
+
+		<div class="school-grid">
+			{school_rows}
 		</div>
 		"""
 	return template
