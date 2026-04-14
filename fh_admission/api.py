@@ -230,14 +230,16 @@ def generate_eligibility_html_tables(data):
 # --------------- Lead Customizations -------------------------
 def change_sla_status_in_lead(lead_name, sla_status):
     if lead_name and sla_status:
-        frappe.db.set_value("Lead", lead_name, "custom_sla_status", sla_status)
+        lead_doc = frappe.get_doc("Lead", lead_name)
+        lead_doc.custom_sla_status  = sla_status
+        lead_doc.save(ignore_permissions=True)
 
 def update_sla_status_for_eligible_leads_at_every_hour():
     leads = frappe.db.get_all(
         "Lead",
         filters = {
             "creation": ["<=", frappe.utils.add_to_date(frappe.utils.now(), hours=-1)],
-            "custom_is_email_sent": 0
+            "custom_sla_status": ''
         },
         fields = ["name"]
     )
