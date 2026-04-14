@@ -35,14 +35,6 @@ def after_migrations():
                 "options": "\nResponded\nFailed to Respond",
                 "read_only": 1,
             },
-            {
-                "insert_after": "custom_sla_status",
-                "fieldtype" : "Check",
-                "fieldname": "custom_is_email_sent",
-                "label": "Is Email Sent?",
-                "is_system_generated": 0,
-                "is_custom_field": 1,
-            },
         ]    
     }
 
