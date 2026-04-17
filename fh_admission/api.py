@@ -257,3 +257,54 @@ def change_lead_owner_on_assingment(self, method=None):
           if self.allocated_to:
                frappe.db.set_value("Lead", self.reference_name, "lead_owner", self.allocated_to)
      
+def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
+    if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
+        todo = frappe.db.get_value("ToDo", {
+             'reference_type' : 'Lead',
+             'reference_name' : self.name,
+             'assignment_rule' : '{0} - PRO Auto Assign'.format(self.custom_campus)
+        }, 'name')
+        if todo:
+            doc = frappe.get_doc("ToDo", todo)
+            doc.allocated_to = self.lead_owner
+            doc.save(ignore_permissions=True)
+            frappe.msgprint("Lead is assigned to {0}".format(self.lead_owner), alert=True)
+
+@frappe.whitelist()
+def check_logged_in_user_role():
+    roles = frappe.get_roles(frappe.session.user)
+    current_user = "Other User"
+    if roles and "PRO User" in roles:
+         current_user = "PRO User"
+    
+    if roles and "Campus Admin" in roles:
+         current_user = "Campus Admin"     
+	
+    return current_user
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def filter_lead_owner_based_on_campus_for_campus_admin_role(doctype, txt, searchfield, start, page_len, filters):
+    if filters.get("campus"):
+        assigned_pros_to_campus = frappe.db.sql(
+            '''
+            SELECT taru.user, tu.full_name 
+            FROM `tabAssignment Rule User` AS taru
+            INNER JOIN `tabAssignment Rule` AS tar
+            ON taru.parent = tar.name
+            INNER JOIN `tabUser` tu
+            ON tu.name = taru.user
+            WHERE taru.parenttype  = "Assignment Rule"
+            AND taru.parent = "{0} - PRO Auto Assign"
+            AND taru.user LIKE %(txt)s
+            '''.format(filters.get('campus')), {"txt": "%%%s%%" % txt}
+        )
+
+        return assigned_pros_to_campus
+    
+
+def uncheck_sidebar_checkbox_for_pro_role(self, method=None):
+    roles = frappe.get_roles(self.name)
+    if roles and "Campus Admin" not in roles and "PRO User" in roles:
+        self.form_sidebar = 0
+        self.list_sidebar = 0

@@ -43,7 +43,7 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {"Lead" : "public/js/lead.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -142,6 +142,12 @@ after_migrate = "fh_admission.migration.after_migrations"
 doc_events = {
 	"ToDo": {
 		"on_insert": "fh_admission.api.change_lead_owner_on_assingment",
+	},
+    "Lead": {
+        "validate": "fh_admission.api.on_change_of_lead_owner_assign_lead_to_that_user"
+	},
+    "User": {
+        "validate": "fh_admission.api.uncheck_sidebar_checkbox_for_pro_role"
 	}
 }
 
