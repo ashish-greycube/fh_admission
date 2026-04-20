@@ -259,19 +259,17 @@ def change_lead_owner_on_assingment(self, method=None):
                frappe.db.set_value("Lead", self.reference_name, "lead_owner", self.allocated_to)
      
 def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
-    roles = frappe.get_roles(self.name)
-    if roles and "Campus Admin" in roles:
-        if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
-            todo = frappe.db.get_value("ToDo", {
-                'reference_type' : 'Lead',
-                'reference_name' : self.name,
-                'assignment_rule' : '{0} - PRO Auto Assign'.format(self.custom_campus)
-            }, 'name')
-            if todo:
-                doc = frappe.get_doc("ToDo", todo)
-                doc.allocated_to = self.lead_owner
-                doc.save(ignore_permissions=True)
-                frappe.msgprint("Lead is assigned to {0}".format(self.lead_owner), alert=True)
+    if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
+        todo = frappe.db.get_value("ToDo", {
+            'reference_type' : 'Lead',
+            'reference_name' : self.name,
+            'assignment_rule' : '{0} - PRO Auto Assign'.format(self.custom_campus)
+        }, 'name')
+        if todo:
+            doc = frappe.get_doc("ToDo", todo)
+            doc.allocated_to = self.lead_owner
+            doc.save(ignore_permissions=True)
+            frappe.msgprint("Lead is assigned to {0}".format(self.lead_owner), alert=True)
 
 @frappe.whitelist()
 def check_logged_in_user_role():

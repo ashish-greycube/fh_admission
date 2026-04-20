@@ -198,7 +198,7 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 			doc.custom_selected_school = selected_school
 			doc.custom_campus = selected_school
 
-		doc.save(ignore_permissions=True)
+		doc.insert(ignore_permissions=True)
 
 @frappe.whitelist()
 def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
