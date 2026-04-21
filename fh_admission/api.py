@@ -124,7 +124,7 @@ def generate_eligibility_html_tables(data):
         data = json.loads(data)
 
     if not data:
-        return "<div class='eligibility-criteria'>No data available</div>"
+        return "<div class='eligibility-criteria'>Based on the entered date of birth, no applicable grade is available</div>"
 
     # -------- Table 1 : School -> Grades --------
     school_map = defaultdict(lambda: {"code": "", "grades": set()})
@@ -260,6 +260,9 @@ def change_lead_owner_on_assingment(self, method=None):
      
 def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
     if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
+        # Assign This Lead To The New Lead Owner
+        isAssigned = False
+        isShared = False
         todo = frappe.db.get_value("ToDo", {
             'reference_type' : 'Lead',
             'reference_name' : self.name,
@@ -268,8 +271,25 @@ def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
         if todo:
             doc = frappe.get_doc("ToDo", todo)
             doc.allocated_to = self.lead_owner
-            doc.save(ignore_permissions=True)
-            frappe.msgprint("Lead is assigned to {0}".format(self.lead_owner), alert=True)
+            isAssigned = True
+
+        # Share This Lead With The New Lead Owner If Not Shared
+        is_shared = frappe.db.exists("DocShare", {
+            "share_doctype": self.doctype,
+            "share_name": self.name,
+            "user": self.lead_owner
+        })
+        if is_shared == None:
+            frappe.share.add_docshare(
+			    self.doctype, self.name, self.lead_owner, read=1, write=1, submit=0, share=0, flags={"ignore_share_permission": True}, notify=1
+		    )
+            isShared = True
+             
+        doc.save(ignore_permissions=True)
+        if isAssigned:
+            frappe.msgprint("Lead is assigned to User {0}".format(self.lead_owner), alert=True, indicator="green")
+        if isShared:
+            frappe.msgprint("Lead is shared with User {0}".format(self.lead_owner), alert=True, indicator="green")
 
 @frappe.whitelist()
 def check_logged_in_user_role():

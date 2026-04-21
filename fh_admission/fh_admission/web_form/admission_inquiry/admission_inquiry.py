@@ -149,30 +149,30 @@ def create_lead_per_child_on_submit_of_inquiry_form(webform):
     if data:
         if data.first_child_eligible_grades != "" and data.first_child_eligible_schools != "":
              create_new_lead(
-				 data.first_child_first_name, data.first_child_middle_name, data.first_child_last_name, data.first_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.first_child_eligible_schools
+				data.first_child_first_name, data.first_child_middle_name, data.first_child_last_name, data.first_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.first_child_eligible_schools, data.first_child_eligible_grades, data.first_child_date_of_birth, data.academic_year, data.first_child_current_school_name, data
 			 )
 
         if data.do_you_want_to_add_child_second == 1 and data.second_child_eligible_grades != "" and data.second_child_eligible_schools != "":
              create_new_lead(
-				data.second_child_first_name, data.second_child_middle_name, data.second_child_last_name, data.second_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.second_child_eligible_schools
+        		data.second_child_first_name, data.second_child_middle_name, data.second_child_last_name, data.second_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.second_child_eligible_schools, data.second_child_eligible_grades, data.second_child_date_of_birth, data.second_child_academic_year, data.second_child_current_school_name, data
 			 )
 
         if data.do_you_want_to_add_child_third == 1 and data.third_child_eligible_grades != "" and data.third_child_eligible_schools != "":
              create_new_lead(
-                data.third_child_first_name, data.third_child_middle_name, data.third_child_last_name, data.third_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.third_child_eligible_schools
+                data.third_child_first_name, data.third_child_middle_name, data.third_child_last_name, data.third_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.third_child_eligible_schools, data.third_child_eligible_grades, data.third_child_childs_dob, data.third_child_academic_year, data.third_child_current_school_name, data
              )
 
         if data.do_you_want_to_add_another_child_fourth == 1 and data.fourth_child_eligible_grades != "" and data.fourth_child_eligible_schools != "":
              create_new_lead(
-                data.fourth_child_first_name, data.fourth_child_middle_name, data.fourth_child_last_name, data.fourth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.fourth_child_eligible_schools
+                data.fourth_child_first_name, data.fourth_child_middle_name, data.fourth_child_last_name, data.fourth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.fourth_child_eligible_schools, data.fourth_child_eligible_grades, data.fourth_child_childs_dob, data.fourth_child_academic_year, data.fourth_child_current_school_name, data
              )
 
         if data.do_you_want_to_add_another_child_fifth == 1 and data.fifth_child_eligible_grades != "" and data.fifth_child_eligible_schools != "":
              create_new_lead(
-                data.fifth_child_first_name, data.fifth_child_middle_name, data.fifth_child_last_name, data.fifth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.fifth_child_eligible_schools
+                data.fifth_child_first_name, data.fifth_child_middle_name, data.fifth_child_last_name, data.fifth_child_gender, data.source, data.fathers_mobile_no, "Lead", data.mobile_no, data.fifth_child_eligible_schools, data.fifth_child_eligible_grades, data.fifth_child_childs_dob, data.fifth_child_academic_year, data.fifth_child_current_school_name, data
              )
         
-def create_new_lead(first_name, middle_name, last_name, gender, source, phone, status, reference, eligible_school):
+def create_new_lead(first_name, middle_name, last_name, gender, source, phone, status, reference, eligible_school, eligible_grade, dob, academic_year, current_school_name, data):
 	isLeadExist = frappe.db.get_value("Lead", {
 		"first_name" : first_name,
 		"mobile_no": phone,
@@ -188,6 +188,27 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 		doc.mobile_no = phone
 		doc.status = status
 		doc.custom_inquiry_form_reference = reference
+		doc.custom_child_dob = dob
+		doc.custom_academic_year_applying_for = academic_year
+		doc.custom_current_school_name = current_school_name
+		doc.custom_eligible_grade = eligible_grade
+		doc.custom_eligible_school = eligible_school
+		doc.custom_city_you_are_seeking_admission = data.city_for_admission
+		doc.custom_where_are_you_from = data.where_are_you_from
+		doc.custom_select_state = data.state
+		doc.custom_gujarat_city = data.select_gujarat_city
+		doc.custom_maharashtra_city = data.select_maharashtra_city
+		doc.custom_fathers_first_name = data.fathers_first_name
+		doc.custom_fathers_last_name = data.fathers_last_name
+		doc.custom_fathers_mobile_no = data.fathers_mobile_no
+		doc.custom_father_email = data.father_email
+		doc.custom_mothers_first_name = data.mothers_first_name
+		doc.custom_mothers_last_name = data.mothers_last_name
+		doc.custom_mothers_mobile_no = data.mothers_mobile_no
+		doc.custom_mothers_email = data.mothers_last_name
+		doc.custom_fountain_staff_parent_id = data.fountain_staff_parent_id
+		doc.custom_sibling_student_id = data.sibling_student_id
+		
 
 		if eligible_school.startswith("1st"):
 			selected_school = eligible_school.split(',')[0].strip().split(' ')[-1]

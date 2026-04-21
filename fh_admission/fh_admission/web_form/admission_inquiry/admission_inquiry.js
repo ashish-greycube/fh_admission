@@ -2,6 +2,9 @@ var data = [];
 
 // Function To Save Data Of WebForm Fields In Doctype.
 function save_data_to_doc_on_change(fieldname, value) {
+	if (value == "") {
+		frappe.throw("Please select or enter valid value.")
+	}
 	frappe.call({
 		method: "fh_admission.fh_admission.web_form.admission_inquiry.admission_inquiry.save_data_to_doc_on_change",
 		args: {
@@ -88,15 +91,19 @@ function check_eligibility_criteria_and_set_field_options(child_dob, child_acade
 			})
 
 			get_unique_grades(data).then((res) => {
-				var grade_options = "\n" + res.message.join('\n');
-				store_grade_and_school_options_for_future_ref(grade_fieldname, grade_options)
-				frappe.web_form.set_df_property(grade_fieldname, 'options', grade_options);
-				frappe.web_form.set_df_property(grade_fieldname, 'hidden', 0);
-				frappe.web_form.set_df_property(grade_fieldname, 'depends_on', `eval:doc.${grade_fieldname}==''||doc.${grade_fieldname}!='';`);
-				frappe.web_form.set_df_property(school_fieldname, 'depends_on', `eval:doc.${school_fieldname}==''||doc.${school_fieldname}!='';`);
-				if (res.message.length == 1) {
-					frappe.web_form.set_value(grade_fieldname, res.message[0])
-					save_data_to_doc_on_change(grade_fieldname, res.message[0])
+				if (res.message.length > 0) {
+					var grade_options = "\n" + res.message.join('\n');
+					store_grade_and_school_options_for_future_ref(grade_fieldname, grade_options)
+					frappe.web_form.set_df_property(grade_fieldname, 'options', grade_options);
+					frappe.web_form.set_df_property(grade_fieldname, 'hidden', 0);
+					frappe.web_form.set_df_property(grade_fieldname, 'depends_on', `eval:doc.${grade_fieldname}==''||doc.${grade_fieldname}!='';`);
+					frappe.web_form.set_df_property(school_fieldname, 'depends_on', `eval:doc.${school_fieldname}==''||doc.${school_fieldname}!='';`);
+					if (res.message.length == 1) {
+						frappe.web_form.set_value(grade_fieldname, res.message[0])
+						save_data_to_doc_on_change(grade_fieldname, res.message[0])
+					}
+				} else {
+					frappe.web_form.set_df_property(grade_fieldname, 'hidden', 1);
 				}
 			})
 		}
