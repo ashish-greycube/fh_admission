@@ -256,13 +256,13 @@ def change_lead_owner_on_assingment(self, method=None):
      print("Lead Owner Changed===================================================================================")
      if self.reference_type == "Lead" and self.reference_name and self.description.startswith("Automatic Assignment"):
           if self.allocated_to:
-               frappe.db.set_value("Lead", self.reference_name, "lead_owner", self.allocated_to)
+               doc = frappe.get_doc("Lead", self.reference_name,)
+               doc.lead_owner = self.allocated_to
+               doc.save(ignore_permissions=True)
      
 def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
     if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
         # Assign This Lead To The New Lead Owner
-        isAssigned = False
-        isShared = False
         todo = frappe.db.get_value("ToDo", {
             'reference_type' : 'Lead',
             'reference_name' : self.name,
@@ -271,8 +271,12 @@ def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
         if todo:
             doc = frappe.get_doc("ToDo", todo)
             doc.allocated_to = self.lead_owner
-            isAssigned = True
+            doc.save(ignore_permissions=True)
+            # frappe.msgprint("Lead is assigned to User {0}".format(self.lead_owner), alert=True, indicator="green")
+       
 
+def on_change_of_lead_owner_share_lead_to_that_user(self, method=None):
+    if self.has_value_changed("lead_owner") and self.name and self.lead_owner and self.lead_owner != frappe.db.get_value("User", {"full_name": "Parent User"}, "name"):
         # Share This Lead With The New Lead Owner If Not Shared
         is_shared = frappe.db.exists("DocShare", {
             "share_doctype": self.doctype,
@@ -281,15 +285,9 @@ def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
         })
         if is_shared == None:
             frappe.share.add_docshare(
-			    self.doctype, self.name, self.lead_owner, read=1, write=1, submit=0, share=0, flags={"ignore_share_permission": True}, notify=1
-		    )
-            isShared = True
-             
-        doc.save(ignore_permissions=True)
-        if isAssigned:
-            frappe.msgprint("Lead is assigned to User {0}".format(self.lead_owner), alert=True, indicator="green")
-        if isShared:
-            frappe.msgprint("Lead is shared with User {0}".format(self.lead_owner), alert=True, indicator="green")
+                self.doctype, self.name, self.lead_owner, read=1, write=1, submit=0, share=0, flags={"ignore_share_permission": True}, notify=1
+            )
+            # frappe.msgprint("Lead is shared with User {0}".format(self.lead_owner), alert=True, indicator="green")
 
 @frappe.whitelist()
 def check_logged_in_user_role():

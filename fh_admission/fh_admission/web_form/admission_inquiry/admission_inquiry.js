@@ -2,8 +2,24 @@ var data = [];
 
 // Function To Save Data Of WebForm Fields In Doctype.
 function save_data_to_doc_on_change(fieldname, value) {
-	if (value == "") {
-		frappe.throw("Please select or enter valid value.")
+	let keys = [
+		'first_child_eligible_grades', 'first_child_eligible_schools',
+		'second_child_eligible_grades', 'second_child_eligible_schools',
+		'third_child_eligible_grades', 'third_child_eligible_schools',
+		'fourth_child_eligible_grades', 'fourth_child_eligible_schools',
+		'fifth_child_eligible_grades', 'fifth_child_eligible_schools'
+	]
+	let options_keys = [
+		'first_child_options', 'first_child_school_options',
+		'second_child_options', 'second_child_school_options',
+		'third_child_options', 'third_child_school_options',
+		'fourth_child_options', 'fourth_child_school_options',
+		'fifth_child_options', 'fifth_child_school_options'
+	]
+	if (keys.includes(fieldname) && value == "") {
+		if (frappe.web_form.get_value(options_keys[keys.indexOf(fieldname)]) != undefined) {
+			frappe.throw("Please select or enter valid value.")
+		}
 	}
 	frappe.call({
 		method: "fh_admission.fh_admission.web_form.admission_inquiry.admission_inquiry.save_data_to_doc_on_change",
@@ -15,30 +31,30 @@ function save_data_to_doc_on_change(fieldname, value) {
 		callback: function (res) {
 			if (res && res.message == true) {
 				if (fieldname.startsWith("first")) {
+					frappe.web_form.set_value("first_child_school_options", null)
+					frappe.web_form.set_value("first_child_options", null)
 					frappe.web_form.set_value('first_child_eligible_grades', null)
 					frappe.web_form.set_value('first_child_eligible_schools', null)
-					frappe.web_form.set_value("first_child_options", null)
-					frappe.web_form.set_value("first_child_school_options", null)
 				} else if (fieldname.startsWith("second")) {
-					frappe.web_form.set_value('second_child_eligible_grades', null)
-					frappe.web_form.set_value('second_child_eligible_schools', null)
 					frappe.web_form.set_value("second_child_options", null)
 					frappe.web_form.set_value("second_child_school_options", null)
+					frappe.web_form.set_value('second_child_eligible_grades', null)
+					frappe.web_form.set_value('second_child_eligible_schools', null)
 				} else if (fieldname.startsWith("third")) {
-					frappe.web_form.set_value('third_child_eligible_grades', null)
-					frappe.web_form.set_value('third_child_eligible_schools', null)
 					frappe.web_form.set_value("third_child_options", null)
 					frappe.web_form.set_value("third_child_school_options", null)
+					frappe.web_form.set_value('third_child_eligible_grades', null)
+					frappe.web_form.set_value('third_child_eligible_schools', null)
 				} else if (fieldname.startsWith("fourth")) {
+					frappe.web_form.set_value("fourth_child_school_options", null)
+					frappe.web_form.set_value("fourth_child_options", null)
 					frappe.web_form.set_value('fourth_child_eligible_grades', null)
 					frappe.web_form.set_value('fourth_child_eligible_schools', null)
-					frappe.web_form.set_value("fourth_child_options", null)
-					frappe.web_form.set_value("fourth_child_school_options", null)
 				} else if (fieldname.startsWith("fifth")) {
-					frappe.web_form.set_value('fifth_child_eligible_grades', null)
-					frappe.web_form.set_value('fifth_child_eligible_schools', null)
 					frappe.web_form.set_value("fifth_child_options", null)
 					frappe.web_form.set_value("fifth_child_school_options", null)
+					frappe.web_form.set_value('fifth_child_eligible_grades', null)
+					frappe.web_form.set_value('fifth_child_eligible_schools', null)
 				}
 			}
 		}
