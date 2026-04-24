@@ -150,9 +150,6 @@ doc_events = {
     "User": {
         "validate": "fh_admission.api.uncheck_sidebar_checkbox_for_pro_role"
 	},
-    "Inquiry Form FH": {
-        "validate": "fh_admission.api.change_status_on_validate_and_send_message",
-	}
 }
 
 # Scheduled Tasks

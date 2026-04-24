@@ -233,15 +233,15 @@ frappe.ready(function () {
 	let form_initialized = false;
 
 	// Change Status To Completed On Web Form Submission
-	// $(".submit-btn").on("click", () => {
-	// 	frappe.call({
-	// 		method: "fh_admission.fh_admission.web_form.admission_inquiry.admission_inquiry.change_status_of_doc_on_form_submit_and_send_message",
-	// 		args: {
-	// 			"docname": frappe.web_form.doc.mobile_no,
-	// 			"webform_data": frappe.web_form.doc
-	// 		}
-	// 	})
-	// })
+	$(".submit-btn").on("click", () => {
+		frappe.call({
+			method: "fh_admission.fh_admission.web_form.admission_inquiry.admission_inquiry.change_status_of_doc_on_form_submit_and_send_message",
+			args: {
+				"docname": frappe.web_form.doc.mobile_no,
+				"webform_data": frappe.web_form.doc
+			}
+		})
+	})
 
 	setTimeout(() => {
 		set_school_and_grade_values_on_load()
