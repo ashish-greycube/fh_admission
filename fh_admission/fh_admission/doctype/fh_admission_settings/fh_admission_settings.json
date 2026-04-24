@@ -11,7 +11,7 @@
   "enter_source_name",
   "generate_url",
   "source_wise_urls",
-  "urls"
+  "url_sources"
  ],
  "fields": [
   {
@@ -46,19 +46,18 @@
    "label": "Source Wise URLs"
   },
   {
-   "default": "\"\"",
-   "fieldname": "urls",
-   "fieldtype": "Text",
+   "fieldname": "url_sources",
+   "fieldtype": "Table",
    "hidden": 1,
-   "label": "URLs",
-   "read_only": 1
+   "label": "URL Sources",
+   "options": "Source URL Details FH"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-26 17:06:17.917743",
+ "modified": "2026-04-24 15:26:57.482537",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission Settings",

@@ -10,12 +10,17 @@ frappe.ui.form.on("FH Admission Settings", {
                     'source': frm.doc.enter_source_name
                 },
                 callback: function (res) {
-                    const URL = res.message;
-                    if (URL != "") {
-                        frappe.db.get_single_value("FH Admission Settings", "urls").then((r) => {
-                            let updated_urls = r + "\n" + URL
-                            frappe.db.set_value("FH Admission Settings", "FH Admission Settings", "urls", updated_urls).then((r) => { console.log(r) })
-                        })
+                    const valid_source = res.message;
+                    if (valid_source) {
+                        let exists = (frm.doc.url_sources || []).some(row => row.source === valid_source);
+                        if (!exists) {
+                            let row = frm.add_child("url_sources", {
+                                "source": valid_source
+                            });
+                            frm.refresh_field("url_sources");
+                        }
+                        frm.save()
+                        frm.reload_doc();
                     }
                 }
             })
