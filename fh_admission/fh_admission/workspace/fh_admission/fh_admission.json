@@ -35,6 +35,25 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Admission Settings",
+   "link_count": 0,
+   "link_to": "FH Admission Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Masters",
    "link_count": 7,
    "link_type": "DocType",
@@ -46,7 +65,7 @@
    "is_query_report": 0,
    "label": "Academic Year",
    "link_count": 0,
-   "link_to": "Academic Year FH",
+   "link_to": "FHS Academic Year",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -110,28 +129,9 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Settings",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Admission Settings",
-   "link_count": 0,
-   "link_to": "FH Admission Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
   }
  ],
- "modified": "2026-03-20 17:54:30.720677",
+ "modified": "2026-04-29 14:58:01.219254",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission",
@@ -148,7 +148,7 @@
    "role": "FH Admission"
   }
  ],
- "sequence_id": 24.0,
+ "sequence_id": 27.0,
  "shortcuts": [],
  "title": "FH Admission"
 }

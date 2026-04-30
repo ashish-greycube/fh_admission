@@ -6,6 +6,16 @@ def after_migrations():
     custom_fields = {
         "Lead": [
             {
+                "insert_after": "custom_campus",
+                "fieldtype" : "Link",
+                "fieldname": "custom_campus_admin",
+                "label": "Campus Admin",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+                "options": "User",
+                "fetch_from": "custom_campus.campus_admin"
+            },
+            {
                 "insert_after": "request_type",
                 "fieldtype" : "Data",
                 "fieldname": "custom_selected_school",
@@ -262,6 +272,18 @@ def after_migrations():
                 "is_system_generated": 0,
                 "is_custom_field": 1,
                 "insert_after": "custom_eligible_grade"
+            }
+        ],    
+
+        "Event": [
+            {
+                "fieldname": "custom_campus_admin",
+                "fieldtype": "Link",
+                "label": "Campus Admin",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+                "insert_after": "reference_doctype",
+                "options": "User"
             }
         ]    
     }

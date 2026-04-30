@@ -30,7 +30,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "A.Y.",
-   "options": "Academic Year FH"
+   "options": "FHS Academic Year"
   },
   {
    "fieldname": "city",
@@ -95,7 +95,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-11 10:50:29.273989",
+ "modified": "2026-04-29 14:55:01.513189",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Grade Calculator",

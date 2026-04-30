@@ -144,12 +144,15 @@ doc_events = {
 		"after_insert": "fh_admission.api.change_lead_owner_on_assingment",
 	},
     "Lead": {
-        "validate": "fh_admission.api.on_change_of_lead_owner_assign_lead_to_that_user",
+        "validate": ["fh_admission.api.on_change_of_campus_change_lead_owner_from_assignment", "fh_admission.api.on_change_of_lead_owner_assign_lead_to_that_user"],
         "on_update": "fh_admission.api.on_change_of_lead_owner_share_lead_to_that_user"
 	},
     "User": {
         "validate": "fh_admission.api.uncheck_sidebar_checkbox_for_pro_role"
 	},
+    "Event": {
+        "after_insert": "fh_admission.api.on_creation_of_event_from_lead_set_campus_admin"
+	}
 }
 
 # Scheduled Tasks

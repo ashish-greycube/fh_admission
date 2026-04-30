@@ -12,6 +12,7 @@
   "area",
   "board_type",
   "add_grades",
+  "campus_admin",
   "column_break_hwnn",
   "abbrevetion",
   "address",
@@ -78,12 +79,20 @@
    "fieldtype": "Link",
    "label": "School Type",
    "options": "School Type FH"
+  },
+  {
+   "fieldname": "campus_admin",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Campus Admin",
+   "options": "User",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-10 15:55:55.054741",
+ "modified": "2026-04-27 15:18:11.167075",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "School FH",

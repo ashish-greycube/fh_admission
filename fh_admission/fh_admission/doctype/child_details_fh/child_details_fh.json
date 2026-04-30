@@ -59,7 +59,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Academic Year applying for",
-   "options": "Academic Year FH"
+   "options": "FHS Academic Year"
   },
   {
    "fieldname": "childs_dob",
@@ -84,7 +84,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-03-05 11:03:55.366766",
+ "modified": "2026-04-29 14:59:02.813097",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Child Details FH",

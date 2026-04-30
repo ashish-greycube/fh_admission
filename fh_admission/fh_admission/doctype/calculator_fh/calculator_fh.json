@@ -27,7 +27,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "A.Y.",
-   "options": "Academic Year FH",
+   "options": "FHS Academic Year",
    "reqd": 1
   },
   {
@@ -70,7 +70,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-10 09:51:43.971824",
+ "modified": "2026-04-29 14:54:09.020291",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Calculator FH",

@@ -329,3 +329,27 @@ def uncheck_sidebar_checkbox_for_pro_role(self, method=None):
     if roles and "Campus Admin" not in roles and "PRO User" in roles:
         self.form_sidebar = 0
         self.list_sidebar = 0
+
+def on_creation_of_event_from_lead_set_campus_admin(self, method=None):
+     if self.event_participants and len(self.event_participants) > 0:
+          for e in self.event_participants:
+               if e.reference_doctype == "Lead":
+                    campus_admin = frappe.db.get_value("Lead", e.reference_docname, "custom_campus_admin")
+                    if campus_admin:
+                         self.custom_campus_admin = campus_admin
+                         self.save(ignore_permissions=True)
+
+def on_change_of_campus_change_lead_owner_from_assignment(self, method=None):
+	pro = None
+	if self.has_value_changed("custom_campus"):
+		ar = frappe.db.get_value("Assignment Rule", {"assign_condition": 'custom_campus == "{0}"'.format(self.custom_campus)}, "name")
+		if ar:
+			doc = frappe.get_doc("Assignment Rule", ar)
+			if doc:
+				for user in doc.users:
+						if user.user != doc.last_user:
+							pro = user.user
+							break
+				self.lead_owner = pro if pro else doc.last_user  
+		else:
+			frappe.throw("Default Assignment Rule for campus {0} not found! Please contact your system manager.".format(self.custom_campus))
