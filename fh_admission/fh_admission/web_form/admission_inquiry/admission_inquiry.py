@@ -205,7 +205,7 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 		doc.custom_mothers_first_name = data.mothers_first_name
 		doc.custom_mothers_last_name = data.mothers_last_name
 		doc.custom_mothers_mobile_no = data.mothers_mobile_no
-		doc.custom_mothers_email = data.mothers_last_name
+		doc.custom_mothers_email = data.mothers_email
 		doc.custom_fountain_staff_parent_id = data.fountain_staff_parent_id
 		doc.custom_sibling_student_id = data.sibling_student_id
 		

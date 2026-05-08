@@ -82,7 +82,7 @@ def after_migrations():
                 "insert_after": "custom_col_break_basic",
                 "fieldtype" : "Select",
                 "fieldname": "custom_select_state",
-                "label": "Where are you from?",
+                "label": "State",
                 "options": "\nGujarat\nMaharashtra\nNone of the above",
                 "is_system_generated": 0,
                 "is_custom_field": 1,
