@@ -20,58 +20,58 @@ def get_eligible_grades(child_dob, child_academic_year, city):
 
     query = """
         WITH AdjustedCriteria AS (
-            SELECT 
-				school.name,
+            SELECT
+                school.name,
                 school.school_name,
-				school.city,
-				grade.school_type,
+                school.city,
+                grade.school_type,
                 grade.grade_name,
-                grade.base_academic_year,	
+                grade.base_academic_year,
                 /* Task 1: Dynamically calculate offset for EACH row */
                 DATE_ADD(
-                    grade.age_criteria_start_date, 
+                    grade.age_criteria_start_date,
                     INTERVAL (%s - CAST(SUBSTRING(grade.base_academic_year, 1, 4) AS SIGNED)) YEAR
                 ) AS adjusted_start_date,
                 DATE_ADD(
-                    grade.age_criteria_end_date, 
+                    grade.age_criteria_end_date,
                     INTERVAL (%s - CAST(SUBSTRING(grade.base_academic_year, 1, 4) AS SIGNED)) YEAR
                 ) AS adjusted_end_date
-            FROM 
+            FROM
                 `tabSchool FH` school
-            INNER JOIN 
+            INNER JOIN
                 `tabGrade Details FH` grade ON grade.parent = school.name
-            WHERE 
+            WHERE
                 grade.base_academic_year LIKE '20%%' /* Safety: only rows with YYYY format */
         )
-        SELECT 
-			name,	
-			school_type,
-            school_name, 
-			grade_name, 
-			base_academic_year, 
-            adjusted_start_date, 
-			adjusted_end_date,
+        SELECT
+            name,
+            school_type,
+            school_name,
+            grade_name,
+            base_academic_year,
+            adjusted_start_date,
+            adjusted_end_date,
             city
-        FROM 
+        FROM
             AdjustedCriteria
-        WHERE 
+        WHERE
             %s BETWEEN adjusted_start_date AND adjusted_end_date AND city = %s
     """
 
-    # We pass target_year twice (for start and end date calculation) 
+    # We pass target_year twice (for start and end date calculation)
     # and child_dob for the final filter
     return frappe.db.sql(query, (target_year, target_year, child_dob, city), as_dict=True)
 
 @frappe.whitelist()
 def get_unique_grades(query_results):
-	query_results = json.loads(query_results)
-	unique_grades = []
-	if query_results:
-		for res in query_results:
-			# if res.get('school_type') == school_type:
-				if res.get('grade_name') not in unique_grades:
-					unique_grades.append(res.get('grade_name'))
-	return sorted(unique_grades)
+    query_results = json.loads(query_results)
+    unique_grades = []
+    if query_results:
+        for res in query_results:
+            # if res.get('school_type') == school_type:
+                if res.get('grade_name') not in unique_grades:
+                    unique_grades.append(res.get('grade_name'))
+    return sorted(unique_grades)
 
 def get_ordinal(n):
     """Helper function to return the ordinal string of a number (1st, 2nd, 3rd, etc.)"""
@@ -82,9 +82,9 @@ def get_ordinal(n):
 def get_possible_options_for_school(items):
     if not items:
         return []
-        
+
     results = []
-    
+
     # 1. Generate "Only [Item]" for every input
     for item in items:
         results.append(f"{item}")
@@ -92,31 +92,31 @@ def get_possible_options_for_school(items):
     # --- STOP HERE IF ONLY ONE INPUT ---
     if len(items) == 1:
         return results
-        
+
     # 2. Add "EITHER" or "ANY" (Only for 2+ inputs)
-    # results.append("EITHER" if len(items) == 2 else "ANY") 
-        
+    # results.append("EITHER" if len(items) == 2 else "ANY")
+
     # 3. All full-length permutations (Only for 2+ inputs)
     for perm in itertools.permutations(items):
         ordered_parts = [f"{get_ordinal(i + 1)} Preference {val}" for i, val in enumerate(perm)]
         results.append(" , ".join(ordered_parts))
-        
+
     return results
 
 @frappe.whitelist()
 def get_unique_schools_based_on_grade(query_results, grade):
-	query_results = json.loads(query_results)
-	unique_schools = []
-	schools = []
-	if query_results and grade: 
-		for res in query_results:
-			if res.get('grade_name') == grade:
-				if res.get('name') not in unique_schools:
-					unique_schools.append(res.get('name'))
+    query_results = json.loads(query_results)
+    unique_schools = []
+    schools = []
+    if query_results and grade:
+        for res in query_results:
+            if res.get('grade_name') == grade:
+                if res.get('name') not in unique_schools:
+                    unique_schools.append(res.get('name'))
 
-	if unique_schools != []:
-		schools = get_possible_options_for_school(unique_schools)
-	return schools
+    if unique_schools != []:
+        schools = get_possible_options_for_school(unique_schools)
+    return schools
 
 
 @frappe.whitelist()
@@ -148,19 +148,19 @@ def generate_eligibility_html_tables(data):
         """
 
     table1 = f"""
-		<table class="table table-sm" style="border:1px solid black; margin-top:1rem;">
-			<thead class="table-light">
-				<tr>
-					<th style='border:1px solid black;'>Code</th>
-					<th style='border:1px solid black;'>Eligible School(s)</th>
-					<th style='border:1px solid black;'>Eligible Grade(s)</th>
-				</tr>
-			</thead>
-			<tbody>
-			{table1_rows}
-			</tbody>
-		</table>
-		"""
+        <table class="table table-sm" style="border:1px solid black; margin-top:1rem;">
+            <thead class="table-light">
+                <tr>
+                    <th style='border:1px solid black;'>Code</th>
+                    <th style='border:1px solid black;'>Eligible School(s)</th>
+                    <th style='border:1px solid black;'>Eligible Grade(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+            {table1_rows}
+            </tbody>
+        </table>
+        """
 
     # -------- Table 2 : School Types --------
     school_types = defaultdict(list)
@@ -189,17 +189,17 @@ def generate_eligibility_html_tables(data):
         rows_html += "</tr>"
 
     table2 = f"""
-		<table class="table table-sm" style="border:1px solid black;">
-			<thead class="table-light">
-				<tr>
-					{header_html}
-				</tr>
-			</thead>
-			<tbody>
-				{rows_html}
-			</tbody>
-		</table>
-		"""
+        <table class="table table-sm" style="border:1px solid black;">
+            <thead class="table-light">
+                <tr>
+                    {header_html}
+                </tr>
+            </thead>
+            <tbody>
+                {rows_html}
+            </tbody>
+        </table>
+        """
 
     city = data[0].get('city')
     all_schools = frappe.db.get_all("School FH", {"city": city}, ['name', 'school_name'], order_by="name")
@@ -207,19 +207,19 @@ def generate_eligibility_html_tables(data):
           school_rows = "".join([f"<tr><td style='border:1px solid black;'>{s.school_name} ({s.name})</td></tr>" for s in all_schools])
 
     table2 = f"""
-		<table class="table table-sm" style="border:1px solid black;">
+        <table class="table table-sm" style="border:1px solid black;">
             <thead class="table-light">
-				<tr>
-					<th style="border:1px solid black;">Schools In City {city}</th>
-				</tr>
-			</thead>
-			<tbody>
-                
-				    {school_rows}
-                
-			</tbody>
-		</table>
-		"""
+                <tr>
+                    <th style="border:1px solid black;">Schools In City {city}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                    {school_rows}
+
+            </tbody>
+        </table>
+        """
 
     final_html = f"""
         <div class="eligibility-criteria">
@@ -261,7 +261,7 @@ def change_lead_owner_on_assingment(self, method=None):
                doc = frappe.get_doc("Lead", self.reference_name,)
                doc.lead_owner = self.allocated_to
                doc.save(ignore_permissions=True)
-     
+
 def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
     if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
         # Assign This Lead To The New Lead Owner
@@ -275,7 +275,7 @@ def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
             doc.allocated_to = self.lead_owner
             doc.save(ignore_permissions=True)
             # frappe.msgprint("Lead is assigned to User {0}".format(self.lead_owner), alert=True, indicator="green")
-       
+
 
 def on_change_of_lead_owner_share_lead_to_that_user(self, method=None):
     if self.has_value_changed("lead_owner") and self.name and self.lead_owner and self.lead_owner != frappe.db.get_value("User", {"full_name": "Parent User"}, "name"):
@@ -297,10 +297,10 @@ def check_logged_in_user_role():
     current_user = "Other User"
     if roles and "PRO User" in roles:
          current_user = "PRO User"
-    
+
     if roles and "Campus Admin" in roles:
-         current_user = "Campus Admin"     
-	
+         current_user = "Campus Admin"
+
     return current_user
 
 @frappe.whitelist()
@@ -309,7 +309,7 @@ def filter_lead_owner_based_on_campus_for_campus_admin_role(doctype, txt, search
     if filters.get("campus"):
         assigned_pros_to_campus = frappe.db.sql(
             '''
-            SELECT taru.user, tu.full_name 
+            SELECT taru.user, tu.full_name
             FROM `tabAssignment Rule User` AS taru
             INNER JOIN `tabAssignment Rule` AS tar
             ON taru.parent = tar.name
@@ -322,7 +322,7 @@ def filter_lead_owner_based_on_campus_for_campus_admin_role(doctype, txt, search
         )
 
         return assigned_pros_to_campus
-    
+
 
 def uncheck_sidebar_checkbox_for_pro_role(self, method=None):
     roles = frappe.get_roles(self.name)
@@ -340,16 +340,76 @@ def on_creation_of_event_from_lead_set_campus_admin(self, method=None):
                          self.save(ignore_permissions=True)
 
 def on_change_of_campus_change_lead_owner_from_assignment(self, method=None):
-	pro = None
-	if self.has_value_changed("custom_campus"):
-		ar = frappe.db.get_value("Assignment Rule", {"assign_condition": 'custom_campus == "{0}"'.format(self.custom_campus)}, "name")
-		if ar:
-			doc = frappe.get_doc("Assignment Rule", ar)
-			if doc:
-				for user in doc.users:
-						if user.user != doc.last_user:
-							pro = user.user
-							break
-				self.lead_owner = pro if pro else doc.last_user  
-		else:
-			frappe.throw("Default Assignment Rule for campus {0} not found! Please contact your system manager.".format(self.custom_campus))
+    pro = None
+    if self.has_value_changed("custom_campus") and self.custom_campus != None:
+        ar = frappe.db.get_value("Assignment Rule", {"assign_condition": 'custom_campus == "{0}"'.format(self.custom_campus)}, "name")
+        if ar:
+            doc = frappe.get_doc("Assignment Rule", ar)
+            if doc:
+                for user in doc.users:
+                        if user.user != doc.last_user:
+                            pro = user.user
+                            break
+                self.lead_owner = pro if pro else doc.last_user
+        else:
+            frappe.throw("Default Assignment Rule for campus {0} not found! Please contact your system manager.".format(self.custom_campus))
+
+# WEBHOOK CUSTOMIZATION ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def on_insert_off_lead_send_document_to_nucleus(self, method):
+    if self.custom_inquiry_form_reference:
+        settings = frappe.get_doc("FH Admission Settings", "FH Admission Settings")
+        if settings:
+            URL = settings.webhook_url
+            KEY = settings.webhook_api_key
+            SECRET = settings.get_password("webhook_secret")
+            
+            headers =  {
+                'api_key': KEY,
+                'api_secret': SECRET,
+                'Content-Type': 'application/json'
+            }
+            
+            payload = json.dumps({
+                "name": self.name,
+                "source": self.source,
+                "first_name": self.first_name,
+                "last_name": self.last_name,
+                "middle_name": self.middle_name,
+                "gender": self.gender,
+                "custom_child_dob": str(self.custom_child_dob) if self.custom_child_dob else None,
+                "custom_academic_year_applying_for": self.custom_academic_year_applying_for,
+                "custom_eligible_grade": self.custom_eligible_grade,
+                "custom_current_school_name": self.custom_current_school_name,
+                "custom_sibling_student_id": self.custom_sibling_student_id,
+                "custom_fountain_staff_parent_id": self.custom_fountain_staff_parent_id,
+                "custom_fathers_first_name": self.custom_fathers_first_name,
+                "custom_fathers_last_name": self.custom_fathers_last_name,
+                "custom_fathers_mobile_no": self.custom_fathers_mobile_no,
+                "custom_father_email": self.custom_father_email,
+                "custom_mothers_first_name": self.custom_mothers_first_name,
+                "custom_mothers_last_name": self.custom_mothers_last_name,
+                "custom_mothers_mobile_no": self.custom_mothers_mobile_no,
+                "custom_mothers_email": self.custom_mothers_email,
+                "custom_eligible_school": self.custom_eligible_school,
+                "owner": self.owner,
+                "modified_by": self.modified_by,
+                "lead_owner": self.lead_owner,
+                "custom_select_state": self.custom_select_state,
+                "custom_where_are_you_from": self.custom_where_are_you_from,
+                "creation": self.creation.strftime("%Y-%m-%dT%H:%M:%S") if self.creation else None,
+                "modified": self.modified.strftime("%Y-%m-%dT%H:%M:%S") if self.modified else None,
+            })
+            
+            try:
+                response = requests.request("POST", URL, headers=headers, data=payload)
+                if response.status_code == 200:
+                    res = response.json()
+                    nucleus_ref = res['data']['id']
+                    if res['isSuccess'] == True:
+                        frappe.db.set_value(self.doctype, self.name, "custom_nucleus_reference", nucleus_ref, update_modified=False)
+
+            except Exception as e:
+                log = frappe.log_error(
+                    title = "Data Syncronization With Nucleus Failed For Lead {0}".format(self.name),
+                    message = "{0}".format(str(e))
+                )

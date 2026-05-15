@@ -145,7 +145,8 @@ doc_events = {
 	},
     "Lead": {
         "validate": ["fh_admission.api.on_change_of_campus_change_lead_owner_from_assignment", "fh_admission.api.on_change_of_lead_owner_assign_lead_to_that_user"],
-        "on_update": "fh_admission.api.on_change_of_lead_owner_share_lead_to_that_user"
+        "on_update": "fh_admission.api.on_change_of_lead_owner_share_lead_to_that_user",
+        "after_insert": "fh_admission.api.on_insert_off_lead_send_document_to_nucleus"
 	},
     "User": {
         "validate": "fh_admission.api.uncheck_sidebar_checkbox_for_pro_role"

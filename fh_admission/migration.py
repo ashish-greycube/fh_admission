@@ -272,6 +272,15 @@ def after_migrations():
                 "is_system_generated": 0,
                 "is_custom_field": 1,
                 "insert_after": "custom_eligible_grade"
+            },
+            {
+                "fieldname": "custom_nucleus_reference",
+                "fieldtype": "Data",
+                "label": "Nucleus Reference",
+                "is_system_generated": 0,
+                "is_custom_field": 1,
+                "insert_after": "custom_inquiry_form_reference",
+                "read_only": 1
             }
         ],    
 

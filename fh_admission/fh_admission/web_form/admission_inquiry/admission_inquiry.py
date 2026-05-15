@@ -279,8 +279,8 @@ def get_html_of_all_schools():
 		}}
 
 		/* Color States */
-		.warning {{ background-color: #ffc107; color: #212529; }}
-		.info {{ background-color: #0dcaf0; color: #fff; }}
+		.warning {{ background-color: #005baa; color: #fff; }}
+		.info {{ background-color: #b8292f; color: #fff; }}
 
 		/* Tablet: 2 columns (max-width: 992px) */
 		@media (max-width: 992px) {{
