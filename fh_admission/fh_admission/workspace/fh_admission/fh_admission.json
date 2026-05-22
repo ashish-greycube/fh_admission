@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"W13vadhhPe\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">FH Admission</span>\",\"col\":12}},{\"id\":\"DdsER8kA-u\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"7r67f_OtwV\",\"type\":\"card\",\"data\":{\"card_name\":\"Recommendation Calculator\",\"col\":4}},{\"id\":\"j2y-Q00pO5\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
+ "content": "[{\"id\":\"W13vadhhPe\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">FH Admission</span>\",\"col\":12}},{\"id\":\"DdsER8kA-u\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"KbMe_btDvD\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"j2y-Q00pO5\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}},{\"id\":\"7r67f_OtwV\",\"type\":\"card\",\"data\":{\"card_name\":\"Recommendation Calculator\",\"col\":4}}]",
  "creation": "2026-03-05 17:59:36.199035",
  "custom_blocks": [],
  "docstatus": 0,
@@ -129,9 +129,58 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Lead Report",
+   "link_count": 0,
+   "link_to": "Lead Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Agent Performance Report",
+   "link_count": 0,
+   "link_to": "Agent Performance Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Funnel Analysis Report",
+   "link_count": 0,
+   "link_to": "Funnel Analysis Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Task & Activity Reports",
+   "link_count": 0,
+   "link_to": "Task & Activity Reports",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2026-04-29 14:58:01.219254",
+ "modified": "2026-05-22 11:04:46.594838",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "FH Admission",

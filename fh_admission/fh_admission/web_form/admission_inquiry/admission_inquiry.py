@@ -229,7 +229,7 @@ def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
 		status = check_for_empty_fields_before_set_status_as_completed(docname)
 		print(status)
 		if status == "Completed":
-			frappe.db.set_value("Inquiry Form FH", docname, 'status', "Completed")
+			frappe.db.set_value("Inquiry Form FH", docname, 'status', "Completed", update_modified=False)
 			frappe.db.commit()
 
 		# Create Lead & Send Confirmation Message On Whatsapp

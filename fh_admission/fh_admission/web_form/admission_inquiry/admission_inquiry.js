@@ -339,6 +339,17 @@ frappe.ready(function () {
 	$('select[data-fieldname="fourth_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("fourth_child_eligible_grades", frappe.web_form.get_value("fourth_child_eligible_grades")));
 	$('select[data-fieldname="fifth_child_eligible_grades"]').on("change", () => save_data_to_doc_on_change("fifth_child_eligible_grades", frappe.web_form.get_value("fifth_child_eligible_grades")));
 
+	// Validation for checking Mobile Number of Parents
+	frappe.web_form.validate = () => {
+		let data = frappe.web_form.get_values();
+
+		if (data.fathers_mobile_no.length != 10 || data.mothers_mobile_no.length != 10) {
+			frappe.msgprint('Please enter a valid 10 digit mobile number for Parent.');
+			return false
+		}
+		return true
+	}
+
 	// Bind Event OnLoad
 	bindEligibilityButtonEventOnLoad();
 
