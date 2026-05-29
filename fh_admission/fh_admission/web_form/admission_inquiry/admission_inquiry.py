@@ -15,7 +15,7 @@ def save_data_to_doc_on_change(mobile_no, fieldname, value):
 				frappe.throw("Please enter a valid 10 digit mobile number.")
 
 		# Save value of field in inquiry document.
-		frappe.errprint(f"{mobile_no, fieldname, value}")
+		# frappe.errprint(f"{mobile_no, fieldname, value}")
 		frappe.db.set_value("Inquiry Form FH", mobile_no, fieldname, value, update_modified=False)
 
 		# If field is checkbox then update no of children added in inquiry form.

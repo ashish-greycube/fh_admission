@@ -248,19 +248,33 @@ def update_sla_status_for_eligible_leads_at_every_hour():
     if leads:
         for lead in leads:
             lead_doc = frappe.get_doc("Lead", lead.name)
-            if lead_doc.response_by and frappe.utils.now_datetime() > frappe.utils.get_datetime(lead_doc.response_by) and lead_doc.first_responded_on == None:
-                change_sla_status_in_lead(lead.name, "Failed to Respond")
-            else:
-                change_sla_status_in_lead(lead.name, "Responded")
+            if lead_doc.response_by:
+                current_time = frappe.utils.now_datetime()
+                response_by_time = frappe.utils.get_datetime(lead_doc.response_by)
+
+                # Time not passed frappe.utilsyet and no response
+                if current_time < response_by_time and lead_doc.first_responded_on is None:
+                    pass
+
+                elif current_time < response_by_time and lead_doc.first_responded_on is not None:
+                    change_sla_status_in_lead(lead.name, "Responded")
+
+                # Time has passed
+                elif current_time > response_by_time:
+                    # Responded before SLA deadline
+                    if (lead_doc.first_responded_on and frappe.utils.get_datetime(lead_doc.first_responded_on) <= response_by_time):
+                        change_sla_status_in_lead(lead.name, "Responded")
+
+                    # No response OR responded after SLA deadline
+                    else:
+                        change_sla_status_in_lead(lead.name, "Failed to Respond")
 
 @frappe.whitelist()
 def change_lead_owner_on_assingment(self, method=None):
      print("Lead Owner Changed===================================================================================")
      if self.reference_type == "Lead" and self.reference_name and self.description.startswith("Automatic Assignment"):
           if self.allocated_to:
-               doc = frappe.get_doc("Lead", self.reference_name,)
-               doc.lead_owner = self.allocated_to
-               doc.save(ignore_permissions=True)
+            frappe.db.set_value("Lead", self.reference_name, "lead_owner", self.allocated_to, update_modified=False)
 
 def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
     if self.has_value_changed("lead_owner") and self.name and self.lead_owner:
@@ -271,10 +285,7 @@ def on_change_of_lead_owner_assign_lead_to_that_user(self, method=None):
             'assignment_rule' : '{0} - PRO Auto Assign'.format(self.custom_campus)
         }, 'name')
         if todo:
-            doc = frappe.get_doc("ToDo", todo)
-            doc.allocated_to = self.lead_owner
-            doc.save(ignore_permissions=True)
-            # frappe.msgprint("Lead is assigned to User {0}".format(self.lead_owner), alert=True, indicator="green")
+            frappe.db.set_value("ToDo", todo, "allocated_to", self.lead_owner, update_modified=False)
 
 
 def on_change_of_lead_owner_share_lead_to_that_user(self, method=None):
@@ -289,7 +300,6 @@ def on_change_of_lead_owner_share_lead_to_that_user(self, method=None):
             frappe.share.add_docshare(
                 self.doctype, self.name, self.lead_owner, read=1, write=1, submit=0, share=0, flags={"ignore_share_permission": True}, notify=1
             )
-            # frappe.msgprint("Lead is shared with User {0}".format(self.lead_owner), alert=True, indicator="green")
 
 @frappe.whitelist()
 def check_logged_in_user_role():
@@ -396,8 +406,8 @@ def on_insert_off_lead_send_document_to_nucleus(self, method):
                 "lead_owner": self.lead_owner,
                 "custom_select_state": self.custom_select_state,
                 "custom_where_are_you_from": self.custom_where_are_you_from,
-                "creation": self.creation.strftime("%Y-%m-%dT%H:%M:%S") if self.creation else None,
-                "modified": self.modified.strftime("%Y-%m-%dT%H:%M:%S") if self.modified else None,
+                "creation": frappe.utils.get_datetime(self.creation).strftime("%Y-%m-%dT%H:%M:%S") if self.creation else None,
+                "modified": frappe.utils.get_datetime(self.modified).strftime("%Y-%m-%dT%H:%M:%S") if self.modified else None,
             })
             
             try:
