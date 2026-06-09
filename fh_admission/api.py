@@ -104,7 +104,7 @@ def get_possible_options_for_school(items):
     return results
 
 @frappe.whitelist()
-def get_unique_schools_based_on_grade(query_results, grade):
+def get_unique_schools_based_on_grade(query_results, grade=""):
     query_results = json.loads(query_results)
     unique_schools = []
     schools = []

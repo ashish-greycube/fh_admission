@@ -17,6 +17,7 @@ function save_data_to_doc_on_change(fieldname, value) {
 		'fifth_child_options', 'fifth_child_school_options'
 	]
 	if (keys.includes(fieldname) && value == "") {
+		return
 		if (frappe.web_form.get_value(options_keys[keys.indexOf(fieldname)]) != undefined) {
 			frappe.throw("Please select or enter valid value.")
 		}
@@ -126,6 +127,13 @@ function check_eligibility_criteria_and_set_field_options(child_dob, child_acade
 	})
 
 	frappe.web_form.on(grade_fieldname, (field, value) => {
+		if (value == "" || value == null) {
+			return
+		}
+		if (frappe.web_form.get_value(grade_fieldname) == "" || frappe.web_form.get_value(grade_fieldname) == null) {
+			return
+		}
+
 		frappe.call({
 			method: "fh_admission.api.get_unique_schools_based_on_grade",
 			args: {

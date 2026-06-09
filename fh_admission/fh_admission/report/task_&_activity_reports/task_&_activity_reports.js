@@ -21,5 +21,17 @@ frappe.query_reports["Task & Activity Reports"] = {
 			"fieldtype": "Link",
 			"options": "User"
 		},
-	]
+	],
+	"formatter": function (value, row, column, data, default_formatter) {
+		// Use the default formatter first
+		value = default_formatter(value, row, column, data);
+
+		// Apply custom logic based on column ID
+		if (column.fieldname === "overdue_task") {
+			if (value == "Yes") {
+				value = `<span style="color:red;">${value}</span>`;
+			}
+		}
+		return value;
+	}
 };

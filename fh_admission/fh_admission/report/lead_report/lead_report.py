@@ -16,50 +16,9 @@ def execute(filters=None):
 def get_columns():
     return [
         {
-            "fieldname" : "lead_id",
-            "fieldtype" : "Link",
-            "label" : "Lead ID",
-            "options" : "Lead",
-        },
-		{
-            "fieldname" : "lead_source",
-            "fieldtype" : "Data",
-            "label" : "Lead Source",
-        },
-        {
-            "fieldname" : "lead_status",
-            "fieldtype" : "Data",
-            "label" : "Lead Status",
-        },
-        {
-            "fieldname" : "parent_name",
-            "fieldtype" : "Data",
-            "label" : "Parent Name",
-        },
-        {
             "fieldname" : "child_name",
             "fieldtype" : "Data",
             "label" : "Child Name",
-        },
-        {
-            "fieldname" : "parent_mobile",
-            "fieldtype" : "Data",
-            "label" : "Parent Mobile Number",
-        },
-        {
-            "fieldname" : "email",
-            "fieldtype" : "data",
-            "label" : "Email ID",
-        },
-        {
-            "fieldname" : "city",
-            "fieldtype" : "Data",
-            "label" : "City",
-        },
-        {
-            "fieldname" : "school",
-            "fieldtype" : "Data",
-            "label" : "Selected School",
         },
         {
             "fieldname" : "grade",
@@ -67,9 +26,50 @@ def get_columns():
             "label" : "Grade",
         },
         {
+            "fieldname" : "lead_status",
+            "fieldtype" : "Data",
+            "label" : "Lead Status",
+        },
+        {
+            "fieldname" : "parent_mobile",
+            "fieldtype" : "Data",
+            "label" : "Parent Mobile Number",
+        },
+        {
+            "fieldname" : "parent_name",
+            "fieldtype" : "Data",
+            "label" : "Parent Name",
+        },
+        {
+            "fieldname" : "email",
+            "fieldtype" : "data",
+            "label" : "Email ID",
+        },
+        {
+            "fieldname" : "school",
+            "fieldtype" : "Data",
+            "label" : "Selected School",
+        },
+        {
+            "fieldname" : "city",
+            "fieldtype" : "Data",
+            "label" : "City",
+        },
+        {
             "fieldname" : "inquiry_date",
             "fieldtype" : "Data",
             "label" : "Inquiry Date",
+        },
+		{
+            "fieldname" : "lead_source",
+            "fieldtype" : "Data",
+            "label" : "Lead Source",
+        },
+        {
+            "fieldname" : "lead_id",
+            "fieldtype" : "Link",
+            "label" : "Lead ID",
+            "options" : "Lead",
         },
         {
             "fieldname" : "last_interaction",

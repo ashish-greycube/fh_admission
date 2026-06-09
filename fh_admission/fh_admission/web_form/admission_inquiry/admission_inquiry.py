@@ -186,6 +186,7 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 		doc.gender = gender
 		doc.source = source
 		doc.mobile_no = phone
+		doc.email_id = data.father_email
 		doc.status = status
 		doc.custom_inquiry_form_reference = reference
 		doc.custom_child_dob = dob
@@ -280,7 +281,7 @@ def get_html_of_all_schools():
 
 		/* Color States */
 		.warning {{ background-color: #005baa; color: #fff; }}
-		.info {{ background-color: #b8292f; color: #fff; }}
+		.info {{ background-color: #f2c418; color: #000; }}
 
 		/* Tablet: 2 columns (max-width: 992px) */
 		@media (max-width: 992px) {{
