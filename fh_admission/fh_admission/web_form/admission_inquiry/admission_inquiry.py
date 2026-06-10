@@ -225,6 +225,12 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 @frappe.whitelist()
 def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
 	output = {}
+
+	# inquiry_doc = frappe.get_doc("Inquiry Form FH", docname)
+
+	# if inquiry_doc.has_value_changed("status"):
+	# 	frappe.errprint("status value changed in doc")
+
 	if docname:
 		# Validate Empty Fields Before Submitting Form & Update Status
 		status = check_for_empty_fields_before_set_status_as_completed(docname)
@@ -250,6 +256,11 @@ def get_html_of_all_schools():
 	if all_schools:
 		counter = 0
 		for s in all_schools:
+
+			# for skipping FABSV boarding school adn removing it from all schools list in webform
+			if s.name == "FABSV":
+				continue
+
 			# We use a data-attribute or class for the alternating colors
 			color_class = 'warning' if counter == 0 else 'info'
 			

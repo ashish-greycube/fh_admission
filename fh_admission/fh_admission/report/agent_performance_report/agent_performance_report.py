@@ -86,9 +86,9 @@ def get_data(filters):
 		SELECT
 			u.name AS agent_name,
 			IFNULL(COUNT(DISTINCT lead.lead_name), 0) AS leads_assigned,
-			IFNULL(SUM(CASE WHEN lead.lead_status IN ("Replied", "Converted", "Admitted", "Admission Form Fee Paid") THEN 1 ELSE 0 END), 0) AS leads_contacted,
-			IFNULL((COUNT(DISTINCT lead.lead_name) - SUM(CASE WHEN lead.lead_status IN ("Replied", "Converted", "Admitted", "Admission Form Fee Paid") THEN 1 ELSE 0 END)), 0) AS not_contacted,
-			IFNULL((SUM(CASE WHEN (lead.lead_status IN ("Converted", "Lead", "Admitted", "Admission Form Fee Paid")) THEN 1 ELSE 0 END)) / COUNT(DISTINCT lead.lead_name), 0) AS conversion_rate,
+			IFNULL(SUM(CASE WHEN lead.lead_status IN ("Replied", "Converted", "Admitted", "Admission Form Fee Paid", "Contacted", "Interested", "Not Interested", "To Follow-up", "Waitlist", "Parent Refusal", "Admission Withdrawal", "Refused", "Lead") THEN 1 ELSE 0 END), 0) AS leads_contacted,
+			IFNULL((COUNT(DISTINCT lead.lead_name) - SUM(CASE WHEN lead.lead_status IN ("Replied", "Converted", "Admitted", "Admission Form Fee Paid", "Contacted", "Interested", "Not Interested", "To Follow-up", "Waitlist", "Parent Refusal", "Admission Withdrawal", "Refused", "Lead") THEN 1 ELSE 0 END)), 0) AS not_contacted,
+			IFNULL((SUM(CASE WHEN (lead.lead_status IN ("Lead", "Interested", "Waitlist", "Converted", "Admitted", "Admission Form Fee Paid")) THEN 1 ELSE 0 END)) / COUNT(DISTINCT lead.lead_name), 0) AS conversion_rate,
 			IFNULL(SUM(CASE WHEN lead.sla_status="Failed to Respond" THEN 1 ELSE 0 END), 0) AS missed_sla,
 			SUM(IFNULL(lead.tasks_completed, 0)) AS tasks_completed,
 			SUM(IFNULL(lead.tasks_overdue, 0)) AS tasks_overdue,

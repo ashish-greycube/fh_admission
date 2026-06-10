@@ -71,9 +71,9 @@ def get_data(filters):
 				SELECT
 					l.custom_eligible_school AS school,
 					COUNT(l.name) AS total_inquiries,
-					SUM(CASE WHEN (l.status IN ("Replied", "Lead", "Coverted", "Admitted", "Admission Form Fee Paid")) THEN 1 ELSE 0 END) AS qualified_leads,
+					SUM(CASE WHEN (l.status IN ("Replied", "Lead", "Coverted", "Admitted", "Admission Form Fee Paid", "Contacted", "To Follow-up", "Waitlist")) THEN 1 ELSE 0 END) AS qualified_leads,
 					SUM(CASE WHEN l.status IN ("Admitted", "Converted", "Admission Form Fee Paid") THEN 1 ELSE 0 END) AS admissions_confirmed,
-					(SUM(CASE WHEN (l.status="Do Not Contact" OR l.status="Not Interested") THEN 1 ELSE 0 END))/COUNT(l.name) AS drop_off_rate
+					(SUM(CASE WHEN (l.status IN ("Do Not Contact", "Not Interested", "Parent Refusal", "Admission Withdrawal")) THEN 1 ELSE 0 END))/COUNT(l.name) AS drop_off_rate
 				FROM
 					`tabLead` l
 				WHERE
