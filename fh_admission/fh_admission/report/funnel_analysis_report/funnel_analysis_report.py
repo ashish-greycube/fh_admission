@@ -69,7 +69,7 @@ def get_data(filters):
 		LEFT JOIN
 			(
 				SELECT
-					l.custom_eligible_school AS school,
+					l.custom_campus AS school,
 					COUNT(l.name) AS total_inquiries,
 					SUM(CASE WHEN (l.status IN ("Replied", "Lead", "Coverted", "Admitted", "Admission Form Fee Paid", "Contacted", "To Follow-up", "Waitlist")) THEN 1 ELSE 0 END) AS qualified_leads,
 					SUM(CASE WHEN l.status IN ("Admitted", "Converted", "Admission Form Fee Paid") THEN 1 ELSE 0 END) AS admissions_confirmed,
@@ -80,7 +80,7 @@ def get_data(filters):
 					1=1
 					{0}
 				GROUP BY
-					l.custom_eligible_school
+					l.custom_campus
 			) lead
 		ON
 			lead.school = s.name

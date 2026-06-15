@@ -129,7 +129,7 @@ def get_data(filters):
 			WHERE 
 				ep.reference_doctype = 'Lead'
 				AND e.docstatus != 2
-                AND e.status = "Completed"
+                AND (e.status = "Completed" OR e.status = "Closed")
 			GROUP BY 
 				ep.reference_docname
 		) event
