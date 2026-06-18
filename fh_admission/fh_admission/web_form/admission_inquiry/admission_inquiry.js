@@ -484,12 +484,7 @@ function setAllSchoolsOnLoad() {
 		args: {},
 		callback: function (res) {
 			if (res) {
-				$(".web-form-footer .web-form-actions").after(`
-					<div>
-						<hr style="border: 1px solid #00000080; margin-top: 20px; margin-bottom: 10px;">	
-						${res.message}
-					</div>	
-				`)
+				$(".all-schools").after(res.message)
 			}
 		}
 	})
