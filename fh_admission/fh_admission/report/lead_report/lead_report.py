@@ -47,8 +47,9 @@ def get_columns():
         },
         {
             "fieldname" : "school",
-            "fieldtype" : "Data",
+            "fieldtype" : "Link",
             "label" : "Selected School",
+            "options": "School FH"
         },
         {
             "fieldname" : "city",

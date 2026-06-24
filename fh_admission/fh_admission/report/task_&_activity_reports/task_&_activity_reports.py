@@ -16,12 +16,6 @@ def execute(filters=None):
 def get_columns():
 	return [
 		{
-			"fieldname" : "task_id",
-			"fieldtype" : "Link",
-			"label" : "Task ID",
-			"options" : "ToDo",
-		},
-		{
 			"fieldname" : "task_type",
 			"fieldtype" : "Data",
 			"label" : "Task Type",
@@ -30,6 +24,22 @@ def get_columns():
 			"fieldname" : "associated_lead",
 			"fieldtype" : "Data",
 			"label" : "Associated Lead",
+		},
+		{
+			"fieldname" : "student_name",
+			"fieldtype" : "Data",
+			"label" : "Student Name",
+		},
+		{
+			"fieldname" : "grade",
+			"fieldtype" : "Data",
+			"label" : "Grade",
+		},
+		{
+			"fieldname" : "campus",
+			"fieldtype" : "Link",
+			"label" : "Campus",
+			"options": "School FH"
 		},
 		{
 			"fieldname" : "task_creation",
@@ -56,6 +66,12 @@ def get_columns():
 			"fieldtype" : "Data",
 			"label" : "Overdue Task",
 		},
+		{
+			"fieldname" : "task_id",
+			"fieldtype" : "Link",
+			"label" : "Task ID",
+			"options" : "ToDo",
+		},
 	]
 
 def get_data(filters):
@@ -75,9 +91,16 @@ def get_data(filters):
 			DATE(t.creation) AS task_creation,
 			t.date AS task_due,
 			t.allocated_to AS task_owner,
-			t.status AS task_status
+			t.status AS task_status,
+			l.lead_name AS student_name,
+			l.custom_campus AS campus,
+			l.custom_eligible_grade AS grade
 		FROM
 			`tabToDo` t
+		LEFT JOIN
+			`tabLead` as l
+		ON
+			l.name = t.reference_name
 		WHERE
 			1=1
 			{0}

@@ -17,8 +17,9 @@ def get_columns():
 	return [
 		{
 			"fieldname" : "campus",
-			"fieldtype" : "Data",
+			"fieldtype" : "Link",
 			"label" : "Campus",
+			"options": "School FH"
 		},
 		{
 			"fieldname" : "total_inquiries",
@@ -27,7 +28,7 @@ def get_columns():
 		},
 		{
 			"fieldname" : "qualified_leads",
-			"fieldtype" : "IntS",
+			"fieldtype" : "Int",
 			"label" : "Number of Leads Qualified",
 		},
 		{
