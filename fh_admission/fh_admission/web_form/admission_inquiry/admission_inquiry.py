@@ -265,52 +265,119 @@ def get_html_of_all_schools():
 			color_class = 'warning' if counter == 0 else 'info'
 			
 			school_rows += f"""
-			<div class='school-card {color_class}'>
-				<strong>{s.school_name}</strong><br>
-				({s.name} - {s.city})
+			<div class="campus-item">
+				<span class="campus-code {color_class}">
+					{ s.name }
+				</span>
+				<span class="campus-name">
+					{ s.school_name }, { s.city }
+				</span>
 			</div>
 			"""
 			counter = 0 if counter == 1 else 1
 
 	template = f"""
 		<style>
-		.school-grid {{
-			display: grid;
-			/* Desktop: 4 columns */
-			grid-template-columns: repeat(4, 1fr);
-			gap: 6px;
-			width: 100%;
-		}}
-
-		.school-card {{
-			padding: 0.6em 0.2em;
-			text-align: center;
-			border-radius: 4px;
-			font-family: sans-serif;
-			font-size: 0.7rem;
-		}}
-
-		/* Color States */
-		.warning {{ background-color: #005baa; color: #fff; }}
-		.info {{ background-color: #f2c418; color: #000; }}
-
-		/* Tablet: 2 columns (max-width: 992px) */
-		@media (max-width: 992px) {{
-			.school-grid {{
-				grid-template-columns: repeat(2, 1fr);
+			.footer-campus {{
+				width: 100%;
+				padding: 10px;
+				box-sizing: border-box;
 			}}
-		}}
 
-		/* Mobile: 1 column (max-width: 480px) */
-		@media (max-width: 480px) {{
-			.school-grid {{
-				grid-template-columns: 1fr;
+			.campus-title {{
+				text-align: center;
+				font-size: 14px;
+				font-weight: 700;
+				letter-spacing: 2px;
+				margin-bottom: 15px;
 			}}
-		}}
+
+			.campus-list {{
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}}
+
+			.campus-item {{
+				display: inline-flex;
+				align-items: center;
+				margin-bottom: 8px;
+			}}
+
+			.campus-item:not(:last-child)::after {{
+				content: "|";
+				margin: 0 10px;
+				color: #888;
+			}}
+
+			.campus-code {{
+				display: inline-block;
+				padding: 3px 5px;
+				border-radius: 4px;
+				font-size: 12px;
+				font-weight: 700;
+				margin-right: 6px;
+			}}
+
+			.campus-code.yellow {{
+				background: #f5c400;
+				color: #000;
+			}}
+
+			.campus-code.blue {{
+				background: #0056a6;
+				color: #fff;
+			}}
+
+			.campus-name {{
+				font-size: 14px;
+				color: #555;
+			}}
+
+			/* Tablet */
+			@media screen and (max-width: 768px) {{
+				.campus-title {{
+					font-size: 16px;
+				}}
+
+				.campus-name {{
+					font-size: 13px;
+				}}
+
+				.campus-item:not(:last-child)::after {{
+					margin: 0 8px;
+				}}
+			}}
+
+			/* Mobile */
+			@media screen and (max-width: 480px) {{
+				.campus-list {{
+					flex-direction: column;
+					align-items: flex-start;
+				}}
+
+				.campus-item {{
+					width: 100%;
+					margin-bottom: 10px;
+				}}
+
+				.campus-item::after {{
+					display: none;
+				}}
+			}}
+
+			/* Color States */
+			.warning {{ background-color: #005baa; color: #fff; padding:0.2em; border-radius:4px; font-weight: 600; }}
+			.info {{ background-color: #f2c418; color: #000; padding: 0.2em; border-radius:4px; font-weight: 600; }}
 		</style>
 
-		<div class="school-grid">
-			{school_rows}
+		<div class="footer-campus">
+			<div class="campus-title">FOUNTAINHEAD CAMPUSES</div>
+
+			<div class="campus-list">
+				{school_rows}
+			</div>
 		</div>
 		"""
 	return template
