@@ -110,7 +110,7 @@ def get_data(filters):
 
 	for d in data:
 		frappe.errprint(f"{type(d.get("task_due"))} - {type(today_date)}")
-		if d.get("task_status") == "Open" and d.get("task_due") < today_date:
+		if d.get("task_status") == "Open" and d.get("task_due") and d.get("task_due") < today_date:
 			d["overdue_task"] = "Yes"
 		else:
 			d["overdue_task"] = "No"
