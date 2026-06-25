@@ -22,8 +22,9 @@ def get_columns():
 		},
 		{
 			"fieldname" : "associated_lead",
-			"fieldtype" : "Data",
+			"fieldtype" : "Link",
 			"label" : "Associated Lead",
+			"options": "Lead"
 		},
 		{
 			"fieldname" : "student_name",
@@ -53,8 +54,9 @@ def get_columns():
 		},
 		{
 			"fieldname" : "task_owner",
-			"fieldtype" : "Data",
+			"fieldtype" : "Link",
 			"label" : "Task Owner",
+			"options": "User"
 		},
 		{
 			"fieldname" : "task_status",
@@ -77,6 +79,13 @@ def get_columns():
 def get_data(filters):
 
 	conditions = ""
+
+	user = frappe.session.user
+
+	user_roles = frappe.get_roles(user)
+
+	if ("Campus Admin" not in user_roles):
+		conditions += 'AND t.allocated_to = "{0}"'.format(user)
 
 	if filters.get("from_date") and filters.get("to_date"):
 		conditions += "AND DATE(t.creation) BETWEEN '{0}' AND '{1}'".format(filters["from_date"], filters["to_date"])
@@ -103,6 +112,7 @@ def get_data(filters):
 			l.name = t.reference_name
 		WHERE
 			1=1
+			AND t.reference_type = "Lead"
 			{0}
 	""".format(conditions), as_dict=1, debug=1)
 

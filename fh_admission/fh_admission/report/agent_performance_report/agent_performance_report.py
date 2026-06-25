@@ -72,6 +72,21 @@ def get_data(filters):
 
 	conditions = {}
 
+	all_pro_users_dict = frappe.db.sql("""
+		SELECT u.name
+		FROM `tabUser` u
+		LEFT JOIN `tabHas Role` r
+		on r.parent = u.name
+		WHERE r.role = "PRO User"
+	""", as_dict=True)
+
+	all_pro_users = []
+
+	for role in all_pro_users_dict:
+		all_pro_users.append(role.name)
+	
+	conditions["users"] = "AND u.name IN {0}".format(tuple(all_pro_users))
+		
 	if filters.get("from_date") and filters.get("to_date"):
 		conditions["date"] = "AND DATE(l.creation) BETWEEN '{0}' AND '{1}'".format(filters["from_date"], filters["to_date"])
 	if filters.get("campus"):
@@ -158,11 +173,12 @@ def get_data(filters):
 		WHERE
 			1=1
 			{3}
+			{4}
 		GROUP BY
 			u.name
 		ORDER BY
 			leads_assigned DESC 
-	""".format(conditions.get("date") or "", conditions.get("campus") or "", conditions.get("grade") or "", conditions.get("user") or ""), as_dict=1, debug=1)
+	""".format(conditions.get("date") or "", conditions.get("campus") or "", conditions.get("grade") or "", conditions.get("user") or "", conditions.get("users") or ""), as_dict=1, debug=1)
 
 	for row in data:
 		row["conversion_rate"] = f"{round(row['conversion_rate'] * 100)}%"

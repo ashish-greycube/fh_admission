@@ -63,8 +63,9 @@ def get_columns():
         },
 		{
             "fieldname" : "lead_source",
-            "fieldtype" : "Data",
+            "fieldtype" : "Link",
             "label" : "Lead Source",
+            "options": "Lead Source"
         },
         {
             "fieldname" : "lead_id",
