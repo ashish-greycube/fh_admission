@@ -38,7 +38,7 @@ frappe.query_reports["Lead Report"] = {
 			"fieldname": "status",
 			"label": "Lead Status",
 			"fieldtype": "Select",
-			"options": ['', 'Lead', 'Open', 'Replied', 'Opportunity', 'Quotation', 'Lost Quotation', 'Interested', 'Converted', 'Do Not Contact', 'Not Interested', 'Hold', 'Refused', 'Admission Form Fee Paid', 'Admitted', 'Junk']
+			"options": ['', 'Lead', 'Open', 'Replied', 'Opportunity', 'Quotation', 'Lost Quotation', 'Interested', 'Converted', 'Do Not Contact', 'Not Interested', 'Hold', 'Refused', 'Admission Form Fee Paid', 'Confirmed', 'Junk']
 		},
 	],
 	onload: function (report) {
