@@ -11,7 +11,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letter_head": null,
- "modified": "2026-06-26 13:35:28.504257",
+ "modified": "2026-06-26 14:48:45.754076",
  "modified_by": "Administrator",
  "module": "Fh Admission",
  "name": "Agent Performance Report",
@@ -20,6 +20,25 @@
  "ref_doctype": "Lead",
  "report_name": "Agent Performance Report",
  "report_type": "Script Report",
- "roles": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Script Manager"
+  },
+  {
+   "role": "Campus Admin"
+  },
+  {
+   "role": "Super Admin"
+  },
+  {
+   "role": "Report Manager"
+  }
+ ],
  "timeout": 0
 }
