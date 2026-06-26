@@ -251,7 +251,7 @@ def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
 @frappe.whitelist()
 def get_html_of_all_schools():
 	all_schools = frappe.db.get_all("School FH" ,['name', 'school_name', 'city'], order_by="city")
-
+	all_schools.append(all_schools.pop(0))
 	school_rows = ""
 	if all_schools:
 		counter = 0
@@ -262,7 +262,7 @@ def get_html_of_all_schools():
 				continue
 
 			# We use a data-attribute or class for the alternating colors
-			color_class = 'warning' if counter == 0 else 'info'
+			color_class = 'info' if counter == 0 else 'warning'
 			
 			school_rows += f"""
 			<div class="campus-item">
