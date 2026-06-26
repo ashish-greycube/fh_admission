@@ -84,60 +84,64 @@ def get_data(filters):
 
     conditions = ""
 
+    # Check logged-in user roles and restrict by lead_owner if necessary
+    user_roles = frappe.get_roles()
+    if "Campus Admin" not in user_roles and "Super Admin" not in user_roles and "PRO User" in user_roles:
+        conditions += " AND l.lead_owner = '{0}'".format(frappe.session.user)
+
     if filters.get("source"):
-        conditions += "AND l.source = '{0}'".format(filters["source"])
+        conditions += " AND l.source = '{0}'".format(filters["source"])
     if filters.get("campus"):
-        conditions += "AND l.custom_eligible_school = '{0}'".format(filters["campus"])
+        conditions += " AND l.custom_eligible_school = '{0}'".format(filters["campus"])
     if filters.get("city"):
-        conditions += "AND l.custom_city_you_are_seeking_admission = '{0}'".format(filters["city"])
+        conditions += " AND l.custom_city_you_are_seeking_admission = '{0}'".format(filters["city"])
     if filters.get("status"):
-        conditions += "AND l.status = '{0}'".format(filters["status"])
-	
-	# We compare Date of Creation to Filter's Date => Filter's date is converted from DD-MM-YYYY -> to -> YYYY-MM-DD for SQL comparision
+        conditions += " AND l.status = '{0}'".format(filters["status"])
+    
+    # We compare Date of Creation to Filter's Date => Filter's date is converted from DD-MM-YYYY -> to -> YYYY-MM-DD for SQL comparision
     if filters.get("date"):
         filter_date = frappe.utils.getdate(filters["date"])
-        conditions += "AND DATE(l.creation) = '{0}'".format(filter_date)
+        conditions += " AND DATE(l.creation) = '{0}'".format(filter_date)
 
     if filters.get("grade"):
-        # grade = filters["grade"].split("-")[0]
-        conditions += "AND l.custom_eligible_grade = '{0}'".format(filters["grade"])
+        conditions += " AND l.custom_eligible_grade = '{0}'".format(filters["grade"])
 
     return frappe.db.sql("""
-		SELECT 
-			l.name AS lead_id,
-			l.source AS lead_source,
-			l.status AS lead_status,
-			CONCAT(IFNULL(l.custom_fathers_first_name, ''), ' ', IFNULL(l.custom_fathers_last_name, '')) AS parent_name,
-			l.lead_name AS child_name,
-			l.mobile_no AS parent_mobile,
-			l.custom_father_email AS email,
-			l.custom_city_you_are_seeking_admission AS city,
-			l.custom_campus AS school,
-			l.custom_eligible_grade AS grade,
-			DATE(l.creation) AS inquiry_date,
-			IFNULL(DATE(event.latest_date), "-") AS last_interaction
-		FROM
-			`tabLead` l
-		LEFT JOIN (
-			SELECT 
-				ep.reference_docname AS lead_id,
-				MAX(e.starts_on) AS latest_date
-			FROM
-				`tabEvent` e
-			JOIN 
-				`tabEvent Participants` ep
-			ON
-				ep.parent = e.name
-			WHERE 
-				ep.reference_doctype = 'Lead'
-				AND e.docstatus != 2
+        SELECT 
+            l.name AS lead_id,
+            l.source AS lead_source,
+            l.status AS lead_status,
+            CONCAT(IFNULL(l.custom_fathers_first_name, ''), ' ', IFNULL(l.custom_fathers_last_name, '')) AS parent_name,
+            l.lead_name AS child_name,
+            l.mobile_no AS parent_mobile,
+            l.custom_father_email AS email,
+            l.custom_city_you_are_seeking_admission AS city,
+            l.custom_campus AS school,
+            l.custom_eligible_grade AS grade,
+            DATE(l.creation) AS inquiry_date,
+            IFNULL(DATE(event.latest_date), "-") AS last_interaction
+        FROM
+            `tabLead` l
+        LEFT JOIN (
+            SELECT 
+                ep.reference_docname AS lead_id,
+                MAX(e.starts_on) AS latest_date
+            FROM
+                `tabEvent` e
+            JOIN 
+                `tabEvent Participants` ep
+            ON
+                ep.parent = e.name
+            WHERE 
+                ep.reference_doctype = 'Lead'
+                AND e.docstatus != 2
                 AND (e.status = "Completed" OR e.status = "Closed")
-			GROUP BY 
-				ep.reference_docname
-		) event
-		ON
-			l.name = event.lead_id
-		WHERE
-			l.docstatus != 2
-			{0}
+            GROUP BY 
+                ep.reference_docname
+        ) event
+        ON
+            l.name = event.lead_id
+        WHERE
+            l.docstatus != 2
+            {0}
     """.format(conditions), as_dict=1, debug=1)

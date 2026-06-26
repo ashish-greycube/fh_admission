@@ -84,7 +84,7 @@ def get_data(filters):
 
 	user_roles = frappe.get_roles(user)
 
-	if ("Campus Admin" not in user_roles):
+	if "Campus Admin" not in user_roles and "Super Admin" not in user_roles and "PRO User" in user_roles:
 		conditions += 'AND t.allocated_to = "{0}"'.format(user)
 
 	if filters.get("from_date") and filters.get("to_date"):
