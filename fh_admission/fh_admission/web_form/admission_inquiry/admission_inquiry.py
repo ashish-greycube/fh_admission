@@ -9,13 +9,17 @@ def get_context(context):
 
 @frappe.whitelist()
 def save_data_to_doc_on_change(mobile_no, fieldname, value):
+	if not mobile_no:
+		return
+	
 	if mobile_no:
 		if fieldname in ['fathers_mobile_no', 'mothers_mobile_no']:
 			if value != "" and (not value.isdigit() or len(value) > 10):
 				frappe.throw("Please enter a valid 10 digit mobile number.")
 
 		# Save value of field in inquiry document.
-		# frappe.errprint(f"{mobile_no, fieldname, value}")
+		if value == "":
+			value = None
 		frappe.db.set_value("Inquiry Form FH", mobile_no, fieldname, value, update_modified=False)
 
 		# If field is checkbox then update no of children added in inquiry form.
@@ -223,13 +227,17 @@ def create_new_lead(first_name, middle_name, last_name, gender, source, phone, s
 		doc.insert(ignore_permissions=True)
 
 @frappe.whitelist()
-def change_status_of_doc_on_form_submit_and_send_message(docname, webform_data):
+def change_status_of_doc_on_form_submit_and_send_message(docname=None, webform_data=None):
 	output = {}
 
 	# inquiry_doc = frappe.get_doc("Inquiry Form FH", docname)
 
 	# if inquiry_doc.has_value_changed("status"):
 	# 	frappe.errprint("status value changed in doc")
+
+	if not docname:
+		frappe.log_error(title="Document Name Not Found", message=frappe.get_traceback())
+		return
 
 	if docname:
 		# Validate Empty Fields Before Submitting Form & Update Status
